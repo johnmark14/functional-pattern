@@ -580,10 +580,10 @@ if ($('#find-a-practitioner').length != 0 ) {
 $('#dis-modal .content').scroll( function() {
   var parent = $(this).parents('#dis-modal')
   var btn = $(parent).find('.accept')
-
-  if ($(this).scrollTop() == $(this)[0].scrollHeight - $(this).height()) {
-    $(btn).attr('disabled', false)
-  }
+  // Custom code by John remove! replace with checkbox
+  // if ($(this).scrollTop() == $(this)[0].scrollHeight - $(this).height()) {
+  //   $(btn).attr('disabled', false)
+  // }
 })
 
 
