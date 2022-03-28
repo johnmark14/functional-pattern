@@ -73,6 +73,8 @@ window.addEventListener('load', function() {
 
 
 {% include 'globo.formbuilder.scripts' %}
+ <!-- John Dev Edits ================================================== -->
+ {{ 'john-custom.css' | asset_url | stylesheet_tag }}
 </head>
 
 <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {% unless tempate contains 'index' %} others {% endunless %}">  

@@ -1,0 +1,25 @@
+.modal {
+
+    .dis-container {
+        text-align: center;
+    }
+
+    .dis-checkbox {
+        display: inline-block;
+        position: relative;
+        margin: 0 auto;
+
+        label {
+            &::before {
+                border-color: black;
+            }
+            user-select: none;
+            font-weight: bold;
+        }
+    }
+
+    .dis-footer {
+       
+        margin-top: 10px;
+    }
+}

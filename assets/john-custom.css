@@ -1,0 +1,21 @@
+.modal .dis-container {
+  text-align: center;
+}
+.modal .dis-checkbox {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+}
+.modal .dis-checkbox label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-weight: bold;
+}
+.modal .dis-checkbox label::before {
+  border-color: black;
+}
+.modal .dis-footer {
+  margin-top: 10px;
+}

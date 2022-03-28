@@ -531,7 +531,7 @@ if ($('#find-a-practitioner').length != 0 ) {
     var modal = $('#dis-modal')
     modal.show()
     $('body').addClass('no-overflow')
-    $('#find-a-practitioner .dis-footer').addClass('hide-dec')
+    // $('#find-a-practitioner .dis-footer').addClass('hide-dec')
   }
 }
 
@@ -566,6 +566,15 @@ if ($('#find-a-practitioner').length != 0 ) {
 
     document.location.href = link
   })
+
+  $(document).on('change', '.dis-checkbox #agree-disclaimer', function() {
+    if($(this).prop("checked") == true) {
+      $('.dis-footer .accept').prop('disabled', false)
+    } else {
+      $('.dis-footer .accept').prop('disabled', true)
+    }
+  })
+
 })
 
 $('#dis-modal .content').scroll( function() {
