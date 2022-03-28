@@ -1,0 +1,286 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="icon-block-inner" style="background:{{section.settings.bg_color}}; float:left;width:100%;">  
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="grid-uniform">
+      {% if section.settings.heading != blank or section.settings.description != blank   %}  
+      <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+        <div class="border-title text-center"> 
+          {% if section.settings.heading != blank  %}
+          <h2 style="color:{{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.description != blank  %}  
+          <div class="short-desc">  <p style="color:{{ section.settings.description_color }};">{{ section.settings.description }}</p></div>
+          {% endif %}           
+        </div>
+      </div>
+      <div class="dt-sc-hr-invisible-very-small"></div>
+      {% endif %} 
+    </div>
+
+    <div class="v_column" style="position:relative;">
+      <div class="v_column_img  small-grid__item">
+        <a href="{{ section.settings.link }}"  class="support_section">
+          {% if  section.settings.image != blank %}
+          <img src="{{ section.settings.image | img_url:'600X' }}"  alt="{{ section.settings.title }}"/>
+          {% else %}
+          <img src="//via.placeholder.com/370x320">
+          {% endif %}
+        </a>
+      </div>
+
+      {% if section.blocks.size > 0 %}      
+      {% for block in section.blocks  %}
+      <div class="best-food-item">
+        {% if block.settings.image_icon != blank %}
+        <a href="{{ section.settings.link_icon }}">
+          <div class="img-icon">
+            <img src="{{ block.settings.image_icon | img_url:'small' }}"  alt="{{ block.settings.grid_text_1_sub_heading }}"/>
+          </div>
+        </a>
+        {% else %}
+        <a href="{{ section.settings.link_icon }}">
+          <div class="img-icon">
+            <img src="//via.placeholder.com/30x30">
+          </div>
+        </a>
+        {% endif %}
+        {% if block.settings.grid_text_1_desc != blank or block.settings.grid_text_1_sub_heading != blank %}
+        <div class="number-icon">
+          {% if block.settings.grid_text_1_sub_heading != blank %}
+          <h5> {{ block.settings.grid_text_1_sub_heading  }}</h5>
+          {% endif %}
+          {% if block.settings.grid_text_1_desc != blank %}<p>{{ block.settings.grid_text_1_desc }}</p>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>  
+</div>
+
+<style>
+
+  .specification-icon-block-type-2 h5  {color: {{ section.settings.grid_icon_title_color }};}
+
+  .specification-icon-block-type-2  p {color: {{ section.settings.grid_icon_desc_color }};}
+
+  .specification-icon-block-type-2 .v_column_img:before { content:"";float:left;width:100%;height:100%;border:3px dotted {{ section.settings.grid_number_border_hover_color }};border-radius:100%;   animation: 1s animateBorder infinite;}
+
+  .specification-icon-block-type-2 .v_column_img:hover:before {border:3px dotted {{ section.settings.grid_number_border_color }}; transition:
+    border-color 0s ease-out 0.5s, // Wait for ::before to finish before showing border
+    width 0.25s ease-out 0.5s, // And then exanding width
+    height 0.25s ease-out 0.75s; // And finally height}
+  .specification-icon-block-type-2 .img-icon:before { box-shadow:0 0 0 6px {{ section.settings.grid_number_border_hover_color }};content:"";float:left;width:100%;height:100%;border-radius:100%;   }
+
+
+  @keyframes border-dance {
+    0% {
+      background-position: 0px 0px, 300px 116px, 0px 150px, 216px 0px;
+    }
+    100% {
+      background-position: 300px 0px, 0px 116px, 0px 0px, 216px 150px;
+    }
+  }
+
+  @keyframes shadow-pulse
+  {
+    0% {
+      box-shadow: 0 0 0 0px {{  section.settings.grid_number_border_hover_color | color_modify:'alpha', 0.7 }};
+    }
+    100% {
+      box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+    }
+  }
+
+
+  .specification-icon-block-type-2 .img-icon {
+
+    background-color: {{ section.settings.grid_number_border_color }};margin:auto; }
+
+
+  @media (max-width: 967px) {
+
+    .specification-icon-block-type-2 .v_column_img:before,.specification-icon-block-type-2 .v_column_img:hover:before  { border:none; }
+
+  }
+
+</style>
+
+{% schema %}
+{
+"name": "Specification Block 2",
+"class": "index-section specification-icon-block-type-2",
+"max_blocks":6,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg Color",
+"default":"#f5f5f5"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Heading"     
+},
+{
+"type": "color",
+"id": "heading_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "textarea",
+"id": "description",
+"label": "Description",
+"default": "Description"     
+},
+{
+"type": "color",
+"id": "description_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "color",
+"id": "grid_icon_title_color",
+"label": "Title Color",
+"default": "#000"	
+},
+{
+"type": "color",
+"id": "grid_number_border_color",
+"label": "Bg Color",
+"default": "#fff"	
+},
+{
+"type": "color",
+"id": "grid_number_border_hover_color",
+"label": "Border Hover Color",
+"default": "#ffc600"	
+},
+
+{
+"type": "color",
+"id": "grid_icon_desc_color",
+"label": "Description Color",
+"default": "#000"	
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Centered Image",
+"info": "Size: 570x570"
+},
+
+{
+"type": "url",
+"id": "link",
+"label": "Link"          
+},  
+{
+"type": "text",
+"id": "title",
+"label": "Alt Text"          
+}
+
+
+],
+"blocks": [
+{
+"type": "text",
+"name": "Content block",
+"settings": [ 
+
+{
+"type": "image_picker",
+"id": "image_icon",
+"label": "Image"          
+},
+{
+"type": "url",
+"id": "link_icon",
+"label": "Link"          
+},  
+{
+"type": "text",
+"id": "grid_text_1_sub_heading",
+"label": "Sub Title",
+"default": "Sub Title" 
+},
+{
+"type": "textarea",
+"id": "grid_text_1_desc",
+"label": "Description",
+"default": "Description" 
+}
+
+]
+}
+],
+"presets": [
+{
+"name": "Specification Block 2",
+"category": "Text",
+"blocks": [
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+}
+]
+}
+]
+}
+{% endschema %}

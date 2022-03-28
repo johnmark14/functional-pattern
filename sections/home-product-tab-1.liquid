@@ -1,0 +1,528 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{%- assign limit = section.settings.column_desktop | times: section.settings.rows_desktop -%}
+
+{% capture image_block %}        
+<div class="overlay-text">  
+  <div class="collection_title imageText_position {{ section.settings.image_text_position }}">
+    {% if section.settings.sub_caption != blank %}
+    <h6 class="section-header__title" style="color:{{ section.settings.sub_caption_clr }};">    
+      {{ section.settings.sub_caption }}
+    </h6>
+    {% endif %}
+    {% if section.settings.caption != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.caption_clr }};">    
+      {{ section.settings.caption }}
+    </h2>
+    {% endif %}  
+  </div>
+  {% unless section.settings.layout_setup == '100%' or section.settings.image-position == 'none' %}
+  {% if section.settings.image != blank %}
+  <img src="{{ section.settings.image | img_url: '1920X' }}" alt="{{ section.settings.image }}" />
+  <div class="ovrly"></div>
+  {% else %}
+  <img src="//via.placeholder.com/650x950">
+  {% endif%} 
+  {% endunless %}
+</div>
+{% endcapture %}
+
+{% capture content_block %}     
+{% if section.settings.title != blank or section.settings.small_title != blank  %}
+<div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+  <div class="border-title">
+    {% if section.settings.title != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+      {{ section.settings.title }}
+    </h2>
+    {% endif %}  
+    {% if section.settings.small_title != blank %}
+    <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+    {% endif %}                
+  </div>
+</div>
+{% endif %}
+{% endcapture %}
+
+{% if section.settings.layout_setup == '75%' %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--three-quarters large--three-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '50%' %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '67%' %}
+{% assign column1  = 'grid__item wide--two-thirds post-large--two-thirds large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-third post-large--two-third large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '100%' %}
+{% assign column1  = 'grid__item' %}
+{% assign column2  = 'grid__item' %}
+{% else %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% endif %}
+
+<div class="product-tab" style="float:left;width:100%;margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">     
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="product-block-inner"> 
+      {{ content_block }}
+      <div class="grid-uniform">            
+        {% if section.settings.image-position == 'left' %}
+        <div class="{% if section.settings.image-position != 'none' %} {{column2}} image-on-left {% else %}grid__item{% endif %}">         
+            {{image_block}}        
+        </div>        
+        
+        {% endif %}        
+        <div class="{% if section.settings.image-position != 'none' %} {{column1}} {% else %}grid__item{% endif %}">      
+          <div class="dt-sc-tabs-container-section">              
+            {% if section.blocks.size > 0 %} 
+            <div class="dt-sc-tabs-container">
+              <div class="dt-sc-tabs-header {% if section.settings.layout_setup == '100%' or section.settings.image-position == 'none' %}without-image {{ section.settings.navigation_position }} {% endif %}">
+              {% if section.settings.layout_setup == '100%' or section.settings.image-position == 'none' %}
+              {{image_block}}
+              {% endif %}
+                </div>
+              <ul class="dt-sc-tabs wow fadeInUp animated {{section.settings.tab_position}}">         
+                {% for block in section.blocks %} 
+                {% if block.settings.title != blank %}
+                <li><a data-toggle="tab" href="#tabs-{{ block.id }}-init" class="tabs-{{ block.id }}">{{ block.settings.title }} </a></li>           
+                {% endif %}
+                {% endfor %}
+              </ul>
+              
+              {% for block in section.blocks %}
+              <div class="dt-sc-tabs-content" style="padding:0;background:{{ section.settings.bg_color }};">                  
+                <div class="tabs-{{ block.id }}">
+                  <div class="tab-content" {% if section.settings.multigrid  == 'single' %}data-product-single-row-tab{% endif %}{% if section.settings.multigrid  == 'multi' %}data-product-multi-row-tab{% endif %}{% if section.settings.multigrid  == 'none' %}data-product-multi-tab-grid{% endif %}>                                      
+                    <ul class="tab2 tab-items" id="tabs-{{ block.id }}-init" {%  unless section.settings.multigrid == 'none' %}  data-autoplay="{{section.settings.autoplay}}" {% if section.settings.multigrid  == 'single' %} data-row="1" {% else %} data-row="{{ section.settings.rows_desktop }}" {% endif %} data-cols="{{ section.settings.column_desktop }}" {% endunless %} >
+                      {% if section.settings.multigrid == 'none' %}
+                      {% case section.settings.column_desktop %}
+                      {% when '2' %}
+                      {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+                      {% when '3' %}
+                      {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+                      {% when '4' %}
+                      {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+                      {% when '5' %}
+                      {%- assign grid_item_width = 'wide--one-fifth post-large--one-quarter large--one-third medium--one-half small-grid__item' -%}            
+                      {% endcase %}              
+                      {% endif  %}
+                      {% if section.settings.multigrid == 'single' or section.settings.multigrid == 'multi' %}
+                      {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}            
+                      {% endif %}  
+                      {%- assign collection = collections[block.settings.collection] -%}     
+                      {% if section.settings.multigrid == 'single' or section.settings.multigrid == 'multi' %}
+                      {% for product in collection.products  %}
+                      {% include 'home-product-grid-item', grid_item_width: " " %}                       
+                      {% endfor %}
+                      {% else %}
+                      {% for product in collection.products  limit: limit   %}
+                      {% include 'home-product-grid-item', grid_item_width: grid_item_width %}                       
+                      {% endfor %}
+                      {% endif %}
+                    </ul>        
+                    {% if section.settings.navigation %}
+                    {% if section.settings.multigrid == 'single' or section.settings.multigrid == 'multi' %}
+                    <div class="product_tab_nav carousel-arrow {{ section.settings.navigation_position }}" id="navCtrls-{{ block.id}}-nav"></div>  
+                    {% endif  %}
+                    {% endif  %}
+                  </div>                                   
+                </div> 
+              </div>    
+              {% endfor %}  
+            </div>
+            {% endif %}           
+          </div><!--End tabs container-->         
+        </div>    
+        
+        {% if section.settings.image-position == 'right' %}
+        <div class="{% if section.settings.image-position != 'none' %} {{column2}} {% else %}grid__item{% endif %} image-on-right">
+            {{image_block}}
+        </div>      
+        {% endif %}
+      </div>      
+    </div>      
+    <div class="dt-sc-hr-invisible-large"></div>  
+  </div> 
+</div>
+
+{% for block in section.blocks %}
+<style>
+ 
+  .home-product-tab ul.dt-sc-tabs li a { color:{{ section.settings.tag_clr }}; background: {{section.settings.tabactive_bg_clr}} }
+  .home-product-tab ul.dt-sc-tabs li a.tabs-{{ block.id }}:hover {color:{{ section.settings.tag_hover_clr }};background: {{section.settings.tabactive_hover_bg_clr}};}
+  .home-product-tab ul.dt-sc-tabs li a.current { color:{{ section.settings.tag_hover_clr }};background: {{section.settings.tabactive_hover_bg_clr}}; }
+  .home-product-tab .list-collection-products .grid__item {padding:0;}
+  
+</style>
+{% endfor %}
+
+<script type="text/javascript"> 
+  window.hptab_autoplay = {{ section.settings.autoplay }};
+  window.hptab_navigation = {{ section.settings.navigation }};
+  window.hptab_pagination = {{section.settings.pagination }}
+</script>
+
+{% schema %}
+{
+"name": "Product Tab 1",
+"class": "index-section home-product-tab",
+"max_blocks": 6,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "select",
+"id": "layout_setup",
+"label": "Layout Grid Style",
+"options": [
+{
+"value": "75%",
+"label": "75/25"
+},
+{
+"value": "50%",
+"label": "50/50"
+},
+{
+"value": "67%",
+"label": "67/33"
+},
+{
+"value": "100%",
+"label": "100/100"
+}
+],
+"default": "75%"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Product Tab"
+},	
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading",
+"default": "Small Heading"
+},	
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "tab_position",
+"label": "Tab Position",
+"options": [
+{
+"value": "default",
+"label": "Align Center"
+},
+{
+"value": "align-left",
+"label": "Align Left"
+},
+{
+"value": "align-right",
+"label": "Align right"
+}
+]
+},
+{
+"type": "color",
+"id": "tag_clr",
+"label": "Tag Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "tabactive_bg_clr",
+"label": "Tag Bg Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "tag_hover_clr",
+"label": "Tag Hover Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "tabactive_hover_bg_clr",
+"label": "Tag Hover Bg Color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "rows_desktop",
+"label": "Rows",
+"info": "For desktop screen",
+"options": [ 
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}        
+],
+"default": "2"
+},
+{
+"type": "select",
+"id": "column_desktop",
+"label": "Products per row",
+"info": "For desktop screen",
+"options": [       
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}     
+],
+"default": "4"
+},
+{
+"type": "select",
+"id": "multigrid",
+"label": "Tab Type",
+"info": "Tab Grid Styles",
+"options": [       
+{
+"value": "single",
+"label": "Single Row Carousel"
+},
+{
+"value": "multi",
+"label": "Multi Row Carousel"
+},
+{
+"value": "none",
+"label": "No Carousel"
+}        
+],
+"default": "none"
+},
+{
+"type": "checkbox",
+"id": "navigation",
+"label": "Enable Navigaiton",
+"default": true
+},
+{
+"type": "select",
+"id": "navigation_position",
+"label": "Navigation position",
+"options": [      
+{
+"value": "nav-top-left",
+"label": "Top Left"
+},
+{
+"value": "nav-top-right",
+"label": "Top Right"
+},
+{
+"value": "nav-middle",
+"label": "Middle"
+},
+{
+"value": "nav-bottom",
+"label": "Bottom"
+},
+{
+"value": "nav-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "nav-bottom-right",
+"label": "Bottom Right"
+}
+],
+"default": "nav-middle"
+},
+{
+"type": "checkbox",
+"id": "autoplay",
+"label": "Carousel Auto Play",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "pagination",
+"label": "Enable Pagination",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 1000x710"
+},	  
+{
+"type": "select",
+"id": "image-position",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+} ,
+{
+"value": "none",
+"label": "None"
+}   
+]
+},
+{
+"type": "text",
+"id": "caption",
+"label": "Heading",
+"default": "Image Heading"
+},  
+{
+"type": "color",
+"id": "caption_clr",
+"label": "Heading Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "sub_caption",
+"label": "Image Text",
+"default": "Image Text"
+},  
+{
+"type": "color",
+"id": "sub_caption_clr",
+"label": "Sub Heading Color",
+"default":"#000"
+},            
+{
+"type": "select",
+"id": "image_text_position",
+"label": "Image Text Position",
+"options": [
+{
+"value": "imgtxt-top-left",
+"label": "Top Left"
+},
+{
+"value": "imgtxt-top-right",
+"label": "Top Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Middle"
+},
+{
+"value": "imgtxt-bottom",
+"label": "Bottom"
+},
+{
+"value": "imgtxt-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "imgtxt-bottom-right",
+"label": "Bottom Right"
+}          
+
+],
+"default": "imgtxt-middle"
+}
+],
+"blocks": [	
+{
+"type": "text_block",
+"name": "Column",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Collection Name",
+"default": "Tab Name"
+},	
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Product Tab 1",
+"category": "Collection",
+"blocks": [
+{
+"type": "text_block"
+}        
+]
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+{% case request.page_type %}
+{% when 'page' %}
+  {% assign count = page.metafields.accentuate.banner_img_page_content.size %} 
+  {% assign image = page.metafields.accentuate.banner_img_page_content %}	
+  {% assign heading = page.metafields.accentuate.heading_banner_page_content %}	
+  {% assign link = page.metafields.accentuate.link_banner_page_content %}
+  {% assign label = page.metafields.accentuate.label_banner_page_content %}
+{% when 'blog' %}
+  {% assign count = blog.metafields.accentuate.onward_journey_image.size %}
+  {% assign image = blog.metafields.accentuate.onward_journey_image %}
+  {% assign heading = blog.metafields.accentuate.onward_journey_heading %}	
+  {% assign link = blog.metafields.accentuate.onward_journey_link_url %}
+  {% assign label = blog.metafields.accentuate.onward_journey_cta_label %}
+{% endcase  %}
+
+{% if image != blank %}
+  <div class="onward-journey-section">
+      <div class="grid-banner-type-1">     
+        <div class="grid-uniform featuredItems">
+          
+          {% case count %}
+          {% when 1 %}
+            {%- assign column = 'grid__item one-block' -%}
+          {% when 2 %}
+            {%- assign column = 'grid__item wide--one-half post-large--one-half large--one-half two-blocks' -%}
+          {% when 3 %}     
+            {%- assign column = 'grid__item wide--one-third post-large--one-third large--one-third three-blocks' -%}
+          {% endcase  %}
+
+          {% unless count > 4 %}
+            {% for bg_img in image %}
+            <div class="{{ column }}">
+              <div class="overlay style_1 p-relative">
+                <div class="featured-image">
+                  <img src="{{ bg_img[0].src }}" alt="{{ heading[forloop.index0] }}">
+                </div>
+                <div class="featured-content imageText_position imgtxt-middle">       
+                  <h3 style="color: #ffffff;">{{ heading[forloop.index0] }}</h3>
+                  <a class="btn btn-primary" href="{{ link[forloop.index0] }}">{{ label[forloop.index0] }}</a>        
+              </div>
+              </div>
+            </div>       
+            {% endfor %}
+          {% endunless %}
+
+        </div>    
+      </div>  
+  </div>
+{% endif %}

@@ -1,0 +1,58 @@
+{% if section.settings.dpl_grouped_product %}
+{% include 'bundle-product-block' %}
+{% endif %}
+
+<div class="dt-sc-tabs-container">
+  <ul class="dt-sc-tabs">
+    {% if section.settings.product_tab1 %}<li><a class="" href="#"> {{ section.settings.product_tab1_heading }} </a></li>{% endif %} 
+    {% for block in section.blocks %}  
+    {% case block.type %}
+    {% when 'html' %}
+    {% assign sel_product = block.settings.select_product_name %}
+    {% if product.handle == sel_product %}    
+    {% if section.settings.product_tab2 %}<li><a class="" href="#"> {{ section.settings.product_tab2_heading }}  </a></li>{% endif %}
+    {% endif %}
+    {% endcase %}
+    {% endfor %}    
+    {% if section.settings.product_tab3 %}<li><a class="" href="#"> {{ section.settings.product_tab3_heading }}  </a></li>{% endif %}      
+
+  </ul>
+  {% if section.settings.product_tab1 %}
+  <div class="dt-sc-tabs-content rte" id="desc_pro">
+    <p>{{ product.description }}</p>
+
+  </div>
+  {% endif %}
+  {% for block in section.blocks %}  
+  {% case block.type %}
+  {% when 'html' %}
+  {% assign sel_product = block.settings.select_product_name %}
+  {% if product.handle == sel_product %}    
+  {% if section.settings.product_tab2 %}
+  <div class="dt-sc-tabs-content">
+  {{ block.settings.html }}
+  </div>
+  {% endif %}  
+  {% endif %}
+  {% endcase %}
+  {% endfor %}    
+  {% if section.settings.product_tab3 %}
+  <div class="dt-sc-tabs-content">
+    <div class="commentlist">
+      <div class="comment-text">
+        <div class="rating-review">
+          <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %} 
+</div>
+
+{% if settings.enable_ask_an_expert %}
+<div class="theme-ask" data-toggle="modal" data-target="#ask_an_expert">
+  <h5 class="ask-an-expert-text btn">
+    <i class="fa fa-question-circle"></i>{{ settings.ask_an_expert }}
+  </h5>
+</div>
+{% endif %}

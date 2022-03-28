@@ -1,0 +1,242 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}"> 
+  <div style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">  
+    {% if section.settings.title != blank or section.settings.text != blank %}
+    <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+      <div class="border-title">
+        <h2 style="color:{{ section.settings.title_clr }};">{{ section.settings.title }}</h2>
+        {% if section.settings.text != blank   %}
+        <p style="color:{{ section.settings.text_clr }};">{{ section.settings.text }}</p>
+        {% endif %}
+      </div>
+    </div>  
+    {% endif %}
+    
+    {% if section.blocks.size > 0 %}    
+    <div class="grid-uniform">    
+      <div class="grid__item">        
+        {% if section.settings.brand_style == 'style2' %}
+        {% case section.settings.brand_rows %}
+        {% when '3' %}
+        {%- assign block_width = 'grid__item wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+        {% when '4' %}
+        {%- assign block_width = 'grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+        {% when '5' %}
+        {%- assign block_width = 'grid__item wide--one-fifth post-large--one-fifth large--one-fifth medium--one-half small-grid__item' -%}
+        {% when '6' %}
+        {%- assign block_width = 'grid__item wide--one-sixth post-large--one-sixth large--one-sixth medium--one-half small-grid__item' -%}
+        {% endcase %}
+        {% endif %}
+        <div class="client-logo-block">
+          <div class="{% if section.settings.brand_style == 'style1' %}client-carousel{% else %}grid-uniform{% endif %}" {% if section.settings.brand_style == 'style1' %} data-brands-slider data-rows="{{ section.settings.brand_rows }}" {% endif %}>
+            {% for block in section.blocks %}
+            {% if block.settings.client_img != blank %}
+            <div class="logo-item {% if section.settings.brand_style == 'style2' %} {{block_width}} {% endif %}">
+              <a href="{{ block.settings.client_link }}"> <img src="{{ block.settings.client_img | img_url: "x150"  }}" alt="{{ block.settings.client_heading }}" /></a>
+            </div>
+            {% else %}          
+            <div class="logo-item {% if section.settings.brand_style == 'style2' %} {{block_width}} {% endif %}">
+              <img src="//via.placeholder.com/250x150">
+            </div>
+            {% endif %}           
+            {% endfor %}          
+          </div>
+
+          {% if section.settings.brand_navigation %}
+          <div class="brand_nav carousel-arrow {{ section.settings.navigation_position }}"></div> 
+          {% endif  %}
+        </div>
+      </div>  
+    </div>
+    {% endif %} 
+  </div>
+</div>
+<script type="text/javascript">
+  window.brand_navigation = {{ section.settings.brand_navigation }};
+  window.brand_pagination = {{section.settings.brand_pagination }}
+</script>
+
+{% schema %}
+{
+"name": "Brand Logos",
+"class": "index-section client-logo",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Brand Logos"
+},
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+}, 
+{
+"type": "text",
+"id": "text",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "brand_style",
+"label": "Style",
+"options": [
+{
+"value": "style1",
+"label": "Carousel Slider"
+},
+{
+"value": "style2",
+"label": "Grid Items"
+}      
+],
+"default": "style1"
+},
+{
+"type": "select",
+"id": "brand_rows",
+"label": "Brand per row",
+"options": [
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+},
+{
+"value": "6",
+"label": "6"
+}
+],
+"default": "5"
+},
+{
+"type": "checkbox",
+"id": "brand_pagination",
+"label": "Enable Pagination",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "brand_navigation",
+"label": "Enable Navigaiton",
+"default": true
+},
+{
+"type": "select",
+"id": "navigation_position",
+"label": "Navigation position",
+"options": [ 
+{
+"value": "nav-middle",
+"label": "Middle"
+},
+{
+"value": "nav-bottom",
+"label": "Bottom"
+}
+],
+"default": "nav-middle"
+}
+],
+"blocks": [
+{
+"type": "Image",
+"name":"Image",
+"settings": [
+{
+"type": "image_picker",
+"id": "client_img",
+"label": "Image",
+"info": "Size: 200x150"
+},
+{
+"type": "text",
+"id": "client_heading",
+"label": "text"
+},
+{
+"type": "url",
+"id": "client_link",
+"label": "Link URL"
+}
+]
+}
+],
+
+"presets": [
+{
+"name": "Brand Logos",
+"category": "Image",
+"blocks": [
+{
+"type": "Image"
+},
+{
+"type": "Image"
+},
+{
+"type": "Image"
+},
+{
+"type": "Image"
+},
+{
+"type": "Image"
+}
+]
+}
+]
+}
+{% endschema %}

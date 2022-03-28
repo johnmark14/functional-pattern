@@ -1,0 +1,78 @@
+{{ 'inview-donut-easing.js' | asset_url | script_tag }}
+{{ 'theme.js' | asset_url | script_tag }}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}    
+{{ 'history-to-light.js' | asset_url | script_tag }}
+{{ 'footer.js' | asset_url | script_tag }}
+{{ 'shop.js' | asset_url | script_tag }}  
+
+{% if template contains 'article' or template contains 'product' %}
+{% if settings.social_sharing_blog or settings.social_sharing_products %}
+{{ 'social-buttons.js' | asset_url | script_tag }}
+{% endif %}
+{% endif %}
+<script src="{{ 'wow.js' | asset_url }}"></script>
+
+<script type="text/javascript">
+  $('.quick-view .close-window').on('click', function() {  			
+    $('.quick-view').switchClass("open-in","open-out");
+  });
+</script>
+
+{% if template contains 'product' %}
+<script type="text/javascript">
+  var rv = $('.recently-viewed-products');
+  if ( rv.length ) {     
+    Shopify.Products.recordRecentlyViewed();
+  }
+</script>
+{% endif %}
+
+
+{% unless settings.search_model == 'search_type1' %}
+<script src="{{ 'ajax-search-script.js' | asset_url }}"></script>
+{% endunless %}
+
+
+{% if  settings.header_style_1 == 'style_3' %}
+<script>     
+
+    var appendPrependMenuMobile = function() {
+        var appendMb = $('[data-append-header-mb]'),
+            headerPc = $('[data-append-header-pc]'),
+            navSearch = headerPc.find('.nav-search'),
+            areaMb = $('.wrapper-navigation .mb-area');
+
+        if (window.innerWidth < 1200) {
+            appendMb.appendTo(areaMb);
+        } else {
+            appendMb.insertAfter(navSearch);
+        };
+    };
+
+    $(document).ready(function() {
+        appendPrependMenuMobile();
+    });
+
+    var winWidth = $(window).innerWidth();
+
+    $(window).on('resize', function () {
+        var resizeTimerId;
+
+        clearTimeout(resizeTimerId);
+
+        resizeTimerId = setTimeout(function() {
+            var curWinWidth = $(window).innerWidth();
+
+            if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+                appendPrependMenuMobile();
+            };
+            winWidth = curWinWidth;
+        }, 0);
+    });
+
+    {% if settings.enable_multilang %}
+    translator.doTranslate('.site-header');
+    {% endif %}
+</script>
+{% endif %}

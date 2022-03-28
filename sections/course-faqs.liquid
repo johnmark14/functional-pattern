@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="text-center">
+    <p class="f-bk">Faqs</p>
+    <h3>HAVE QUESTIONS? WE HAVE ANSWERS.</h3>
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="faqs-wrapper">
+
+    <!--dt-sc-toggle-frame-set starts-->
+    <div class="dt-sc-toggle-frame-set">
+      {% assign count = product.metafields.answer.answer.size %}  
+      {% for i in (1..count) %}             
+        <h5 class="dt-sc-toggle-accordion  {% if forloop.first == true %}active{% endif %}"><a href="#">{{ product.metafields.accentuate.question[forloop.index0] }}</a></h5>                    	            
+        <div class="dt-sc-toggle-content {% if forloop.last %} last{% endif %}" {% if forloop.first == true %}style="display:block;"{% endif %}>
+          <div class="dt-sc-block">{{ product.metafields.answer.answer[forloop.index0].html }}</div>
+        </div>      	         
+      {% endfor %}   
+      {% assign count = product.metafields.accentuate.answer_c.size %}  
+      {% for i in (1..count) %}             
+        <h5 class="dt-sc-toggle-accordion  {% if forloop.first == true %}active{% endif %}"><a href="#">{{ product.metafields.accentuate.question_c[forloop.index0] }}</a></h5>                    	            
+        <div class="dt-sc-toggle-content {% if forloop.last %} last{% endif %}" {% if forloop.first == true %}style="display:block;"{% endif %}>
+          <div class="dt-sc-block">{{ product.metafields.accentuate.answer_c[forloop.index0].html }}</div>
+        </div>      	         
+      {% endfor %}  
+    </div>
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+{% section 'product-equipment' %}
+
+{% unless product.metafields.accentuate.equipment_features_title == blank and product.metafields.accentuate.equipment_features_content == blank %}
+  {% section 'equipment-features' %}
+{% endunless %}
+
+{% section 'product-bundle-block' %}
+
+{% unless product.metafields.accentuate.title_related_course == blank and product.metafields.accentuate.related_courses == blank %}
+  {% section 'course-related-products' %}
+{% endunless %}
+
+{% unless product.metafields.accentuate.text_block == blank and product.metafields.accentuate.video_background_image == blank %}
+  {% section 'equipment-video-block' %}
+{% endunless %}
+
+{% unless product.metafields.accentuate.testimonials_content == blank and product.metafields.accentuate.testimonial_name == blank and product.metafields.accentuate.testimonial_photo == blank %}
+  {% section 'equipment-product-testimonial' %}
+{% endunless %}
+
+
+{% unless product.metafields.accentuate.question == blank and product.metafields.answer.answer == blank %}
+  {% section 'equipment-faqs' %}
+{% endunless %}
+
+<div class="container" style="clear: both">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="text-center">
+    <p class="f-bk">Reviews</p>
+    <h3>See what others are saying!</h3>
+  </div>
+  {% render 'okendo-reviews-widget', product: product %}
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>

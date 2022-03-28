@@ -1,0 +1,345 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+{% if section.settings.show_portfolio_parallax_section %}
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="donutchart-inner" style="float:left;width:100%;margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+  <!--container starts-->
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">     
+    <!--main-title starts-->
+    <div class="parallax">
+      {% if section.settings.heading != blank or section.settings.sub_heading != blank   %}  
+      <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+        <div class="border-title wow fadeInDown animated">          
+          {% if section.settings.heading != blank  %}  
+          <h2 class="" style="color:{{ section.settings.heading_clr }}">{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.sub_heading != blank  %}  
+          <div class="small-desc">
+            <p style="color:{{ section.settings.sub_heading_clr }}">{{ section.settings.sub_heading }}</p>
+          </div>  
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!--main-title ends-->
+      <div class="grid-uniform">
+        {% if section.settings.show_1_donutchartbar %}
+        <!--column one-fourth starts-->
+        <div class="grid__item wide--one-quarter post-large--one-quarter large--one-half medium--one-half">
+          <!--donutchart-medium starts-->
+          <div class="dt-sc-donutchart-medium">
+            <!--donutchart starts-->
+            {% if section.settings.chart_1_percentage != blank %}
+            <div class="dt-sc-donutchart1" data-percent="{{ section.settings.chart_1_percentage }}" ></div>
+            {% endif %}
+            <!--donutchart ends-->
+            {% if section.settings.chart_1__title != blank %}
+            <h6 class="dt-sc-donutchart-title orange">{{ section.settings.chart_1__title }}</h6>
+            {% endif %}
+          </div>
+          <!--donutchart-medium ends-->
+        </div>                        
+        <!--column one-fourth ends-->
+        {% endif %}
+        {% if section.settings.show_2_donutchartbar %}
+        <!--column one-fourth starts-->
+        <div class="grid__item wide--one-quarter post-large--one-quarter large--one-half medium--one-half">
+          <!--donutchart-medium starts-->
+          <div class="dt-sc-donutchart-medium">
+            <!--donutchart starts-->
+            {% if section.settings.chart_2_percentage != blank %}
+            <div class="dt-sc-donutchart2" data-percent="{{ section.settings.chart_2_percentage }}"></div>
+            {% endif %}
+            <!--donutchart ends-->
+            {% if section.settings.chart_2__title != blank %}
+            <h6 class="dt-sc-donutchart-title blue">{{ section.settings.chart_2__title }}</h6>
+            {% endif %}
+          </div>
+          <!--donutchart-medium ends-->
+        </div>                        
+        <!--column one-fourth ends-->
+        {% endif %}
+        {% if section.settings.show_3_donutchartbar %}
+        <!--column one-fourth starts-->
+        <div class="grid__item wide--one-quarter post-large--one-quarter large--one-half medium--one-half">
+          <!--donutchart-medium starts-->
+          <div class="dt-sc-donutchart-medium">
+            <!--donutchart starts-->
+            {% if section.settings.chart_3_percentage != blank %}
+            <div class="dt-sc-donutchart3" data-percent="{{ section.settings.chart_3_percentage }}" ></div>
+            {% endif %}
+            <!--donutchart ends-->
+            {% if section.settings.chart_3__title != blank %}
+            <h6 class="dt-sc-donutchart-title light-green"> {{ section.settings.chart_3__title }}</h6>
+            {% endif %}
+          </div>
+          <!--donutchart-medium ends-->
+        </div>                        
+        <!--column one-fourth ends-->
+        {% endif %}
+
+        {% if section.settings.show_4_donutchartbar %}
+        <!--column one-fourth starts-->
+        <div class="grid__item wide--one-quarter post-large--one-quarter large--one-half medium--one-half">
+          <!--donutchart-medium starts-->
+          <div class="dt-sc-donutchart-medium">
+            <!--donutchart starts-->
+            {% if section.settings.chart_4_percentage != blank %}
+            <div class="dt-sc-donutchart4" data-percent="{{ section.settings.chart_4_percentage }}" ></div>
+            {% endif %}
+            <!--donutchart ends-->
+            {% if section.settings.chart_4__title != blank %}
+            <h6 class="dt-sc-donutchart-title yellow">{{ section.settings.chart_4__title }}</h6>
+            {% endif %}
+          </div>
+          <!--donutchart-medium ends-->
+        </div>                        
+        <!--column one-fourth ends-->
+        {% endif %}
+      </div>
+      <!--container ends-->
+    </div>
+  </div>
+</div>
+{% endif %}  
+
+<style>
+  {% if section.settings.full-width-brilliance %}
+  .home-donutchart-bar .donutchart-inner { background:url({{ section.settings.full-width-brilliance | img_url: 'master' }}) repeat-y 50% 0 fixed; }
+  {% else %}
+  .home-donutchart-bar .donutchart-inner { background-color:{{ section.settings.brilliance_bg_color }}; }
+  {% endif %}
+  .home-donutchart-bar .dt-sc-donutchart1 div span , .home-donutchart-bar .dt-sc-donutchart1 .dt-sc-donutchart-title{color:{{section.settings.chart_1__title_clr}};}
+  .home-donutchart-bar .dt-sc-donutchart2 div span ,.home-donutchart-bar .dt-sc-donutchart2 .dt-sc-donutchart-title{color:{{section.settings.chart_2__title_clr}};}
+  .home-donutchart-bar .dt-sc-donutchart3 div span , .home-donutchart-bar .dt-sc-donutchart3 .dt-sc-donutchart-title{color:{{section.settings.chart_3__title_clr}};}
+  .home-donutchart-bar .dt-sc-donutchart4 div span , .home-donutchart-bar .dt-sc-donutchart4 .dt-sc-donutchart-title{color:{{section.settings.chart_4__title_clr}};}
+  .home-donutchart-bar h6.orange{color:{{section.settings.chart_1__title_clr}};}
+  .home-donutchart-bar h6.blue{color:{{section.settings.chart_2__title_clr}};}
+  .home-donutchart-bar h6.light-green{color:{{section.settings.chart_3__title_clr}};}
+  .home-donutchart-bar h6.yellow{color:{{section.settings.chart_4__title_clr}};}
+</style>
+
+{% schema %}
+{
+"name": "Donutchart Bar",
+"class": "index-section home-donutchart-bar",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default":"Our Services"
+},
+{
+"type": "color",
+"id": "heading_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "sub_heading",
+"label": "Sub Heading"
+},
+{
+"type": "color",
+"id": "sub_heading_clr",
+"label": "Sub Heading color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "header",
+"content": "Portfolio Parallax Section"
+},
+{
+"type": "checkbox",
+"id": "show_portfolio_parallax_section",
+"label": "Show Portfolio Parallax Section",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "use_brilliance_bg_image",
+"label": "Use Brilliance Bg Image?"
+},
+{
+"type": "image_picker",
+"id": "full-width-brilliance",
+"label": "Brilliance BG Image"
+},
+{
+"type": "color",
+"id": "brilliance_bg_color",
+"label": "Brilliance BG color",
+"default": "#f5f5f5"
+},
+{
+"type": "checkbox",
+"id": "show_1_donutchartbar",
+"label": "Show donutchartbar",
+"default": true
+},
+{
+"type": "text",
+"id": "chart_1_percentage",
+"label": "Chart1 Percentage",
+"default":"90"
+},
+
+{
+"type": "text",
+"id": "chart_1__title",
+"label": "Chart 1 Title",
+"default":"Graphic Design"
+},
+{
+"type": "color",
+"id": "chart_1__title_clr",
+"label": "chart title color",
+"default": "#000"
+},
+{
+"type": "checkbox",
+"id": "show_2_donutchartbar",
+"label": "Show donutchartbar",
+"default": true
+},
+{
+"type": "text",
+"id": "chart_2_percentage",
+"label": "Chart2 Percentage",
+"default":"95"
+},
+{
+"type": "text",
+"id": "chart_2__title",
+"label": "Chart 2 Title",
+"default":"Web Design"
+},
+{
+"type": "color",
+"id": "chart_2__title_clr",
+"label": "chart title color",
+"default": "#000"
+},
+{
+"type": "checkbox",
+"id": "show_3_donutchartbar",
+"label": "Show donutchartbar",
+"default": true
+},
+{
+"type": "text",
+"id": "chart_3_percentage",
+"label": "Chart3 Percentage",
+"default":"95"
+},
+{
+"type": "text",
+"id": "chart_3__title",
+"label": "Chart 3 Title",
+"default":"Web Development"
+},
+{
+"type": "color",
+"id": "chart_3__title_clr",
+"label": "chart title color",
+"default": "#000"
+},
+{
+"type": "checkbox",
+"id": "show_4_donutchartbar",
+"label": "Show donutchartbar",
+"default": true
+},
+{
+"type": "text",
+"id": "chart_4_percentage",
+"label": "Chart4 Percentage",
+"default":"100"
+},
+
+{
+"type": "text",
+"id": "chart_4__title",
+"label": "Chart 4 Title",
+"default": "Customer Support"
+},
+{
+"type": "color",
+"id": "chart_4__title_clr",
+"label": "chart title color",
+"default": "#000"
+}
+],
+"presets": [
+{
+"name": "Donutchart Bar",
+"category": "Chart",
+"blocks": []
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+jQuery(document).ready(function($){  
+
+/* Donut Chart */
+$('.dt-sc-donutchart1').one('inview', function (event, visible){
+if (visible == true) {
+$(".dt-sc-donutchart1").donutchart({'fgColor': '#fe6b35', 'bgColor': '#f5f5f5', 'textsize': 38 });
+$(".dt-sc-donutchart1").donutchart("animate");
+
+$(".dt-sc-donutchart2").donutchart({'fgColor': '#665de5', 'bgColor': '#f5f5f5', 'textsize': 38 });
+$(".dt-sc-donutchart2").donutchart("animate");
+
+$(".dt-sc-donutchart3").donutchart({'fgColor': '#36a6a0', 'bgColor': '#f5f5f5', 'textsize': 38 });
+$(".dt-sc-donutchart3").donutchart("animate");
+$(".dt-sc-donutchart4").donutchart({'fgColor': '#f4d30f', 'bgColor': '#f5f5f5', 'textsize': 38 });
+$(".dt-sc-donutchart4").donutchart("animate");
+
+}
+});
+
+});
+{% endjavascript %}

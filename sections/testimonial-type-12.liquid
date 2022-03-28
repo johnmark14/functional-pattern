@@ -1,0 +1,226 @@
+<div data-section-id="{{ section.id }}"  data-section-type="testimonial-type-12" class="testimonial-type-12" style="{% if section.settings.image_1 %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-attachment:fixed;background-repeat:no-repeat;background-position:center center; {% else %}background-color:{{section.settings.background_color}};{% endif%}">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="container">
+    <div class="grid-uniform">    
+      {% if section.settings.title != blank %}
+      <div class="border-title">
+        {% if section.settings.title_img != blank %}
+        <div class="tilte_img">
+          <img src="{{ section.settings.title_img | img_url: 'small' }}" alt="" title=""  />
+        </div>
+        {% endif %}
+
+        <h2 style="color:{{section.settings.title_color }}">{{ section.settings.title }}</h2>  
+      </div>
+      {% endif %}
+
+      <div id="test-car-12" class="test-car-12 {{section.id}}-loop">
+        {% if section.blocks.size > 0 %}  
+        {% for block in section.blocks %}
+        <div class="grid__item"> 
+          <div class="testimonial-block " >           
+            <blockquote>
+              {% if block.settings.text_desc != blank %}
+              <q style="color:{{block.settings.des_color }}">{{ block.settings.text_desc }}</q>
+              {% endif %} 
+            </blockquote>
+            <div class="test-detail">   
+
+              <div class="text-img">
+                {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | img_url: '100X' }}" alt="{{ block.settings.image_heading }}" />             
+                {% else %}
+                <img src="//via.placeholder.com/100x100">
+                {% endif%}        
+              </div>
+              <div class="test-inner-detail">
+                {% if block.settings.author_name != blank %}
+                <h4 style="color:{{block.settings.author_color }}">{{ block.settings.author_name }}</h4>
+                {% endif %}
+                {% if block.settings.author_designation != blank %}
+                <span style="color:{{block.settings.author_designationcolor }}">{{ block.settings.author_designation }}</span>
+                {% endif %}
+              </div>
+              <div class="overlay"></div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}         
+        {% endif %}  
+      </div>
+    </div>  
+  </div>
+</div>
+
+
+<style>
+
+  .testimonial-type-12{background:{{section.settings.bg_color }};}
+  .testimonial-type-12 .owl-theme .owl-controls .owl-page span{background:{{section.settings.border_color }};}
+  .testimonial-type-12 .authorimg::before{    border-bottom: 40px solid {{section.settings.imgborder_color }};}
+  .testimonial-type-12 .authorimg{border:3px solid {{section.settings.imgborder_color }};}
+  .testimonial-type-12 blockquote q::before , .testimonial-type-12 blockquote q::after{color:{{section.settings.quote_color }};}
+  .testimonial-type-12  .owl-prev , .testimonial-type-11 .owl-next{line-height:30px;background:{{section.settings.arrowbg_color }};color:{{section.settings.arrow_color }};}
+
+  .testimonial-type-12 .slick-slide.slick-current.slick-active.slick-center {opacity:1;}
+  .testimonial-type-12 .text-img {border:2px solid {{section.settings.imgborder_color}};}
+  .testimonial-type-12 .slick-arrow::before { color:{{section.settings.arrow_color}}; }
+
+</style>
+
+
+<script>
+  jQuery(document).ready(function() {
+    jQuery('.test-car-12.{{section.id}}-loop').slick({
+
+           dots:true,
+           slidesToShow: 1,
+           infinite:true,
+           responsive: [
+           {
+           breakpoint: 768,
+           settings: {
+           arrows: true,
+           centerMode: true,
+           centerPadding: '0',
+           slidesToShow: 1
+           }
+           },
+           {
+           breakpoint: 480,
+           settings: {
+           arrows: false,
+           slidesToShow: 1
+           }
+           }
+           ]
+           });
+  }); 
+
+</script>
+
+
+{% schema %}
+{
+"name": "Testimonial",
+"settings": [
+{
+"type": "image_picker",
+"id": "title_img",
+"label": "Title Image",
+"info": "Size: 79x39"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 1920x1280"
+},
+{
+"type": "color",
+"id": "background_color",
+"label":"Bckground color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "imgborder_color",
+"label": "Img Border Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "quote_color",
+"label": "Quote Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Title Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "arrowbg_color",
+"label": "Arrow Bg Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "arrow_color",
+"label": "Arrow  Color",
+"default":"#000"
+}
+],
+"blocks": [
+{
+"type": "text",
+"name": "Text",
+"settings": [
+
+{
+"type": "textarea",
+"id": "text_desc",
+"label": "Description",
+"default":"Pellentesque posuere orci lobortis scelerisque blandit. Donec id tellus lacinia an, tincidunt risus ac, consequat velit. Quisquemos sodales suscipit tortor ditaemcos condimentum"
+},
+{
+"type": "color",
+"id": "des_color",
+"label": "Description Color",
+"default":"#000"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "image_heading",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "author_name",
+"label": "Author name",
+"default":"Author"
+},
+{
+"type": "color",
+"id": "author_color",
+"label": "Author Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "author_designation",
+"label": "Author Designation",
+"default":"Designation"
+},
+{
+"type": "color",
+"id": "author_designationcolor",
+"label": "Designation Color",
+"default":"#000"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+
+{% endjavascript %}

@@ -1,0 +1,13 @@
+{% layout none %}
+
+ <div class="product-collection {{ rows }} products-grid grid-uniform" >
+        {% if collection.products_count > 0 %}    
+        {% for product in collection.products limit: 10 %}
+            {% include 'ella-product-grid-item' %}       
+        {% endfor%}
+        {% else %}
+        <div class="text-center">
+            {{ 'collections.general.no_matches' | t }}
+        </div>
+        {% endif %}
+</div>

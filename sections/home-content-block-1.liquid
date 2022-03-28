@@ -1,0 +1,320 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %} 
+
+<div class="content-block" style="float:left; width:100%; margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+  <div class="{% if section.settings.full %}{% else %}container{% endif %}">
+    <div class="grid-uniform">        
+      {% if section.blocks.size > 0 %}      
+      {% for block in section.blocks %} 
+      <div class="section-two grid_row-flex">
+        <div class="grid__item wow slideInLeft wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item grid_column_container"> 
+          <div class="grid_column-inner" style="background-color:{{ section.settings.left_bg }}; {% if section.settings.left_bg_img != blank %} background-image:url({{ section.settings.left_bg_img | img_url:'master' }});background-repeat:no-repeat;{% endif %}">
+            <div class="block-content block-content--{{ block.id }}">              
+              {% if block.settings.title != blank %}                        
+              <h3 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h3>        
+              {% endif %}   
+              {% if block.settings.sub_title != blank %}                         
+              <h4 style="color:{{ section.settings.sub_title_color }};">{{ block.settings.sub_title }}</h4>        
+              {% endif %} 
+              {% if block.settings.desc != blank %}                         
+              <p style="color:{{ section.settings.desc_color }};">{{ block.settings.desc }}</p>        
+              {% endif %} 
+              {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" style="" class="btn">{{ block.settings.button }}<div class="overlay"></div></a>{% endif%}
+            </div> 
+          </div>
+        </div>
+        <div  class="grid__item wow slideInRight wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item grid_column_container">  
+          <div class="grid_column-inner" style="background:{{ section.settings.right_bg }}">
+            <div class="img-content img-content--{{ block.id }}"> 
+              {% if block.settings.link != blank %}<a href="{{ block.settings.link_2 }}">{% endif%}
+
+              {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.title }}" />
+              {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif%}           
+              {% if block.settings.link != blank %}  </a>
+              {% endif%}
+
+              <div class="price_content" style="background:{{ section.settings.price_bg }}">
+                {% if block.settings.rtitle != blank %}                        
+                <h3 style="color:{{ section.settings.price_color }};">{{ block.settings.rtitle }}</h3>        
+                {% endif %}   
+
+                {% if block.settings.rdesc != blank %}                         
+                <p style="margin:0;color:{{ section.settings.price_desc }};">{{ block.settings.rdesc }}</p>        
+                {% endif %} 
+              </div>
+              {% if block.settings.rsub_title != blank %}                         
+              <h4 style="color:{{ section.settings.price_title_color }};">{{ block.settings.rsub_title }}</h4>        
+              {% endif %} 
+              {% if block.settings.rdesc_etc != blank %}                         
+              <p style="color:{{ section.settings.author_color }};" class="rdesc_etc">{{ block.settings.rdesc_etc }}</p>        
+              {% endif %} 
+
+              {% if block.settings.button_2 != blank %}<a href="{{ block.settings.link_2 }}" style="" class="btn">{{ block.settings.button_2 }}<div class="overlay"></div></a>{% endif%}
+
+            </div>
+          </div>
+        </div>
+      </div>    
+
+      {% endfor %}
+      {% endif %}
+      {% for block in section.blocks %} 
+      <style>
+
+        .home-content-block-1 .block-content--{{ block.id }} .btn { background: {{ block.settings.button_bg }} ;color: {{ block.settings.button_text }};}
+        .home-content-block-1 .block-content--{{ block.id }} .btn:hover { background:{{ block.settings.button_hover_bg }};color: {{ block.settings.button_hover_text }};border-color: {{ block.settings.button_hover_bg }};}
+        .home-content-block-1 .img-content--{{ block.id }} .btn { background: {{ block.settings.button_bg_1 }} ;color: {{ block.settings.button_text_1 }};}
+        .home-content-block-1 .img-content--{{ block.id }} .btn:hover { background:{{ block.settings.button_hover_bg_1 }};color: {{ block.settings.button_hover_text_1 }};border-color: {{ block.settings.button_hover_bg_1 }};}
+        .home-content-block-1 .img-content--{{ block.id }} .btn:hover:after, .home-content-block-1 .img-content--{{ block.id }} .btn:hover:before,.home-content-block-1 .img-content--{{ block.id }} .btn:active:after, .home-content-block-1 .img-content--{{ block.id }} .btn:active:before {          border-color: {{ block.settings.button_bg_1 }};        }
+        .home-content-block-1 .block-content--{{ block.id }} .btn:hover:after, .home-content-block-1 .block-content--{{ block.id }} .btn:hover:before, .home-content-block-1 .block-content--{{ block.id }} .btn:active:after, .home-content-block-1 .block-content--{{ block.id }} .btn:active:before {          border-color: {{ block.settings.button_bg }};   }     
+
+      </style>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+"name": "Content Block 1",
+"class": "index-section home-content-block-1",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "left_bg",
+"label": "Left Section Bg",
+"default":"#fff"	
+},
+{
+"type": "image_picker",
+"id": "left_bg_img",
+"label": "BG Image"
+
+},
+{
+"type": "color",
+"id": "right_bg",
+"label": "Right Section Bg",
+"default":"#f7f7f7"	
+}, 
+
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading color",
+"default":"#000"	
+}, 	
+{
+"type": "color",
+"id": "sub_title_color",
+"label": "Sub heading",
+"default":"#000"	
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Description",
+"default":"#000"	
+},
+
+
+{
+"type": "color",
+"id": "price_bg",
+"label": "Price Bg",
+"default":"#fff"	
+},
+{
+"type": "color",
+"id": "price_color",
+"label": "Price Color",
+"default":"#d3ad69"	
+},
+{
+"type": "color",
+"id": "price_desc",
+"label": "Price Subtitle",
+"default":"#121212"	
+},
+{
+"type": "color",
+"id": "price_title_color",
+"label": "Price Desc",
+"default":"#121212"	
+},
+{
+"type": "color",
+"id": "author_color",
+"label": "Price Desc",
+"default":"#d3ad69"	
+}
+
+
+],
+"blocks": [
+{
+"type": "Image",
+"name": "support block",
+"settings": [ 
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Left Title"	
+},
+
+{
+"type": "text",
+"id": "sub_title",
+"label": "Sub heading",
+"default": "Left Caption"	
+},
+
+{
+"type": "textarea",
+"id": "desc",
+"label": "Left Text",
+"default": "Left Text"	
+},
+
+{
+"type": "text",
+"id": "button",
+"label": "Button",
+"default": "More about us"	
+},  
+{
+"type": "color",
+"id": "button_bg",
+"label": "Button Bg",
+"default": "#d3ad69"	
+},
+{
+"type": "color",
+"id": "button_text",
+"label": "Button Text",
+"default": "#fff"	
+},
+{
+"type": "color",
+"id": "button_hover_bg",
+"label": "Button Hover Bg",
+"default": "#000"	
+},
+{
+"type": "color",
+"id": "button_hover_text",
+"label": "Button Hover Text",
+"default": "#fff"	
+},
+{
+"type": "url",
+"id": "link",
+"label": "Link"          
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 600x412"
+},
+{
+"type": "text",
+"id": "rtitle",
+"label": "Right Title",
+"default": "Headinge"	
+},
+
+{
+"type": "text",
+"id": "rsub_title",
+"label": "Left Caption",
+"default": "Sub heading"	
+},
+
+{
+"type": "textarea",
+"id": "rdesc",
+"label": "Right Text",
+"default": "Right Text"	
+},
+{
+"type": "textarea",
+"id": "rdesc_etc",
+"label": "Right Text 2",
+"default": "Righ Text 2" 	
+},
+
+{
+"type": "text",
+"id": "button_2",
+"label": "Button",
+"default": "Read More"	
+},  
+{
+"type": "color",
+"id": "button_bg_1",
+"label": "Button Bg",
+"default": "#d3ad69"	
+},
+{
+"type": "color",
+"id": "button_text_1",
+"label": "Button Text",
+"default": "#fff"	
+},
+{
+"type": "color",
+"id": "button_hover_bg_1",
+"label": "Button Hover Bg",
+"default": "#000"	
+},
+{
+"type": "color",
+"id": "button_hover_text_1",
+"label": "Button Hover Text",
+"default": "#fff"	
+},
+{
+"type": "url",
+"id": "link_2",
+"label": "Link Text"
+}
+
+]
+}
+],
+"presets": [
+{
+"name": "Content Block 1",
+"category": "Image",
+"blocks": [
+{
+"type": "Image"
+},
+{
+"type": "Image"
+}        
+]
+}
+]
+}
+{% endschema %}

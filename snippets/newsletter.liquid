@@ -1,0 +1,28 @@
+{% if settings.display_popup_newsletter %}
+<div class="newsletterwrapper" data-newsletter id="email-modal" style="display:none;">
+  <div class="modal-overlay"> </div>
+  <div class="window-content">
+    <div class="window-box text-center">
+      <div class="window-box-bg">
+        <p class="sub-title">{{ settings.popup_newsletter_sub_title }}</p>
+        <h3 class="title">{{ settings.popup_newsletter_title }}</h3> 
+        <p class="message">{{ settings.popup_newsletter_message }}</p>
+
+        <div id="mailchimp-email-subscibe">
+          <div id="mc_embed_signup">
+            {% include 'newsletter-form' %}
+          </div>   
+          <p>{{ settings.form_note }}</p>
+        </div>
+
+        {% if settings.popup_social_enable %}          
+        {% include 'social-links-type-1' %}
+        {% endif %}
+      </div>  
+      <a class="close-window" title="{{ 'general.password_page.close' | t }}">
+        {% include 'icon-close' %}
+      </a>
+    </div>
+  </div> 
+</div>
+{% endif %}

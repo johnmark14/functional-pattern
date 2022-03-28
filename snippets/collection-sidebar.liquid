@@ -1,0 +1,27 @@
+<div class="grid__item {% if settings.collection_sidebar_use == "full_width" %} full_width  {% else %} wide--one-quarter post-large--one-quarter {% endif %} {% if settings.collection_sidebar_use == "left_sidebar" %} left-sidebar{% endif %} {% if settings.collection_sidebar_use == "right_sidebar" %} right-sidebar {% endif %}">
+  <div>
+<!--     <div class="close-sidebar">
+      {% include 'icon-close' %}
+    </div> -->
+
+    <div class="collection_sidebar mobileToggle {% if settings.collection_sidebar_use == "full_width" %}hide{% endif %}"> 
+      {% section 'sidebar-category' %}   
+      {% if current_tags == blank %}
+      {% assign has_refined = false %} 
+      {% else %}
+      {% assign has_refined = true %} 
+      {% endif %}
+      <div class="refined-widgets">
+        <a href="javascript:void(0)" class="clear-all" {% if has_refined == false %}style="display:none"{% endif %}>
+          {{ 'collections.general.clear_all'  | t }}
+        </a>
+      </div>
+      <div class="sidebar-block">
+        {% section 'sidebar-colors' %}
+        {% section 'sidebar-tag-filters' %}
+      </div>
+<!--       {% section 'sidebar-bestsellers' %}   -->
+<!--       {% section 'sidebar-banner' %}   -->
+    </div>
+  </div>
+</div>

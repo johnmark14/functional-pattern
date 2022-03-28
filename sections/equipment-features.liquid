@@ -1,0 +1,37 @@
+{% if product.metafields.accentuate.equipment_features_title != blank %}	
+<!-- 	<div class="dt-sc-hr-invisible-large"></div> -->
+  <div class="equipment-features-section">
+    <div class="container">  
+      <div class="grid-banner-type-1">     
+        <div class="dt-sc-hr-invisible-large"></div>
+        <div class="grid-uniform featuredItems">
+          {% assign title = product.metafields.accentuate.equipment_features_title %}
+          {% assign count = product.metafields.accentuate.equipment_features_title.size %}        
+          {% case count %}
+          {% when 1 %}
+            {%- assign column = 'grid__item one-block' -%}
+          {% when 2 %}
+            {%- assign column = 'grid__item wide--one-half post-large--one-half large--one-half two-blocks' -%}
+          {% when 3 %}     
+            {%- assign column = 'grid__item wide--one-third post-large--one-third large--one-third three-blocks' -%}
+          {% endcase  %}
+
+          {% unless count > 4 %}
+            {% for content in product.metafields.accentuate.equipment_features_content %}
+            <div class="{{ column }} {{count}}">
+                <div class="featured-content text-center">       
+                  <div><h3 style="color: #E51446;">{{ title[forloop.index0] }}</h3></div>            
+                  <div class="additional-text">{{ content.html }}</div>             
+                </div>        
+            </div>       
+            {% endfor %}
+          {% endunless %}
+
+        </div>    
+      </div>  
+    </div>
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>
+
+{% endif %}
+

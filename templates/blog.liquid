@@ -1,0 +1,18 @@
+{% if settings.blog_page_sidebar == "left_sidebar" or  settings.blog_page_sidebar == "right_sidebar" %}
+{% assign mid_width = "grid__item wide--three-quarters post-large--three-quarters" %}
+{% else %}
+{% assign mid_width = "grid__item" %}
+{% endif %}
+
+<div class="blog-post">
+  <div class="blog-post-inner style2">    
+    <div class="grid-uniform">    
+      {% include 'blog-sidebar' %}   
+
+      <div class="{{ mid_width }}">  
+        {% section 'blog' %}
+      </div>
+
+    </div>      
+  </div>
+</div>

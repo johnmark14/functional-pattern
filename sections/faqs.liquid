@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="grid__item shortcodes-section">
+    
+      <!--dt-sc-toggle-frame-set starts-->
+      <div class="dt-sc-toggle-frame-set">
+        {% for block in section.blocks %}          
+          <h5 class="dt-sc-toggle-accordion  {% if forloop.first == true %}active{% endif %}"><a href="#">{{ block.settings.title }}</a></h5>
+          <div class="dt-sc-toggle-content {% if forloop.last %} last{% endif %}" {% if forloop.first == true %}style="display:block;"{% endif %}>
+            <div class="dt-sc-block">
+              {{ block.settings.description }}
+            </div>
+          </div>        
+        {% endfor %}           
+    </div>     
+      <!--dt-sc-toggle-frame-set ends-->
+  
+</div>
+</div>
+<div class="dt-sc-hr-invisible-medium"></div>
+
+
+
+
+{% schema %}
+{
+	"name": "FAQs",
+	"max_blocks": 50,
+	"settings": [],
+	"class": "faq-section",
+	"blocks" : [
+		{
+			"type": "text",
+			"name": "FAQ",
+			"settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"default": "Question",
+					"label": "Question"
+				},
+				{
+					"type": "textarea",
+					"id": "description",
+					"default": "Answer goes here...",
+					"label": "Text"
+				}
+			]
+		}
+	]	
+}
+{% endschema %}

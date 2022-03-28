@@ -1,0 +1,205 @@
+{% if section.settings.display_top_bar %}    
+<div class="wrapper">
+  <div class="top_bar top-bar-type-3">  
+    <div class="container-bg">    
+
+    <div class="top_bar_menu">      
+      <ul class="menu_bar_right grid__item wide--one-sixth">        
+        {% if section.settings.header_phone_value != blank or  section.settings.header_mail_value != blank %}
+        <li>
+          <ul class="top_bar_right">
+            {% if section.settings.header_phone_value != blank %}
+            <li><i class='fa fa-phone' aria-hidden='true'></i> <span>{{ section.settings.header_phone_label }} {{ section.settings.header_phone_value }}</span></li>
+            {% endif %}
+            {% if section.settings.header_mail_value != blank %}
+            <li><i class='fa fa-envelope' aria-hidden='true'></i> {{ section.settings.header_mail_label }} <a href="mailto:{{ section.settings.header_mail_value }}"> {{ section.settings.header_mail_value }}</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %} 
+         {% if settings.enable_multiple_currencies or settings.enable_shopify_payments_currencies %} 
+        <li class="header_currency mobile-currency">
+          <ul class="tbl-list">
+            <li class="currency dropdown-parent uppercase currency-block">
+              {% include 'currencies-switcher' %}
+            </li>
+          </ul>
+        </li> 
+        {% endif %}
+      </ul>     
+    </div>
+  </div>
+</div>
+</div>
+{% endif %} 
+
+<style>
+  
+  /* Top block */
+    .header-type-3 .top_bar  , .header-type-3 .top_bar::after{ background: {{ section.settings.top_bar_bg }}; }
+    .header-type-3 .top_bar li, .header-type-3 .top_bar span { color:{{section.settings.top_bar_text}};}   
+    .header-type-3 .top_bar a { color:{{section.settings.top_bar_links }};}    
+    .header-type-3 .top_bar a:hover, .header-type-3 .top_bar a:hover span { color:{{section.settings.top_bar_link_hover }};}    
+    .header-type-3 .header-bar__module.cart .baskettop a.icon-cart-arrow #cartCount { background: {{ section.settings.minicart_count_bg }};color:{{section.settings.minicart_count }};}
+    .header-type-3 .header-bar__module.cart .baskettop a.icon-cart-arrow:hover #cartCount { background: {{ section.settings.minicart_count_hover_bg }};color:{{section.settings.minicart_count_hover_text }};}
+    .header-type-3 .top_bar .top_bar_right li span,.header-type-3 .tbl-list>li.currency>.dropdown-toggle { border-right:1px solid {{ section.settings.top_border_between_bars }}; }
+    .header-type-3 .top_bar ul li:last-child,.header-type-3 .top_bar .top_bar_right li:last-child span { border-right:none; }
+
+
+ /* Currency block */
+
+    .header-type-3 .lang-currency-groups .dropdown-label,.header-type-3 .lang-currency-groups .dropdown-toggle:after {color:{{section.settings.currency_icon}};}   
+  .header-type-3 .lang-currency-groups .dropdown-label:hover , .header-type-3 .lang-currency-groups .dropdown-toggle:hover::after{color:{{section.settings.currency_icon_hover}};}  
+  .header-type-3 .header_currency ul li.currency:hover:after {border-top-color:{{section.settings.currency_icon_hover}};}
+  .header-type-3 .header_currency ul li.currency:after {border-top-color:{{section.settings.currency_icon}};}
+
+
+</style>
+
+<script>
+  var appendPrependMenuMobile = function() {
+    var headerPanelTop = $('.wrapper-container .top_bar_right'),
+        headerPc = $('.wrapper-container .top_bar_menu'),
+        wrapperNav = $('.wrapper-navigation'),
+        areaMb = wrapperNav.find('.mb-area .menu_bar_right');
+
+    if (window.innerWidth < 1200) {
+      headerPanelTop.appendTo(areaMb);
+    } else {
+      headerPc.prepend(headerPanelTop);
+    };
+  };
+
+  $(document).ready(function() {
+    appendPrependMenuMobile();
+  });
+
+  var winWidth = $(window).innerWidth();
+
+  $(window).on('resize', function () {
+    var resizeTimerId;
+
+    clearTimeout(resizeTimerId);
+
+    resizeTimerId = setTimeout(function() {
+      var curWinWidth = $(window).innerWidth();
+
+      if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+        appendPrependMenuMobile();
+      };
+      winWidth = curWinWidth;
+    }, 0);
+  })
+
+ 
+</script>
+
+
+
+
+<script>
+if ($(window).width() < 1200) {
+   $(".mobile-currency").remove();
+  
+  
+  }
+</script>                   
+                            
+
+{% schema %}
+{
+"name": "Top bar",
+"settings": [
+{
+"type":"checkbox",
+"id": "display_top_bar",
+"label": "Display topbar"	
+},
+{
+"type": "header",
+"content": "Border Block"
+},
+{
+"type": "color",
+"id": "top_border_between_bars",
+"label": "Border lines",
+"default": "#e4e4e4"
+},
+{
+"type": "text",
+"id": "social_title",
+"label": "Heading"      
+},  
+{
+"type": "text",
+"id": "header_phone_label",
+"label": "Phone lable text",
+"default": "Call Us"
+},
+{
+"type": "text",
+"id": "header_phone_value",
+"label": "Phone number",
+"default": "(00) 000 111 222"
+},  
+{
+"type": "text",
+"id": "header_mail_label",
+"label": "Mail lable text",
+"default": "Mail"
+},
+{
+"type": "text",
+"id": "header_mail_value",
+"label": "Mail address",
+"default": "info@somedomain.com"
+},
+{
+"type": "header",
+"content": "Top Bar"
+},
+{
+"type": "color",
+"id": "top_bar_bg",
+"label": "Top bar background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "top_bar_text",
+"label": "Top bar text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "top_bar_links",
+"label": "Top bar links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "top_bar_link_hover",
+"label": "Top bar links hover",
+"default": "#35b8f4"
+},
+
+{
+"type": "header",
+"content": "Currency Block"
+},
+
+{
+"type": "color",
+"id": "currency_icon",
+"label": "Currency Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "currency_icon_hover",
+"label": "Text hover",
+"default": "#35b8f4"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+
+
+
+{% assign header_img = page.metafields.accentuate.cbl_hero_image %}    
+{% assign header_img_mobile = page.metafields.accentuate.cbl_hero_image_mobile %}   
+
+
+
+
+  <div class="content-block-section landing-header hasBG" >
+    
+    <div class="bg-cover bg-desktop" style="background-image: url('{{header_img[0].src }}')"></div>    
+    <div class="bg-cover bg-mobile" style="background-image: url('{{header_img_mobile[0].src }}')"></div>
+
+
+    <div class="container p-relative">
+
+      {% capture media_layout %}
+      <div class="video-wrapper with-popup p-relative">
+      {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] == blank %}
+          {% if video_url[forloop.index0] != blank %}
+          <div class="p-video">
+            <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+              <source src="{{  video_url[forloop.index0] }}" type="video/mp4">                                    
+            </video>
+            <a href="{{ video_url[forloop.index0] }}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>              
+          </div>          
+          {% else %}
+          <div class="p-video">
+            <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+              <source src="{{ video_url[forloop.index0].src }}" type="video/mp4">                                    
+            </video>              
+          </div>
+          {% endif %}
+      {% endif %}
+      </div>    
+      {% endcapture %}
+
+      {% capture text_layout %}
+      <div class="course-content-inner">
+        <h1>{{ page.metafields.accentuate.cbl_header_landing_title }}</h1>
+        {{ page.metafields.accentuate.cbl_header_text_block_html }}
+      </div>    
+      {% endcapture %}    
+
+      <div class="p-relative video-text-block-inner">
+        <div class="grid-uniform video-banner-block v1 d-flex">
+		   
+          <div class="course-content grid__item ">            
+            {{ text_layout }}
+          </div>
+        </div>  
+      </div>
+
+
+    </div>
+
+  </div>

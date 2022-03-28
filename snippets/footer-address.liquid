@@ -1,0 +1,29 @@
+{% if block.settings.title != blank %}        
+<h4 class="footer__title ">{{ block.settings.title}}</h4> 
+{% endif %}
+
+{% if block.settings.footer_address != blank %}
+<ul class="contact-info">
+  <li class="address">         
+    <address> <i class="fas fa-home"></i>{{ block.settings.footer_address }}</address>
+  </li>
+  
+  {% if block.settings.footer_contact_no != blank %}
+  <li class="contact-phone">    
+    <i class="fas fa-phone"></i>{{ block.settings.footer_contact_no }}    
+  </li>
+  {% endif %}
+
+  {% if block.settings.office_hours != blank %}
+  <li class="office-hours">
+    <i class="far fa-clock"></i>{{ block.settings.office_hours }}
+  </li>
+  {% endif %}
+
+  {% if  block.settings.footer_contact_link != blank and block.settings.footer_contact_id != blank %}
+  <li class="office-mail">
+    <a href="mailto:{{ block.settings.footer_contact_link }}"><i class="far fa-envelope"></i>{{ block.settings.footer_contact_id }}</a>     
+  </li>
+  {% endif %}
+</ul>
+{% endif %}       

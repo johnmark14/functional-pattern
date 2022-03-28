@@ -1,0 +1,98 @@
+{% if section.settings.show_best_products %}
+<div data-section-id="{{ section.id }}"  data-section-type="product-sidebar-bestsellers" class="product-sidebar-bestsellers">  
+  <div class="widget widget_top_rated_products">
+    {% if collections[section.settings.bestseller].products.size > 0 %} 
+    {% if section.settings.title != blank %}
+    <h4><span>{{ section.settings.title }}</span></h4>  
+    {% endif %}
+    {% endif %}   
+    <div class="carousel-block">	
+      <ul class="no-bullets top-products">
+        {% for product in collections[section.settings.bestseller].products limit: section.settings.limit %}
+        <li class="products"> 
+          <span class="top_product_count">0{{ forloop.index }}</span>
+          <div class="product-detail top-products-detail">   
+            <a class="grid-link__title" href="{{ product.url | within: collection }}"> {{ product.title }} </a>
+            {% if settings.product_review %} <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> {% endif %}
+            <div class="top-product-prices grid-link__meta">
+              <div class="product_price">
+                <div class="grid-link__org_price">
+                  {{ product.price_min | money }}
+                </div>
+                {% if product.compare_at_price_max > product.price %}
+                <del>{{ product.compare_at_price_max | money }}</del>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+          {% comment %}
+          {% if product.compare_at_price > product.price %}
+          <span class="sale">{{ 'products.product.sale' | t }}</span>    
+          {% endif %}
+          {% endcomment %}
+
+          <div class="products-container">
+            {% if product.images.size > 0 %}            
+            <a class="thumb grid__item" href="{{ product.url | within: collection }}">                  
+              <img alt="featured product" src="{{ product.featured_image | product_img_url: 'small' }}">                                              
+            </a>
+            {% endif %} 
+          </div>
+        </li>
+
+        {% else %}
+        {% for i in (1..section.settings.limit) %}
+        <li class="products">
+          <div class="top-products-detail product-detail"> 
+            <a href="#" class="grid-link__title">Sample title {{ i }}</a>
+            
+            <div class="grid-link__meta">
+              <div class="product_price"> <span class="money" data-currency-usd="$320.00">$0.00</span> </div>
+              <del class="grid-link__sale_price"><span class="money" data-currency-usd="$756.00">$0.00</span></del> </div>
+          </div>
+          <div class="products-container">
+            <a  href="#" class="grid-link thumb"> 
+              <div class="reveal"> 
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                <img src="//via.placeholder.com/570x490">
+              </div>
+            </a>
+          </div>
+        </li>
+        {% endfor %} 
+        {% endfor %}
+      </ul> 
+    </div>
+  </div>
+</div>
+{% endif %} 
+
+{% schema %}
+{
+"name": "Sidebar Bestsellers",    
+"settings": [	
+{
+"type": "checkbox",
+"id": "show_best_products",
+"label": "Enable best sellers"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "collection",
+"id": "bestseller",
+"label": "Collection"
+},
+{
+"type": "text",
+"id": "limit",
+"label": "Product Limit",
+"default": "4"
+}
+]
+}
+{% endschema %}

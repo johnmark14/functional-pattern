@@ -1,0 +1,247 @@
+<div data-section-id="{{ section.id }}" data-section-type="home-newsletter-block" class="home-newsletter-block" style="{% if section.settings.image_1 != blank %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-repeat:no-repeat;{% else %}background-color:{{section.settings.news_bg_clr}}{% endif%};">  
+  <div class="newsletter-block {{ section.settings.newsletter_style }}">
+    <div class="overlay"></div>
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="container">
+
+      <div class="news-inner-block">
+        {% if section.settings.title != blank %}
+        <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+        <div class="border-title wow bounce"> 
+          <h2 class="newslet_title " style="color:{{ section.settings.title_color }};">
+            {{ section.settings.title }}
+          </h2>
+          
+          {% if section.settings.news_desc != blank %}
+          <p  style="color:{{section.settings.text_color}}"> {{ section.settings.news_desc }}</p>
+          {% endif %}
+        </div> 
+        </div>  
+        {% endif %}         
+
+        <div class="mc-embedded-subscribe-form wow fadeInUp animated">       
+          {% form 'customer' %}
+           {{ form.errors | default_errors }}
+          {% if form.posted_successfully? %}
+          <p class="note form-success">{{ 'general.newsletter_form.mailing_list_success_message' | t }}</p>
+          {% else %}
+		  <div class="contact-input">	
+          <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" class="mail" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" >
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <button type="submit" class="btn subscribe" name="subscribe" value="" >{{ section.settings.button }}</button>   
+          </div>
+
+          {% endif %}
+         
+          {% endform %}  
+
+        </div>
+        {% if section.settings.footer_social_enable %}      
+        <div class="footer_social_links wow fadeInUp animated">
+          {% include 'social-links-type-6' %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>
+</div>
+
+<style>
+
+  .newsletter-block form input[type="email"]{color:{{section.settings.input_txt_color}};border:1px solid {{section.settings.news_border_clr}};}
+  .newsletter-block form input[type="email"]:focus{background-color:{{ section.settings.input_bg_color | color_modify: 'alpha', 0.5 }}; border:1px solid {{section.settings.news_border_clr | color_modify: 'alpha', 0.5 }}; }
+  .newsletter-block form input[type="email"]::-webkit-input-placeholder {color:{{section.settings.input_txt_color}};}  
+  .newsletter-block form input[type="email"]::-moz-placeholder { color:{{section.settings.input_txt_color}};}
+  .newsletter-block form input[type="email"]:-ms-input-placeholder {color:{{section.settings.input_txt_color}};}
+  .newsletter-block form input[type="email"]:-moz-placeholder { color:{{section.settings.input_txt_color}};}
+
+  /* {% if section.settings.show_overlay_bg != blank %}
+  .home-newsletter-block::before{background:{{section.settings.news_bg_clr}};}
+  {% endif %} */
+  .newsletter-block form .btn{color:{{section.settings.btn_txt_color}}; background:{{section.settings.btn_bg_color}};}
+  .newsletter-block form .btn:hover {color:{{section.settings.btn_hover_color}}; background:{{section.settings.btn_hover_bg_color}};}
+
+  .newsletter-block .inline-list li a {border:1px solid {{section.settings.social_icon_borderclr}};}
+  .newsletter-block .inline-list li a:hover{border:1px solid {{section.settings.social_icon_hoverbg_clr}};background:{{section.settings.social_icon_hoverbg_clr}};color:{{section.settings.social_icon_hover_clr}};}
+
+</style>
+
+{% schema %}
+{
+"name": "Newsletter",
+"class": "index-section",  
+"settings": [
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 409x496"
+},
+{
+"type": "checkbox",
+"id": "show_overlay_bg",
+"label":"Show Overlay bg Color"
+
+},
+{
+"type": "color",
+"id": "news_bg_clr",
+"label": "Bg Color",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Newsletter"
+},
+{
+"type": "text",
+"id": "news_desc",
+"label": "Desc",
+"default": "Description"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "newsletter_style",
+"label": "Style",
+"options": [
+{
+"value": "style1",
+"label": "Style 1"
+},
+{
+"value": "style2",
+"label": "Style 2"
+},
+{
+"value": "style3",
+"label": "Style 3"
+}
+],
+"default": "style1"
+},
+
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "news_border_clr",
+"label": "Border Color",
+"default": "#000"
+},
+
+{
+"type": "color",
+"id": "input_bg_color",
+"label": "Input Bg color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "input_txt_color",
+"label": "Input Text color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "text_color",
+"label": "Description",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button",
+"label": "Button",
+"default": "Subscribe"
+},
+{
+"type": "color",
+"id": "btn_txt_color",
+"label": "Button Text color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "btn_bg_color",
+"label": "Button Bg color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_hover_bg_color",
+"label": "Button Hover Bg color",
+"default": "#666"
+},
+{
+"type": "color",
+"id": "btn_hover_color",
+"label": "Button Hover Text color",
+"default": "#fff"
+},
+
+{
+"type": "checkbox",
+"id": "footer_social_enable",
+"label": "Show social media icons"       
+},
+{
+"type": "color",
+"id": "social_icon_clr",
+"label": "Social Icon Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "social_icon_borderclr",
+"label": "Social Icon  Border Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "social_icon_hover_clr",
+"label": "Social Icon Hover Color",
+"default":"#fff"
+},
+{
+"type": "color",
+"id": "social_icon_hoverbg_clr",
+"label": "Social Icon Hover Bg Color",
+"default":"#000"
+}
+
+
+],  
+"presets": [
+{
+"name": "Newsletter",
+"category": "Form",
+"blocks": [ ]
+}
+]
+}
+{% endschema %}

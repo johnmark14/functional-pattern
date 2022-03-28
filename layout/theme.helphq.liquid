@@ -1,0 +1,193 @@
+{% if template contains 'article' and blog.metafields.blogfeeder.use_canonical == 'yes' %}{% assign canonical_url = article.metafields.blogfeeder.canonical %}{% endif %}
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  {% if settings.favicon_enable and settings.favicon != blank %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '16x16' }}" type="image/png" />
+  {% endif %}
+  <!-- Title and description ================================================== -->
+  <title>
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+  <!-- Social meta ================================================== -->
+  {% include 'social-meta-tags' %}
+  <!-- Helpers ================================================== -->
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  {% include 'frame_header_styles' %}  
+  {% include 'frame_header_fonts' %}  
+  {% include 'frame_header_scripts' %}  
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}  
+  <script type="text/javascript">
+    delete History
+  </script>
+ {% include 'linked-options' %}
+</head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {% unless tempate contains 'index' %} others {% endunless %}">  
+  {% if settings.search_model == 'search_type3' %} 
+   {% include 'adv-search-model' %}
+  {% endif %}
+  <div class="shifter-page {% if settings.ajax_cart_method == 'drawer' %}is-moved-by-drawer{% endif %}" id="PageContainer"> 
+    {% include 'frame_headers' %}  
+  {% include 'breadcrumb' %}    
+  <main class="{% if template contains 'index' or template contains "about" %}main-home-content {% else %} main-content  {% endif %}">  
+  {% if template contains 'articles' %}
+  <div class="dt-sc-hr-invisible-large"></div>
+  {% endif %}
+    
+ {% if template contains 'product'  %}  
+   {% if settings.enable_filters and settings.product_page_sidebar != 'full_width' %}
+   <div class="sidebar-label">
+     <div class="sidebar-button">        
+       <div class="tags-filter">
+         <button id="showTagsFilter" class="btn tag-fillter">
+           <svg data-name="Layer 1" id="Layer_1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><title></title><path d="M47,12a2,2,0,0,0-2-2H24a2,2,0,0,0,0,4H45A2,2,0,0,0,47,12Z"></path><path d="M3,14H8.35a6,6,0,1,0,0-4H3a2,2,0,0,0,0,4Zm11-4a2,2,0,1,1-2,2A2,2,0,0,1,14,10Z"></path><path d="M45,22H37.65a6,6,0,1,0,0,4H45a2,2,0,0,0,0-4ZM32,26a2,2,0,1,1,2-2A2,2,0,0,1,32,26Z"></path><path d="M22,22H3a2,2,0,0,0,0,4H22a2,2,0,0,0,0-4Z"></path><path d="M45,34H28a2,2,0,0,0,0,4H45a2,2,0,0,0,0-4Z"></path><path d="M18,30a6,6,0,0,0-5.65,4H3a2,2,0,0,0,0,4h9.35A6,6,0,1,0,18,30Zm0,8a2,2,0,1,1,2-2A2,2,0,0,1,18,38Z"></path></svg>
+           {{ 'collections.toolbar.filter' | t }} 
+         </button>
+        <!-- <button id="showTagsFilter2" class="btn tag-fillter"><i class="fa fa-sliders"></i></button>-->
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% endif %}    
+    
+  <div class="wrapper"> 
+    <div class="grid-uniform">
+      <div class="grid__item">  
+        {% unless template contains 'index' or template contains 'services' or template contains 'results' or template contains 'product.course' or template contains 'product.equipment' or template contains 'page.practioners' or template contains 'page.our-practioners' or template contains 'page.contact' or template contains 'articles' or template contains 'collection.courses' or template contains 'collection.equipment' or template contains 'page.helphq' %}
+        <div class="container">
+          {% endunless %}
+          {{ content_for_layout }}
+          {% unless template contains 'index' or template contains 'services' %}
+        </div>  
+        {% endunless %}
+      </div>
+    </div> 
+  </div>
+  {% unless template contains "index" or template contains 'results' or template contains 'contact' or template contains 'articles' or template contains 'collection.courses' or template contains 'collection.equipment' %}
+  <div class="dt-sc-hr-invisible-very-small"></div>
+  {% endunless %}    
+  </main>  
+  {% section 'footer' %}
+  </div>
+
+  
+  
+  
+  
+  {{ 'inview-donut-easing.js' | asset_url | script_tag }}
+{{ 'theme.js' | asset_url | script_tag }}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}    
+{{ 'footer.js' | asset_url | script_tag }}
+{{ 'shop.js' | asset_url | script_tag }}  
+
+{% if template contains 'article' or template contains 'product' %}
+{% if settings.social_sharing_blog or settings.social_sharing_products %}
+{{ 'social-buttons.js' | asset_url | script_tag }}
+{% endif %}
+{% endif %}
+<script src="{{ 'wow.js' | asset_url }}"></script>
+
+<script type="text/javascript">
+  $('.quick-view .close-window').on('click', function() {  			
+    $('.quick-view').switchClass("open-in","open-out");
+  });
+</script>
+
+{% if template contains 'product' %}
+<script type="text/javascript">
+  var rv = $('.recently-viewed-products');
+  if ( rv.length ) {     
+    Shopify.Products.recordRecentlyViewed();
+  }
+</script>
+{% endif %}
+
+
+{% unless settings.search_model == 'search_type1' %}
+<script src="{{ 'ajax-search-script.js' | asset_url }}"></script>
+{% endunless %}
+
+
+{% if  settings.header_style_1 == 'style_3' %}
+<script>     
+
+    var appendPrependMenuMobile = function() {
+        var appendMb = $('[data-append-header-mb]'),
+            headerPc = $('[data-append-header-pc]'),
+            navSearch = headerPc.find('.nav-search'),
+            areaMb = $('.wrapper-navigation .mb-area');
+
+        if (window.innerWidth < 1200) {
+            appendMb.appendTo(areaMb);
+        } else {
+            appendMb.insertAfter(navSearch);
+        };
+    };
+
+    $(document).ready(function() {
+        appendPrependMenuMobile();
+    });
+
+    var winWidth = $(window).innerWidth();
+
+    $(window).on('resize', function () {
+        var resizeTimerId;
+
+        clearTimeout(resizeTimerId);
+
+        resizeTimerId = setTimeout(function() {
+            var curWinWidth = $(window).innerWidth();
+
+            if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+                appendPrependMenuMobile();
+            };
+            winWidth = curWinWidth;
+        }, 0);
+    });
+
+    {% if settings.enable_multilang %}
+    translator.doTranslate('.site-header');
+    {% endif %}
+</script>
+{% endif %}
+  
+  
+  
+  
+  
+  
+  
+  
+  {% include 'qmodal' %}
+  {% include 'modal-box' %}
+  {% include 'currencies' %}
+  {% include 'newsletter' %}     
+  {% include 'modal-compare' %}  
+  {% if template contains 'product' %}
+  {% include 'ask_an_expert' %}  
+  {% endif %}
+  {% if settings.search_model == 'search_type1' %}
+  {% include 'search-autocomplete' %}
+  {% endif %}
+  
+  {% include 'cart-dropdown' %}
+  
+  <div class="wrap-overlay"></div>
+</body>
+</html>

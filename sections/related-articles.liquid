@@ -1,0 +1,204 @@
+{% if section.settings.blog_articles_per_page != blank %}
+{% assign blog_per_page = section.settings.blog_articles_per_page %}
+{% else %}
+{% assign blog_per_page = 12 %}
+{% endif %}
+
+{% case section.settings.blog_grid %}
+{% when '1' %}
+{%- assign blog_item_width = 'wide--grid__item post-large--grid__item large--grid__item medium--grid__item small-grid__item' -%}
+{% when '2' %}
+{%- assign blog_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}            
+{% when '3' %}
+{%- assign blog_item_width = 'wide--one-third post-large--one-third large--one-half medium--one-half small-grid__item' -%}            
+{% when '4' %}
+{%- assign blog_item_width = 'wide--one-quarter post-large--one-third large--one-half medium--one-half small-grid__item' -%}            
+{% when '5' %}
+{%- assign blog_item_width = 'wide--one-fifth post-large--one-quarter large--one-half medium--one-half small-grid__item' -%}            
+{% endcase %}
+{% paginate blog.articles by blog_per_page %}
+
+{% assign current = article.id %}
+
+<div class="dt-sc-hr-invisible-medium"></div>
+<div class="mt-40">
+  <div class="heading-wrapper text-center">
+    <p class="pre-title">Articles</p>
+    <h3>FURTHER READING</h3>
+  </div>
+  <div class="dt-sc-hr-invisible-medium"></div>
+  <div class="grid-uniform">    
+     <div class="blog_grid_section mt-40">
+ 
+      {% for article in blog.articles limit: 3 %}
+        {% unless article.id == current %}
+        <div class="article-item grid__item {{ blog_item_width  }}">
+          <div class="article">
+            <a href="{{ article.url }}">
+              {% if section.settings.show_blog_4_img %}
+              {% if article.image %}
+              {% assign image_alt = article.title | escape %}
+              <div class="article-image p-relative">
+                {{ article | img_url: 'master' | img_tag: image_alt, 'article__image' }}              
+              </div>
+              {% endif %}
+              {% endif %}
+              <div class="article-description">   
+                <div class="article-content">				
+                  <div class="article-header">
+                    {% if section.settings.show_blog_4_date %}
+                    <p class="blog-date">
+                      <span data-datetime="{{ article.published_at | date: '%Y-%m' }}"><span class="date">{{ article.published_at | date: '%b' }} {{ article.published_at | date: '%Y' }}</span></span>             
+                    </p>
+                    {% endif %}                  
+                    {% if article.comments_enabled? %}
+                    {% assign number_of_comments = article.comments_count %}
+                    <p class="comments-count"><i class="far fa-comment"></i><a href="{{ article.url }}#comments">{{  number_of_comments }} {{ 'blogs.comments.comments' | t }}</a></p>
+                    {% endif %}
+                    {% if section.settings.show_blog_4_author %}            
+                    <p class="author">
+                      <i class="far fa-user"></i>
+                      <span> {{ article.author }}</span>
+                    </p> 
+                    {% endif %}
+                  </div>
+                  <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>                
+
+                  {% if section.settings.show_blog_4_content %}
+                  <p class="mt-20 f-bk"> {{ article.excerpt | strip_html | truncate: 150 }}</p>
+                  {% endif %}
+
+                  {% if section.settings.show_blog_4_content %}
+                  <p class="blog-content"> {{ article.excerpt_or_content | strip_html | truncate: 48 }}</p>
+                  {% endif %}                
+
+                  {% if section.settings.show_blog_4_btn %}
+                  <div class="blog-btn mt-15">
+                    <a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
+                  </div>
+                  {% endif %}
+                </div>
+
+                {% if article.tags.size > 0 and section.settings.show_blog_4_tag %}
+                <div class="blog-tag mt-40">                
+                  {% for tag in article.tags %}
+                  <a class="blog-tags">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                  {% endfor %}
+                </div>
+                {% endif %}                                                       
+              </div>                                     
+            </a>
+          </div>          
+        </div>
+       {% endunless %}
+      {% endfor %} 
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-medium"></div>
+</div>
+{% endpaginate %}
+
+<div class="dt-sc-hr-invisible-medium"></div>
+
+{% schema %}
+{
+  "name": "Related Articles",
+  "class": "related-articles-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "blog_articles_per_page",
+      "label": "Blogs per page",
+      "default": "3",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        },
+        {
+          "value": "12",
+          "label": "12"
+        },
+        {
+          "value": "24",
+          "label": "24"
+        },
+        {
+          "value": "36",
+          "label": "36"
+        },
+        {
+          "value": "100",
+          "label": "100"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "blog_grid",
+      "label": "Blog per row (grid only)",
+      "default": "4",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_content",
+      "label": "Display Blog content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_img",
+      "label": "Display Blog img"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_author",
+      "label": "Display Blog author name"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_btn",
+      "label": "Display Blog button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_date",
+      "label": "Display Blog date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_4_tag",
+      "label": "Display Blog tag"
+    }
+  ]
+}
+{% endschema %}

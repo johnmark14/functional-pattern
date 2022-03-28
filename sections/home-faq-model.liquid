@@ -1,0 +1,388 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{% if section.settings.layout_setup == '75%' %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '50%' %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '67%' %}
+{% assign column1  = 'grid__item wide--two-thirds post-large--two-thirds large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-third post-large--two-third large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '100%' %}
+{% assign column1  = 'grid__item' %}
+{% assign column2  = 'grid__item' %}
+{% else %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% endif %}
+
+<div class="dt-sc-tabs-vertical-container parallax" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px; {% if section.settings.image_1 != blank %}background-image:url('{{ section.settings.image_1 | img_url: '1920x' }}');background-repeat:no-repeat;background-size:cover; padding:0 50px;{% else %}background-color:{{section.settings.background_color}};{% endif%}; ">    
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">   
+    {% if section.settings.image_1 != blank or section.settings.bg_color != blank %}  <div class="dt-sc-hr-invisible-large"></div>{% endif %}
+    <div class="wrapper">
+      {% if section.settings.title != blank or section.settings.small_title != blank %}
+      <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+      <div class="border-title">
+        {% if section.settings.title != blank %}
+        <h2 class="section-header__title" style="color:{{ section.settings.heading_color }};">    
+          {{ section.settings.title }}
+        </h2>
+        {% endif %}      
+        {% if section.settings.small_title != blank %}<div class="short-desc">  <p style="color:{{ section.settings.small_title_color }};">{{ section.settings.small_title }}</p></div>{% endif %}   
+      </div>
+      </div>
+      {% endif %}
+      <div class="grid-uniform">
+        {% if section.settings.align_text == 'left' %}
+        <div class="{{column1}}">
+          <div class="left_cnt wow fadeInLeft animated">
+            <div id="homeFaqmodel" class="owl-carousel owl-theme">
+              {% if section.settings.link_2 != blank %}<a class="banner_half_img" href="{{ section.settings.link_2 }}">{% endif%}
+              {% if section.settings.image_2 != blank %}
+              <img src="{{ section.settings.image_2 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_2 != blank %} </a>{% endif%}              
+
+
+              {% if section.settings.link_3 != blank %}<a class="banner_half_img" href="{{ section.settings.link_3 }}">{% endif%}
+              {% if section.settings.image_3 != blank %}
+              <img src="{{ section.settings.image_3 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_3 != blank %} </a>{% endif%}
+
+
+              {% if section.settings.link_4 != blank %}<a class="banner_half_img" href="{{ section.settings.link_4 }}">{% endif%}
+              {% if section.settings.image_4 != blank %}
+              <img src="{{ section.settings.image_4 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_4 != blank %} </a>{% endif%}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="{{column2}}">
+          <div class="dt-sc-toggle-frame-set wow fadeInRight animated">
+            {% for block in section.blocks %}             
+            <div class="dt-sc-toggle-frame">
+              <h5 class="dt-sc-toggle-accordion {% if forloop.first %} active{% endif %}"><a href="#">{{ block.settings.title }}</a></h5>
+              <div class="dt-sc-toggle-content">
+                <div class="block">
+                  {{  block.settings.description }}
+                </div>
+              </div>
+            </div>
+
+            {% endfor %} 
+          </div>
+        </div>
+        {% if section.settings.align_text == 'right' %}
+        <div class="{{column1}}">
+          <div class="right_cnt wow fadeInLeft animated">
+            <div id="homeFaqmodel">
+
+              {% if section.settings.link_2 != blank %}<a class="banner_half_img" href="{{ section.settings.link_2 }}">{% endif%}
+              {% if section.settings.image_2 != blank %}
+              <img src="{{ section.settings.image_2 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_2 != blank %} </a>{% endif%}              
+
+              {% if section.settings.link_3 != blank %}<a class="banner_half_img" href="{{ section.settings.link_3 }}">{% endif%}
+              {% if section.settings.image_3 != blank %}
+              <img src="{{ section.settings.image_3 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_3 != blank %} </a>{% endif%}
+
+
+              {% if section.settings.link_4 != blank %}<a class="banner_half_img" href="{{ section.settings.link_4 }}">{% endif%}
+              {% if section.settings.image_4 != blank %}
+              <img src="{{ section.settings.image_4 | img_url: '1920x' }}" alt="{{ section.settings.title_1 }}">
+              {% else %}
+              <img src="//via.placeholder.com/1024x1000">
+              {% endif %}
+              {% if section.settings.link_4 != blank %} </a>{% endif%}
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <!--dt-sc-tabs-vertical-container ends-->
+    </div>
+    <!--dt-sc-one-half ends--> 
+  </div>  
+</div>
+
+<style>
+  
+  .home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion:after,.home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion:before { background:{{ section.settings.arrow_color }};}
+  .home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion:hover:after,.home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion:hover:before { background:{{ section.settings.arrow_hover }};}
+  .home-faq-model  .dt-sc-toggle-frame h5.dt-sc-toggle-accordion { border-bottom:1px solid {{ section.settings.border_color }};border-top:none;border-left:none;border-right:none;}
+
+  .home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion a { color:{{ section.settings.tab_color }}; }
+  .home-faq-model .dt-sc-toggle-frame h5.dt-sc-toggle-accordion.active a,.home-faq-model  .dt-sc-toggle-frame h5.dt-sc-toggle-accordion a:hover { color:{{ section.settings.tab_text_color }}; }  
+  .home-faq-model .dt-sc-toggle-frame  h5.dt-sc-toggle-accordion.active:before { background: none; }  
+  .home-faq-model .dt-sc-toggle-frame .dt-sc-toggle-content p { color:{{ section.settings.desc_color_1 }}; }
+
+</style>
+
+{% schema %}
+{
+"name": "Home Faq Model",
+"class": "index-section home-faq-model",
+"max_blocks":10,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "select",
+"id": "layout_setup",
+"label": "Layout Grid Style",
+"options": [
+{
+"value": "75%",
+"label": "75/25"
+},
+{
+"value": "50%",
+"label": "50/50"
+},
+{
+"value": "67%",
+"label": "67/33"
+},
+{
+"value": "100%",
+"label": "100/100"
+}
+],
+"default": "50%"
+},
+{
+"type": "color",
+"id": "background_color",
+"label":"Bckground color",
+"default": "#f5f5f5"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Bg Image"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Most frequently asked queries"
+},  
+{
+"type": "color",
+"id": "heading_color",
+"label": "Heading Color",
+"default": "#000"
+},  
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading",
+"default": "Clear your doubts"
+},
+{
+"type": "color",
+"id": "small_title_color",
+"label": "Small Heading Color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "color",
+"id": "border_color",
+"label": "Tab Border Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "tab_color",
+"label": "Tab Color",
+"default":"#000"
+},
+
+{
+"type": "color",
+"id": "tab_text_color",
+"label": "Tab Hover Text Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "desc_color_1",
+"label": "Tab Content",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "arrow_color",
+"label": "Arrow",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "arrow_hover",
+"label": "Arrow Hover",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "align_text",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "right"
+}
+]
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image"
+
+},
+{
+"type": "url",
+"id": "link_2",
+"label": "Link"
+
+},
+{
+"type": "image_picker",
+"id": "image_3",
+"label": "Image"
+
+},
+{
+"type": "url",
+"id": "link_3",
+"label": "Link"
+
+},
+{
+"type": "image_picker",
+"id": "image_4",
+"label": "Image"
+
+},
+{
+"type": "url",
+"id": "link_4",
+"label": "Link"
+
+}
+],
+"blocks": [
+{
+"type": "text",
+"name": "In Block",
+"settings": [ 
+{
+"type": "text",
+"id": "title",
+"label": "Tab",
+"default": "Question"
+},
+{
+"type": "richtext",
+"id": "description",
+"label": "Description",
+"default": "<p>Short Answer</p>"
+}
+
+
+
+
+
+]
+}
+
+
+],
+"presets": [
+{
+"name": "Home Faq Model",
+"category": "Text",
+"blocks": [
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+}
+
+]
+}
+]
+}
+{% endschema %}
+
+
+{% javascript %}
+$(document).ready(function(){
+$('#homeFaqmodel').slick({       
+dots:true,
+slidesToShow: 1,
+slidesToScroll: 1, 
+autoplay:true,
+autoplaySpeed:1000,
+arrows: false
+});
+});
+
+{% endjavascript %}

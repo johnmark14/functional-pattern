@@ -1,0 +1,363 @@
+@media screen and (min-width: 1200px){
+  h3{
+    font-size: 46px;
+    line-height: 44px;
+  }
+}
+@media screen and (max-width: 1199px){
+  h1{
+    font-size: 60px;
+    line-height: 55px;
+  }  
+  h3{
+    font-size: 30px;
+    line-height: 30px;
+  }
+}
+h3:hover{
+  color: #B21B1B;
+}
+.course-collection-hero{
+  position: relative;  
+
+  .video-wrapper{          
+    overflow: hidden;
+  }
+  i{
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;    
+    margin: auto;    
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    
+    @media screen and (min-width: 421px){
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      bottom: 100px;
+      
+      &:before{
+        position: relative;
+        left: 3px;
+      }
+    }
+    @media screen and (max-width: 420px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 30px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 35px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 40px;
+    }    
+  }
+  .video-summary{
+    position: absolute;    
+    left: 0;
+    right: 0;    
+    margin: auto;
+    width: 100%;    
+    text-align: center;
+    max-width: 400px;
+    color: #fff;
+    
+    @media screen and (min-width: 421px){
+      height: 80px;
+      line-height: 80px;
+      bottom: 100px;
+      top: 150px;
+    }    
+    @media screen and (max-width: 420px){
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 60px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 50px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 40px;
+    }    
+  }
+  .no-video-summary i{
+    bottom: 0px;
+    
+    @media screen and (max-width: 420px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;      
+    }
+  }  
+  .course-collection-video{
+    width: 100%;
+    max-height: 600px;
+    
+    @media only screen and (max-width: 420px){
+      min-height: 200px;
+    }    
+  }
+  .course-collection-video[poster]{
+    object-fit: cover;
+  }
+  .image-wrapper img{
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    
+    @media only screen and (max-width: 420px){
+      min-height: 200px;
+    }     
+  }
+}
+.collection-content{
+  .rte{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #000000;
+  }
+  @media screen and (min-width: 1200px){
+    margin-top: -62px;
+    
+    .rte{
+      width: 45%;
+      margin: 0 auto 110px;
+      line-height: 44px;
+      font-size: 34px;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1199px){
+    margin-top: -33px;
+    
+    .rte{
+      width: 60%;
+      margin: 0 auto 110px;
+      line-height: 28px;
+      font-size: 24px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    margin: 55px 0;
+    padding: 0 20px;
+    
+    .rte{
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 30px;
+      letter-spacing: 0px;      
+    }
+  }
+}
+.collection-course{
+  overflow: hidden;
+
+  .container{
+    max-width: 1024px;
+  }
+  @media only screen and (min-width: 768px){
+    .product-collection.products-grid-view{
+      margin-left: -25px;
+      margin-right: -25px;
+
+      .grid__item.item-row{
+        padding: 0 30px 60px;
+      }
+    }
+  }
+  .product-detail{
+    background-color: #EFEFEF;
+    border-radius: 10px 10px 0 0;
+
+    @media only screen and (min-width: 1200px){
+      min-height: 287px; 
+    }    
+    @media only screen and (min-width: 1024px){
+      padding: 40px;    
+    }
+    .f-bk{      
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 23px;
+      letter-spacing: 0.02em;
+      color: #B21B1B;
+    }    
+    .product_desc{
+      display: block;      
+      overflow: hidden;
+      color: #000000;
+
+      p{        
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0px;        
+      }
+    }
+    .product-tag{
+      background: rgba(230, 20, 70, 0.2);
+      border-radius: 50px;
+      font-family: BebasKai;
+      line-height: 23px;
+      letter-spacing: 0.02em;
+      padding: 5px 12px;
+      display: initial;
+      color: #B21B1B;
+      margin-right: 10px;
+    }
+    @media only screen and (min-width: 1024px) and (max-width: 1199px){
+      min-height: 253px;
+    }
+    @media only screen and (min-width: 768px) and (max-width: 1023px){
+      min-height: 223px;
+      padding: 25px;
+    }    
+  }
+  .product-container{    
+    border-radius: 0 0 10px 10px;
+
+    .ImageOverlayCa{
+      opacity: 0.1 !important;
+      background: #000 !important;
+    }
+    a img{
+      object-fit: cover;
+      height: 100%;
+      
+      @media screen and (min-width: 1200px){
+        min-height: 320px;
+      }
+    }
+  }
+  @media only screen and (min-width: 1200px){
+    .product-container{
+      max-height: 326px;
+    }
+    .product_desc{
+      max-height: 50px;
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1199px){
+    .product-container{
+      height: 240px !important;
+    }    
+    .grid-link__title{
+      min-height: 75px;
+    }
+    .product_desc{
+      max-height: 45px;
+      font-size: 16px;
+    }
+  }
+  @media only screen and (max-width: 767px){
+    .product-collection.products-grid-view{
+      margin-left: 0px;
+      margin-right: 0px;
+      
+      .grid__item.item-row{
+        padding: 0 0px 40px;
+      }
+    }
+    .product-detail{
+      padding: 25px;
+    }
+    .product_desc{
+      max-height: 45px;
+      font-size: 16px;
+    }
+    .product-container{
+      height: 240px !important;
+    }
+  }
+}
+// FAQs section
+.faq-section{
+  overflow: hidden;
+  background-color: #EFEFEF;
+
+  .faqs-wrapper{
+    clear: both;    
+    margin: 0 auto;
+
+    .dt-sc-toggle-frame-set{   
+      .dt-sc-toggle-accordion{
+        cursor: pointer;
+        padding: 15px 0px 15px 0px;
+        border-bottom: 1px solid #e4e4e4;
+        border-left: none;
+        border-right: none;
+        border-top: none;        
+
+        &:before{
+
+          width: 19px;
+          height: 19px;
+          color: #000;
+          right: 8px;
+          left: inherit;
+          content: "\f067";
+        }
+        &.active:before{
+          content: "\f068";
+        }      
+      }
+      .dt-sc-toggle-content {
+        padding: 25px 20px 25px 0px;
+        background: transparent;
+
+        p{                
+          color: #000000;
+          line-height: 24px;
+          letter-spacing: 0px;        
+        }
+      }    
+    }
+  }
+  @media screen and (min-width: 1200px){
+    .faqs-wrapper{
+	  max-width: 60%;    
+    }
+    .dt-sc-toggle-accordion{
+      font-size: 30px;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1199px){
+    .faqs-wrapper{
+	  max-width: 80%;
+    }
+    .dt-sc-toggle-accordion{
+      font-size: 30px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    .dt-sc-toggle-accordion{
+      font-size: 26px;
+      line-height: 26px;
+      
+      &:before{
+        line-height: 20px !important;
+    	font-size: 16px;
+      }
+    }    
+  }
+  @media screen and (max-width: 767px){
+    .dt-sc-toggle-accordion{
+      font-size: 22px;
+      line-height: 22px;
+    }
+  }
+}

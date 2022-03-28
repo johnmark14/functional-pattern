@@ -1,0 +1,619 @@
+{% if section.blocks.size > 0 %}
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}    
+
+<div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">  
+  <div class="grid-banner-type-5" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+    <div class="dt-sc-hr-invisible-large"></div>
+    {% if section.settings.title != blank or section.settings.small_title != blank  %}
+    <div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+      <div class="border-title">
+        {% if section.settings.title != blank %}
+        <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+          {{ section.settings.title }}
+        </h2>
+        {% endif %}  
+        {% if section.settings.small_title != blank %}
+        <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+        {% endif %}                
+      </div>
+    </div>      
+    {% endif %}
+
+    <div class="grid-uniform featuredItems">          
+      {% for block in section.blocks %}          
+      {% case section.blocks.size %}
+      {% when 1 %}
+      {%- assign column = 'grid__item one-block' -%}
+      {% when 2 %}
+      {%- assign column = 'grid__item wide--one-whole two-blocks' -%}
+      {% when 3 %}        
+      {%- assign column = 'grid__item wide--one-third post-large--one-third large--one-third three-blocks' -%}
+      {% when 4 %}         
+      {%- assign column = 'grid__item wide--one-quarter post-large--one-quarter large--one-whole four-blocks' -%}
+      {% endcase %}
+
+
+      {% for block in section.blocks %}        
+      {% capture image_only %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <div class="overlay {{block.type}}-{{block.id}}">
+          <div class="featured-image {{ block.settings.image_top-position }}">
+            {% if block.settings.link_1 != blank %}<a class="banner_half_img" href="{{ block.settings.link_1 }}">{% endif%}
+            {% if block.settings.image_1 != blank %}
+            <img src="{{ block.settings.image_1 | img_url: '1000X' }}" alt="{{ block.settings.title_1 }}" />
+            <div class="ovrly"></div>
+            {% else %}
+            <img src="//via.placeholder.com/768x768">
+            {% endif%}           
+            {% if block.settings.link_1 != blank %}  </a>
+            {% endif%}
+          </div>  
+        </div>
+      </div>
+      {% endcapture %}
+
+      {% capture content_only %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <div class="overlay {{block.type}}-{{block.id}}" style="background:{{ block.settings.content_bg_1 }}">
+          <div class="featured-content {{block.type}}-{{block.id}} imageText_position {{ block.settings.image_text_position_1 }}">       
+            {% if block.settings.text_1 != blank %}
+            <h5 style="color:{{ block.settings.text_1_clr }};">{{ block.settings.text_1}}</h5>    
+            {% endif %} 
+            {% if block.settings.title_1 != blank %}
+            <h2 style="color:{{ block.settings.title_1_clr }};">{{ block.settings.title_1 }}</h2>
+            {% endif %}            
+            {% if block.settings.additional_text_1 != blank %}
+            <p class="additional-text" style="color:{{ block.settings.additional_text_1_clr }};">{{ block.settings.additional_text_1 }}</p>
+            {% endif %} 
+            {% if block.settings.button_1 != blank %}
+            <a class="link_text" href="{{ block.settings.link_1 }}">{{ block.settings.button_1}}</a>    
+            {% endif %}  
+            
+            {% if block.settings.show_logos %}
+            <ul class="logo_list">
+              <li>
+                {% if block.settings.logo_img_1 != blank %}
+                <img src="{{ block.settings.logo_img_1 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_2 != blank %}
+                <img src="{{ block.settings.logo_img_2 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_3 != blank %}
+                <img src="{{ block.settings.logo_img_3 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_4 != blank %}
+                <img src="{{ block.settings.logo_img_4 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+            </ul>
+            {% endif%} 
+          </div>      
+        </div>
+      </div>
+      {% endcapture %}        
+
+      {% capture image_only_2 %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <div class="overlay {{block.type}}-{{block.id}}">
+          <div class="featured-image {{ block.settings.image_bottom-position }}">
+            {% if block.settings.link_2 != blank %}<a class="banner_half_img" href="{{ block.settings.link_2 }}">{% endif%}
+            {% if block.settings.image_2 != blank %}
+            <img src="{{ block.settings.image_2 | img_url: '2000X' }}" alt="{{ block.settings.title_2 }}" />
+            <div class="ovrly"></div>
+            {% else %}
+            <img src="//via.placeholder.com/768x768">
+            {% endif%}           
+            {% if block.settings.link_2 != blank %}  </a>
+            {% endif%}
+          </div>  
+        </div>
+      </div>
+      {% endcapture %}
+
+      {% capture content_only_2 %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <div class="overlay {{block.type}}-{{block.id}}" style="background:{{ block.settings.content_bg_2 }}">
+          <div class="featured-content {{block.type}}-{{block.id}} imageText_position {{ block.settings.image_text_position_2 }}">       
+            {% if block.settings.text_2 != blank %}
+            <h5 style="color:{{ block.settings.text_2_clr }};">{{ block.settings.text_2}}</h5>    
+            {% endif %}
+            {% if block.settings.title_2 != blank %}
+            <h2 style="color:{{ block.settings.title_2_clr }};">{{ block.settings.title_2 }}</h2>
+            {% endif %}              
+            {% if block.settings.additional_text_2 != blank %}
+            <p class="additional-text" style="color:{{ block.settings.additional_text_2_clr }};">{{ block.settings.additional_text_2 }}</p>
+            {% endif %}
+            {% if block.settings.button_2 != blank %}
+            <a class="link_text" href="{{ block.settings.link_2 }}">{{ block.settings.button_2}}</a>    
+            {% endif %}
+            
+            {% if block.settings.show_logos %}
+            <ul class="logo_list">
+              <li>
+                {% if block.settings.logo_img_1 != blank %}
+                <img src="{{ block.settings.logo_img_1 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_2 != blank %}
+                <img src="{{ block.settings.logo_img_2 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_3 != blank %}
+                <img src="{{ block.settings.logo_img_3 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+              <li>
+                {% if block.settings.logo_img_4 != blank %}
+                <img src="{{ block.settings.logo_img_4 | img_url: 'large' }}" alt="{{ block.settings.title_1 }}" />
+                {% else %}
+                <img src="//via.placeholder.com/120x100">
+                {% endif%} 
+              </li>
+            </ul>
+            {% endif%}             
+          </div>      
+        </div>
+      </div>
+      {% endcapture %}
+      {% endfor %}   
+      <div class="{{column}} {{block.type}}">
+        <div class="grid-uniform">
+          {% if block.settings.image_top-position == 'left' %}
+          {{image_only}}             
+          {% endif %}
+          {{content_only}}
+          {% if block.settings.image_top-position == 'right' %}
+          {{image_only}}             
+          {% endif %}
+          <div class="dt-sc-hr-invisible-large"></div>
+        </div>          
+
+        <div class="grid-uniform">
+          {% if block.settings.mix_alternative %}          
+          {% if block.settings.image_bottom-position == 'left' %}
+          {{image_only_2}}             
+          {% endif %}
+          {{content_only_2}}
+          {% if block.settings.image_bottom-position == 'right' %}
+          {{image_only_2}}             
+          {% endif %}
+          {% endif %}  
+        </div>          
+      </div> 
+      {% endfor %}
+    </div> 
+  </div>  
+</div>
+
+<style>
+
+  {% for block in section.blocks %}   
+  #shopify-section-{{section.id}}.home-grid-banner .featured-content.{{block.type}}-{{block.id}} .btn1 { color:{{ block.settings.button_1_txt }}; background-color:{{ block.settings.button_1_bg }}; }
+  #shopify-section-{{section.id}}.home-grid-banner .featured-content.{{block.type}}-{{block.id}} .btn2 { color:{{ block.settings.button_2_txt }}; background-color:{{ block.settings.button_2_bg }}; }   
+
+  #shopify-section-{{section.id}}.home-grid-banner .featured-content.{{block.type}}-{{block.id}} .btn1:hover { color:{{ block.settings.hover_button_1_txt }} !important; background-color:{{ block.settings.hover_button_1_bg }} !important; }
+  #shopify-section-{{section.id}}.home-grid-banner .featured-content.{{block.type}}-{{block.id}} .btn2:hover { color:{{ block.settings.hover_button_2_txt }} !important; background-color:{{ block.settings.hover_button_2_bg }} !important; }   
+  {% endfor %}
+
+</style>
+
+{% endif %}
+
+{% schema %}
+{
+"name": "Grid Banner Type 5",
+"class": "index-section home-grid-banner",
+"max_blocks": 2,
+"settings": [  
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Grid Banner Type 5"
+},  
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},  
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+}
+],
+"blocks": [
+{
+"type": "mixed",
+"name": "Mixed",    
+"settings": [  
+{
+"type": "checkbox",
+"id": "mix_alternative",
+"label": "Mix Alternative Style",
+"default": false
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Top Image",
+"info": "Size: 600x500"
+},
+{
+"type": "select",
+"id": "image_top-position",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+} 
+],
+"default": "right"
+},
+{
+"type": "color",
+"id": "content_bg_1",
+"label": "Content Bg color",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "text_1",
+"label": "Sub Heading"
+},
+{
+"type": "color",
+"id": "text_1_clr",
+"label": "Sub Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "additional_text_1",
+"label": "Description",
+"default": "Description"
+},
+{
+"type": "color",
+"id": "additional_text_1_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_1",
+"label": "Button text",
+"default": "Shop Now"
+},
+{
+"type": "color",
+"id": "button_1_bg",
+"label": "Button bg color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_1_txt",
+"label": "Button text color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "hover_button_1_bg",
+"label": "Button hover bg",
+"default": "#272727"
+},
+{
+"type": "color",
+"id": "hover_button_1_txt",
+"label": "Button hover text",
+"default": "#fff"
+},
+{
+"type": "select",
+"id": "image_text_position_1",
+"label": "Text Alignment",
+"options": [
+{
+"value": "imgtxt-middle-left",
+"label": "Align Left"
+},
+{
+"value": "imgtxt-middle-right",
+"label": "Align Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Align Center"
+}    
+],
+"default": "imgtxt-middle-left"
+},
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+},
+{
+"type": "header",
+"content": "Logo Images"
+},
+{
+"type": "checkbox",
+"id": "show_logos",
+"label": "Show Logos"
+},
+{
+"type": "image_picker",
+"id": "logo_img_1",
+"label": "Image 1",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_2",
+"label": "Image 2",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_3",
+"label": "Image 3",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_4",
+"label": "Image 4",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Bottom Image",
+"info": "Size: 600x500"
+},
+{
+"type": "select",
+"id": "image_bottom-position",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}     
+],
+"default": "left"
+},
+{
+"type": "color",
+"id": "content_bg_2",
+"label": "Content Bg color",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "title_2",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_2_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "text_2",
+"label": "Sub Heading"
+},
+{
+"type": "color",
+"id": "text_2_clr",
+"label": "Sub Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "additional_text_2",
+"label": "Description",
+"default": "Description"
+},
+{
+"type": "color",
+"id": "additional_text_2_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_2",
+"label": "Button text",
+"default": "Shop Now"
+},
+{
+"type": "color",
+"id": "button_2_bg",
+"label": "Button bg color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_2_txt",
+"label": "Button text color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "hover_button_2_bg",
+"label": "Button hover bg",
+"default": "#272727"
+},
+{
+"type": "color",
+"id": "hover_button_2_txt",
+"label": "Button hover text",
+"default": "#fff"
+},
+{
+"type": "select",
+"id": "image_text_position_2",
+"label": "Text Alignment",
+"options": [
+{
+"value": "imgtxt-middle-left",
+"label": "Align Left"
+},
+{
+"value": "imgtxt-middle-right",
+"label": "Align Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Align Center"
+}    
+],
+"default": "imgtxt-middle-left"
+},
+{
+"type": "url",
+"id": "link_2",
+"label": "Link URL"
+},
+{
+"type": "header",
+"content": "Logo Images"
+},
+{
+"type": "checkbox",
+"id": "show_logo_2",
+"label": "Show Logos"
+},
+{
+"type": "image_picker",
+"id": "logo_img_5",
+"label": "Image 1",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_6",
+"label": "Image 2",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_7",
+"label": "Image 3",
+"info": "Size: 100x100"
+},
+{
+"type": "image_picker",
+"id": "logo_img_8",
+"label": "Image 4",
+"info": "Size: 100x100"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Grid Banner Type 5",
+"category": "Block Images",
+"blocks": [
+{
+"type": "mixed"
+}
+]
+}
+]
+}
+{% endschema %}

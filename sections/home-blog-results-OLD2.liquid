@@ -1,0 +1,459 @@
+
+{% assign blog_per_page = 3 %}
+
+{% case section.settings.blog_grid %}
+{% when '1' %}
+{%- assign blog_item_width = 'wide--grid__item post-large--grid__item large--grid__item medium--grid__item small-grid__item' -%}
+{% when '2' %}
+{%- assign blog_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}            
+{% when '3' %}
+{%- assign blog_item_width = 'wide--one-third post-large--one-third large--one-half medium--one-half small-grid__item' -%}            
+{% when '4' %}
+{%- assign blog_item_width = 'wide--one-quarter post-large--one-third large--one-half medium--one-half small-grid__item' -%}                       
+{% endcase %}
+
+<div class="container mt-40">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-{{ section.settings.align_text }}">
+      {% if section.settings.text != blank %}
+      <p style="color: {{ section.settings.text_color }}; font-weight: 700;">{{ section.settings.text | escape }}</p>
+      {% endif %}
+      <h2 class="custom-h2" style="color: {{ section.settings.heading_color }};">{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+      <div style="color: {{ section.settings.desc_color }};">{{ section.settings.description }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+  <div class="dt-sc-hr-invisible-medium"></div>  
+  <div class="grid-uniform desktop">     
+     <div class="blog_grid_section mt-40">  
+      
+      {% for block in section.blocks limit: blog_per_page %}       
+        
+		{%- assign article = block.settings.article_picker -%}
+       
+        <div class="article-item grid__item {{ blog_item_width  }}">
+          <div class="article">
+            {% if section.settings.show_blog_4_img %}
+            {% if articles[article].image %}
+            {% assign image_alt = articles[article].title | escape %}
+            <div class="article-image p-relative">
+              {{ articles[article] | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+              <button class="results_modal_btn" type="button" data-toggle="modal" data-target="#results_modal-{{ articles[article].id }}"></button>
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="article-description flexible">   
+              <div class="article-content">	
+                <a class="h4 article-title" href="#" data-toggle="modal" data-target="#results_modal-{{ articles[article].id }}">
+                  {{ articles[article].title }}
+                </a>       
+                {% if articles[article].excerpt != blank %}
+                <p class="f-bk mt-15"> {{ articles[article].excerpt | strip_html | truncate: 150 }}</p>
+                {% endif %}                              
+              </div>
+              
+              
+              {% if articles[article].tags.size > 0 and section.settings.show_blog_4_tag %}
+                {% assign tag_size = articles[article].tags.size %}
+                <div class="blog-tag-wrapper">                
+                  {% for tag in articles[article].tags %}
+                  <a class="blog-tags tag-grey">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}                                                       
+            </div>
+            
+            
+            
+              <div id="results_modal-{{ articles[article].id }}" class="results_modal modal modal-grid fade" role="dialog" style="display: block;">                
+                <div class="modal-content">
+                  <div class="modal-close p-absolute">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>                    
+                  </div>
+                  <div class="modal-body">
+                    
+
+                    <div class="d-flex modal-content-inner">
+                      <div class="modal-avater grid__item one-half">   
+
+                        {% if articles[article].metafields.results_media.results_media != blank or articles[article].metafields.accentuate.vimeo_videos != blank  %}
+
+                        <div class="variable-width slideshow" data-init-slideshow data-dots="true" data-autoplay="false" data-autoplay-speed="2500" data-fade="false" role="toolbar">  
+                          {% assign i = 0 %}
+
+                          {% for video_image in articles[article].metafields.accentuate.video_image %} 
+                        	{% assign i = i | plus: 1 %}
+                            <div class="slick-list slider_style_1 slider-{{ i }}-list">  
+                              <div class="video-mp4 p-video p-relative">
+                                <img src="{{ video_image[0].src }}" alt="{{ video_image[0].alt }}"/>
+                                <a href="{{ article.metafields.accentuate.vimeo_videos[forloop.index0] }}" class="jas-popup-url v-play-icon"><i class="fas fa-play icons" aria-hidden="true"></i></a>   
+                              </div>
+                            </div>							
+                          {% endfor %}
+
+                          {% for media_data in articles[article].metafields.results_media.results_media  %} 
+                          
+                              {% if media_data['media_type'] == 'image' %}
+                                <img src="{{ media_data['src']}}" alt="{{ media_data['alt'] }}"/>
+                              {% else media_data['media_type'] == 'video' %}
+                                <div class="video-mp4 p-video p-relative">
+                                  <video loop id="results-popup-video">
+                                    <source src="{{ media_data['src'] }}" type="video/mp4">                                    
+                                  </video>
+                                  <a href="{{ media_data['src'] }}" class="jas-popup-url v-play-icon"><i class="fas fa-play icons" aria-hidden="true"></i></a>   
+                                </div>
+                              {% endif %}                          
+                          
+
+                          {% endfor %}                      
+                        </div>
+
+                        {% else %}
+
+                        {% if articles[article].image %}
+                        {% assign image_alt = articles[article].title | escape %}
+                        {{ articles[article] | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+                        {% endif %}  
+
+                        {% endif %}
+
+
+                      </div>
+                      <div class="modal-practitioners-inner grid__item one-half">
+                        <div class="article-content-inner">
+                          <h4>{{ articles[article].title }}</h4>
+                          {% if articles[article].excerpt != blank %}
+                          <p class="mt-20 f-bk"> {{ articles[article].excerpt | strip_html | truncate: 150 }}</p>
+                          {% endif %}                        
+
+                          {% if articles[article].tags.size > 0 %}
+                          <div class="blog-tag-wrapper">                
+                            {% for tag in articles[article].tags %}
+                            <a class="blog-tags tag-grey">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                            {% endfor %}
+                          </div>
+                          {% endif %}  
+                          <div class="article-desc mt-40">
+                            <p> {{ articles[article].content }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                      
+                    
+
+                  </div>  
+                </div>
+              </div>             
+            
+          </div>
+        </div>
+      {% endfor %} 
+    </div>    
+  </div>  
+  <div class="grid-uniform ">
+     <div class="blog_grid_section owl-carousel owl-theme ListType2">      
+      {% for block in section.blocks limit: blog_per_page %}       
+		{%- assign article = block.settings.article_picker -%}
+        <div class="article-item grid__item {{ blog_item_width  }}">
+          <div class="article">
+            {% if section.settings.show_blog_4_img %}
+            {% if articles[article].image %}
+            {% assign image_alt = article.title | escape %}
+            <div class="article-image p-relative">
+              {{ articles[article] | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+              <button class="results_modal_btn" type="button" data-toggle="modal" data-target="#results_modal-{{ articles[article].id }}-mb"></button>
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="article-description flexible">   
+              <div class="article-content">				
+                <h4 class="article-title"><button class="results_modal_btn" type="button" data-toggle="modal" data-target="#results_modal-{{ articles[article].id }}-mb">{{ articles[article].title | strip_html | truncate:30 }}</button></h4>                
+                {% if section.settings.show_blog_4_content %}
+                <p class="mt-20 f-bk"> {{ articles[article].excerpt | strip_html | truncate: 150 }}</p>
+                {% endif %}
+              </div>
+              {% if articles[article].tags.size > 0 and section.settings.show_blog_4_tag %}
+                {% assign tag_size = articles[article].tags.size %}
+                <div class="blog-tag mt-40 {% if tag_size > 2 %}overlap-tag-wrapper{% endif %}">                
+                  {% for tag in articles[article].tags %}
+                  <a class="blog-tags {% if tag_size > 2 %}overlap-tag{% endif %}">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}                                                       
+            </div>                       
+          </div>
+        </div>
+      {% endfor %}   
+    </div>   
+  </div>  
+  
+<!--   		Modals -->
+        {% for block in section.blocks limit: blog_per_page %}       
+		{%- assign article = block.settings.article_picker -%}
+       <div id="results_modal-{{ articles[article].id }}-mb" class="results_modal modal fade" role="dialog" style="display: block;">                
+         <div class="modal-content">
+           <div class="modal-close p-absolute">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>                    
+           </div>
+           <div class="modal-body">
+             <div class="grid-uniform d-flex">
+               <div class="grid__item one-half ">
+                 <div class="variable-width slideshow" data-init-slideshow data-dots="true" data-autoplay="true" data-autoplay-speed="2500" data-fade="false" role="toolbar">
+                   {% if articles[article].metafields.results_media.results_media != blank %}
+                   {% assign i = 0 %}
+                   {% for media_data in articles[article].metafields.results_media.results_media %}
+                   {% assign i = i | plus: 1 %}  
+                   <div class="slick-list slider_style_1 slider-{{ i }}-list">      
+
+                     {% if media_data.media_type == 'image' %}
+
+                     <img src="{{ media_data.src }}" alt="{{ media_data.alt }}"/>
+
+                     {% else media_data.mime_type == 'video' %}
+                     <div class="video-mp4 p-video p-relative">
+                       <video loop id="results-popup-video">
+                         <source src="{{ media_data.src }}" type="video/mp4">                                    
+                       </video>
+                       <a href="{{ media_data.src }}" class="jas-popup-url v-play-icon"><i class="fas fa-play icons" aria-hidden="true"></i></a>                                  
+                     </div>
+                     {% endif %}                                
+                   </div>
+                   {% endfor %}
+                   {% else %}
+                   {% if articles[article].image %}
+                   {% assign image_alt = article.title | escape %}
+                   <div class="article-image">{{ articles[article] | img_url: 'master' | img_tag: image_alt, 'article__image' }}</div>
+                   {% endif %}                          
+                   {% endif %}
+                   {% if articles[article].metafields.accentuate.video_source_results != blank %}
+                   {% for video_data in articles[article].metafields.accentuate.video_source_results %}
+                   <div class="fr-view">
+                     {{ video_data }}
+                   </div>
+                   {% endfor %}
+                   {% endif %}                          
+                 </div>  
+               </div>
+               <div class="grid__item one-half article-content">
+                 <div class="article-content-inner">
+                   <h4><a>{{ articles[article].title }}</a></h4>
+
+                   {% if section.settings.show_blog_4_content %}
+                   <p class="mt-20 f-bk"> {{ articles[article].excerpt | strip_html | truncate: 150 }}</p>
+                   {% endif %}                        
+
+                   {% if articles[article].tags.size > 0 and section.settings.show_blog_4_tag %}
+                   <div class="blog-tag mt-40">                
+                     {% for tag in articles[article].tags %}
+                     <a class="blog-tags">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                     {% endfor %}
+                   </div>
+                   {% endif %}  
+                   <div class="article-desc mt-40">
+                     {% if section.settings.show_blog_4_content %}
+                     <p> {{ articles[article].content }}</p>
+                     {% endif %} 
+                   </div>
+                 </div>
+               </div>
+             </div>                  
+           </div>  
+         </div>
+       </div>  
+      {% endfor %}
+  
+  <div class="dt-sc-hr-invisible-medium"></div>
+  <div class="text-center btn-wrapper">
+    {% if section.settings.btn_text != blank and section.settings.btn_url != blank %}
+    <a class="btn btn-primary" href="{{ section.settings.btn_url | escape }}">{{ section.settings.btn_text | escape }}</a>
+    {% endif %}        
+  </div>  
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+
+<script type="text/javascript">        
+  $(document).ready(function(){
+    var ListType2 = $(".ListType2");
+    ListType2.owlCarousel({
+      loop:false,
+      autoPlay: false,
+      nav:true,
+      navContainer: ".nav_list_type2_items",
+      navText: ['<a class="prev-arrow"><i class="fa fa-arrow-left"></i></a>',' <a class="next-arrow"><i class="fa fa-arrow-right"></i></a>'],
+      dots: true,
+      responsive:{
+        0:{
+          items:1
+        },
+        568:{
+          items:2
+        },
+        720:{
+          items:2
+        },
+        1024:{
+          items: 3
+        }
+      }
+    });   
+  }); 
+
+</script>
+
+{% style %}
+	#shopify-section-{{ section.id }}{
+		background-color: {{ section.settings.bg_color }};
+	}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Blog Results",
+    "class": "results-section",
+	"max_blocks": 4,
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Add text here"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Heading",
+        "default": "<p>Add heading here</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Title Color",
+        "default": "#000000"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p>Add description here</p>"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "blog_grid",
+        "label": "Blog per row (grid only)",
+        "default": "4",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_blog_4_content",
+        "label": "Display Blog content"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_blog_4_img",
+        "label": "Display Blog img"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_blog_4_date",
+        "label": "Display Blog date"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_blog_4_tag",
+        "label": "Display Blog tag"
+      },
+      {
+        "type": "header",
+        "content": "Bottom Settings"
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "Button"
+      },
+      {
+        "type": "url",
+        "id": "btn_url",
+        "label": "Url"      
+      }
+    ],
+    "blocks": [
+      {
+        "type": "article",
+        "name": "result",    
+        "settings": [    
+          {
+            "type": "article",
+            "id": "article_picker",
+            "label": "result"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Blog Results",
+        "category": "blog",
+        "blocks": [
+          {
+          	"type": "article"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

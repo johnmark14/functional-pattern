@@ -1,0 +1,71 @@
+{% assign selected_handles = product.metafields.accentuate.related_courses | split: '|' %}
+{% assign count = selected_handles.size %}        
+{% case count %}
+{% when 1 %}
+{%- assign grid_item_width = 'grid__item one-block' -%}
+{% when 2 %}
+{%- assign grid_item_width = 'grid__item wide--one-third post-large--one-third large--one-third two-blocks' -%}
+{% when 3 %}     
+{%- assign grid_item_width = 'grid__item wide--one-third post-large--one-third large--one-third three-blocks' -%}
+{% endcase  %}
+
+{% assign blogStyle = 'data-blog-slider2' %}
+
+<div class="container">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="section-header text-center">
+    <p class="f-bk" style="text-transform: capitalize;">featured in</p>
+    <h3 class="section-title" style="max-width: 600px; margin: 0 auto;">{{ product.metafields.accentuate.title_related_course | escape }}</h3>      
+  </div>
+  <div class="dt-sc-hr-invisible-medium"></div> 
+  <div class="desktop">
+    <div class="course-grid-wrapper">
+      <ul class="grid-uniform" style="justify-content: center;">
+        {% for product in selected_handles limit: 3 %}
+          {% assign current_product = all_products[product] %}
+          {% include 'course-grid-item', grid_item_width: grid_item_width, current_product: current_product %} 
+        {% endfor %}
+      </ul>                              
+    </div>
+  </div>
+  <div class="mobile">
+    <div class="course-grid-wrapper" {{blogStyle}}>
+      <ul class="grid-uniform owl-carousel owl-theme BlogCarousel">
+        {% for product in selected_handles limit: 3 %}
+          {% assign current_product = all_products[product] %}
+          {% include 'course-grid-item-mobile', grid_item_width: grid_item_width, current_product: current_product %} 
+        {% endfor %}
+      </ul>
+    </div>
+  </div>  
+  <div class="dt-sc-hr-invisible-large"></div> 
+</div>
+
+<script type="text/javascript">        
+  $(document).ready(function(){
+    var BlogCarousel = $(".BlogCarousel");
+    BlogCarousel.owlCarousel({
+      loop:true,
+      autoPlay: false,
+      nav:true,
+      navContainer: ".nav_list_type2_items",
+      navText: ['<a class="prev-arrow"><i class="fa fa-arrow-left"></i></a>',' <a class="next-arrow"><i class="fa fa-arrow-right"></i></a>'],
+      dots: false,
+      responsive:{
+        0:{
+          items:1.2
+        },
+        568:{
+          items:2
+        },
+        720:{
+          items:2
+        },
+        1023:{
+          items: 3
+        }
+      }
+    });   
+  }); 
+
+</script>

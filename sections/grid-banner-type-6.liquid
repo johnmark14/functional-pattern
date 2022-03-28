@@ -1,0 +1,226 @@
+<div data-section-id="{{ section.id }}" data-section-type="grid-banner-type-6" class="grid-banner-type-6">  
+  <div class="grid-uniform">        
+    {% if section.blocks.size > 0 %}      
+    {% for block in section.blocks %}
+    {% if block.settings.alignment == "left" %}  
+    <div class="section-one wow fadeIn animated grid-banner-left">
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item"> 
+        <div class="ovrly09 overlay-grid-{{block.id }}" style="">
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif%}
+          {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.title }}" />
+          <div class="overlay"></div>
+          {% else %}
+          <img src="//via.placeholder.com/765x495">
+          {% endif%}           
+          {% if block.settings.link != blank %}  </a>
+          {% endif%}
+        </div>
+      </div>
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item">    
+        <div class="block-content"> 
+
+          {% if block.settings.icon_cls != blank %} 
+          <span class="{{block.settings.icon_cls}}"  style="color:{{block.settings.icon_clr}}"></span>
+          {% endif %}
+
+
+          {% if block.settings.title != blank %}                        
+          <h2 class="small-title">{{ block.settings.title }}</h2>        
+          {% endif %}   
+
+          {% if block.settings.desc != blank %}                         
+          <p>{{ block.settings.desc }}</p>        
+          {% endif %} 
+          {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" style="color:{{block.settings.button_color }};background:{{block.settings.button_bg }};" class="btn">{{ block.settings.button }}<div class="overlay"></div></a>{% endif%}
+        </div>  
+      </div>
+    </div>
+    {% endif%}
+    {% if block.settings.alignment == "right" %}     
+    <div class="section-two wow fadeIn animated grid-banner-right">
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item">    
+        <div class="block-content">  
+
+          {% if block.settings.icon_cls != blank %} 
+          <span class="{{block.settings.icon_cls}}"  style="color:{{block.settings.icon_clr}}"></span>
+          {% endif %}
+          {% if block.settings.title != blank %}                        
+          <h2 class="small-title">{{ block.settings.title }}</h2>        
+          {% endif %}   
+
+          {% if block.settings.desc != blank %}                         
+          <p>{{ block.settings.desc }}</p>        
+          {% endif %} 
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" style="" class="btn">{{ block.settings.button }}<div class="overlay"></div></a>{% endif%}
+        </div>  
+      </div>
+      <div  class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item">  
+        <div class="ovrly09 overlay-grid-{{block.id }}">
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif%}
+
+          {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | img_url: '1920X' }}" alt="{{ block.settings.title }}" />
+          <div class="overlay"></div>
+          {% else %}
+          <img src="//via.placeholder.com/765x495">
+          {% endif%}           
+          {% if block.settings.link != blank %}  </a>
+          {% endif%}
+        </div>
+      </div>
+    </div>
+    {% endif%}
+    {% endfor %}
+    {% endif %}  
+    <div class="dt-sc-hr-invisible-large"></div> 
+  </div>
+</div>
+
+<style>
+
+  {% if section.blocks.size > 0 %}      
+  {% for block in section.blocks %}
+
+  .grid-banner-type-6 .ovrly09.overlay-grid-{{block.id }}::before  {background:{{block.settings.img_bg_color}};}
+
+  {% endfor %}
+  {% endif %}
+
+  .grid-banner-type-6 .block-content h2 {color:{{ section.settings.title_color }}; }
+  .grid-banner-type-6 .block-content h4 {color:{{ section.settings.sub_title_color }}; }
+  .grid-banner-type-6 .block-content p { color:{{ section.settings.desc_color }}; }
+  .grid-banner-type-6 .section-one, .grid-banner-type-6 .section-two{background:{{section.settings.desc_bg_color}};}
+  {% if section.settings.overlay_1 %} .grid-banner-type-6 .overlay { background:{{ section.settings.overlay_bgcolor_1 | color_modify: 'alpha', 0.7 }}; } {% endif %}
+
+</style>
+
+{% schema %}
+{
+"name": "Image and Text Grid",
+"class": "index-section",
+"settings": [
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading color",
+"default":"#000"	
+}, 	
+{
+"type": "color",
+"id": "sub_title_color",
+"label": "Sub heading",
+"default":"#000"	
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Description",
+"default":"#000"	
+},
+{
+"type": "color",
+"id": "desc_bg_color",
+"label": "Description Bg Color",
+"default":"#000"	
+},
+
+{
+"type": "checkbox",
+"id": "overlay_1",
+"label": "Overlay"
+
+},
+{
+"type": "color",
+"id": "overlay_bgcolor_1",
+"label": "Overlay Bg",
+"default":"#fff"	
+}
+
+],
+"blocks": [
+{
+"type": "Image",
+"name": "support block",
+"settings": [ 
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 600x600"
+},
+{
+"type": "color",
+"id": "img_bg_color",
+"label": "Image Bg Color",
+"default":"#000"	
+},
+{
+"type": "select",
+"id": "alignment",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}        
+]
+},
+{
+"type": "text",
+"id": "icon_cls",
+"label": "Icon Class",
+"default": "Icon Class"	
+},
+{
+"type": "color",
+"id": "icon_clr",
+"label": "Icon Color",
+"default":"#000"	
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Collection Name"	
+},
+
+{
+"type": "text",
+"id": "sub_title",
+"label": "Sub heading",
+"default": "Sample Caption"	
+},
+
+{
+"type": "textarea",
+"id": "desc",
+"label": "Description",
+"default": "Sample Description"	
+},
+
+{
+"type": "text",
+"id": "button",
+"label": "Button",
+"default": "View all collection"	
+},    
+
+{
+"type": "text",
+"id": "link",
+"label": "Link"          
+}      
+
+]
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,132 @@
+<div class="grid--full site-header__menubar"> 
+  <a href="#" class="icon-nav close-menu-mb" title="Menu Mobile Icon" data-menu-mb-toogle>
+    <span class="icon-line"></span>
+  </a> 
+
+  <div class="grid__item menubar_inner header-bottom" data-sticky-mb>
+    <div class="wrapper-header-bt">
+      {% include 'header-mobile-v1' %}
+      <div class="header-pc">
+        <div class="header-panel-top">     
+          <div class="grid__item"> 
+            <div class="container">
+              <div class="menu_icon_section">                 
+                <div class="menu_icon_container">
+                  <ul class="menu_icon grid__item wide--one-sixth post-large--one-sixth large--one-sixth">                                    
+
+                    <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+                      <div class="header-search">
+                        <a href="#" class="site-header__link site-header__search" id="search_trigger">                          
+                          <svg class="icon icon-search" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          	<path d="M10.9876 7.8224C13.1818 7.8224 14.9855 9.61202 14.9855 11.8304C14.9855 12.6693 14.7251 13.4522 14.2417 14.142L13.8512 14.7012L13.2933 15.0927C12.6053 15.5774 11.8243 15.8384 10.9876 15.8384C8.79336 15.8384 6.98966 14.0488 6.98966 11.8304C6.98966 9.61202 8.79336 7.8224 10.9876 7.8224ZM10.9876 5.82773C7.67767 5.82773 5 8.51215 5 11.8304C5 15.1486 7.67767 17.8331 10.9876 17.8331C12.2706 17.8331 13.4607 17.4229 14.4462 16.7145L17.2541 19.5295C17.44 19.7159 17.7003 19.8277 17.9607 19.8277C18.221 19.8277 18.4813 19.7345 18.6673 19.5295L18.6859 19.5108C19.0764 19.1193 19.1321 18.4669 18.6859 18.094L15.878 15.2978C16.566 14.3098 16.9937 13.1167 16.9937 11.8304C16.9751 8.51215 14.2975 5.82773 10.9876 5.82773Z" fill="black"/>
+                          </svg>
+                        </a>
+                      </div>
+                    </li>
+
+                    {% unless settings.display_fixtop_menu %}
+                    <div class="check">
+                      {% include 'mobile-search' %}
+                    </div>
+                    {% endunless %}
+
+
+
+                    {% if settings.enable_multiple_currencies or settings.enable_shopify_payments_currencies %}
+                    <li class="header_currency">
+                      <ul class="tbl-list">
+                        <li class="currency dropdown-parent uppercase currency-block">            
+                          {% include 'currencies-switcher' %}
+                        </li>
+                      </ul>
+                    </li>  
+                    {% endif %}
+
+  
+
+                    <li>
+                      <div class="menu_bar_right post-large--hide large--hide medium-down--hide">
+                        <div class="slidedown_section">
+                          <a  id="Togglemodal" title="{{ 'layout.customer.log_in' | t }}" class="icon-cart-arrow" href="https://learning.functionalpatterns.app/">
+                            <svg viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5 9.32773C15.5 11.2607 13.933 12.8277 12 12.8277C10.067 12.8277 8.5 11.2607 8.5 9.32773C8.5 7.39473 10.067 5.82773 12 5.82773C13.933 5.82773 15.5 7.39473 15.5 9.32773ZM5 18.0777C5 15.7502 9.66375 14.5777 12 14.5777C14.3363 14.5777 19 15.7502 19 18.0777V19.8277H5V18.0777Z" fill="black"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    
+                    <li class="header-bar__module cart header_cart">
+                      {% include 'mini-cart' %} 
+                    </li> 
+
+                    
+                    
+                    <li><a href="/pages/start-your-functional-patterns-journey-today" class="btn btn-secondary" id="start-today-btn">Start today</a></li>
+
+<!--                     <li class="post-large--hide large--hide medium-down--hide">
+                      <a class="wishlist" href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><g transform="translate(0,-952.36218)"><path d="M28.2,960.6c-6.1,0-12.1,2.5-16.7,7.4c-9.1,9.9-9.1,25.7,0,35.6l36.7,39.8c0.9,0.9,2.3,1,3.3,0.1c0,0,0.1-0.1,0.1-0.1	c12.3-13.3,24.5-26.5,36.8-39.8c9.1-9.9,9.1-25.7,0-35.6s-24.2-9.9-33.4,0l-5,5.5l-5.1-5.5C40.4,963.1,34.3,960.6,28.2,960.6z M28.7,966c4.7,0,9.3,2,13,5.9l6.7,7.2c0.9,0.9,2.3,1,3.2,0.1c0,0,0.1-0.1,0.1-0.1l6.6-7.2c7.3-7.9,18.7-7.9,26,0 c7.3,7.9,7.3,20.7,0,28.6c-11.4,12.4-22.9,24.7-34.3,37.1l-34.2-37.1c-7.3-7.9-7.3-20.7,0-28.6C19.4,967.9,24.1,966,28.7,966z"/></g></svg></a>
+                    </li> -->
+
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var appendPrependMenuMobile = function() {
+    var headerPanelTop = $('.wrapper-container .header-panel-top'),
+        headerPc = $('.wrapper-container .header-pc'),
+        wrapperNav = $('.wrapper-navigation'),
+        areaMb = wrapperNav.find('.mb-area');
+
+    if (window.innerWidth < 1200) {
+      headerPanelTop.appendTo(areaMb);
+    } else {
+      headerPc.prepend(headerPanelTop);
+    };
+  };
+
+  $(document).ready(function() {
+    appendPrependMenuMobile();
+  });
+
+  var winWidth = $(window).innerWidth();
+
+  $(window).on('resize', function () {
+    var resizeTimerId;
+
+    clearTimeout(resizeTimerId);
+
+    resizeTimerId = setTimeout(function() {
+      var curWinWidth = $(window).innerWidth();
+
+      if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+        appendPrependMenuMobile();
+      };
+      winWidth = curWinWidth;
+    }, 0);
+  })
+
+  {% if settings.enable_multilang %}
+  translator.doTranslate('.site-header');
+  {% endif %}
+</script>
+
+{% schema %}
+{
+"name": "Header",
+"settings": [  
+
+]
+}
+{% endschema %}
+

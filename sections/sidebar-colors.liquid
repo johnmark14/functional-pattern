@@ -1,0 +1,104 @@
+{% if section.blocks.size > 0 %}  
+{% assign counter = 0 %}
+{% for block in section.blocks %}               
+{% assign tag = block.settings.title | strip %} 
+{% if current_tags contains tag %}            
+{% else %}
+{% if collection.tags contains tag %}             
+{% assign counter = counter | plus:1 %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% if section.settings.enable_shop_by_tags_1 %}
+<aside class="sidebar-tag color filter tags {% if counter == 0 %} counter_zero {% endif %}">  
+  <div class="widget widget_colors">
+    <h4>
+      <span>{{ section.settings.shop_by_tags_1_title  }}</span>
+      <a href="javascript:void(0)" class="clear" style="display:none">
+        <i class="fas fa-times"></i>
+      </a>
+    </h4>
+
+    <div class="widget-content">
+      <ul>            
+        {% for block in section.blocks %}         
+        {% if  block.settings.title != blank %}
+        {% assign tag = block.settings.title | strip %} 
+        {% if collection.tags contains tag %} 
+        <li class="{{tag | handle}}">
+          {% assign tag_value = tag | handleize %}
+          <input type="checkbox" id="{{ tag }}{{forloop.index}}" value="{{ tag_value }}" {% if current_tags contains tag %}checked{% endif %}/>
+          <a href="javascript:void(0)"  {% if current_tags contains tag %} class="active" {% endif %} title="{{tag}}">
+            <label for="{{ tag }}{{forloop.index}}">
+              <span style="background:{{ block.settings.color }};"></span>     
+            </label>  
+          </a>
+        </li>  
+        {% else %}
+        <li class="{{tag | handle}}">
+          {% assign tag_value = tag | handleize %}
+          <input type="checkbox" id="{{ tag }}{{forloop.index}}" value="{{ tag_value }}" />
+          <a href="javascript:void(0)" title="{{tag}}" {% if current_tags contains tag %} class="active" {% endif %}>
+            <label for="{{ tag }}{{forloop.index}}">
+              <span style="background:{{ block.settings.color }};"></span>     
+            </label>  
+          </a>
+        </li>             
+        {% endif %}
+        {% endif %}      
+        {% endfor %}
+
+      </ul>
+    </div></div>
+</aside>
+{% endif %}
+{% endif %}
+
+
+{% schema %}
+{
+"name": "Colors",
+"max_blocks": 20,
+"settings": [
+{
+"type": "header",
+"content": "Shop by Color"
+},
+{
+"type": "checkbox",
+"id": "enable_shop_by_tags_1",
+"label": "Enable",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_tags_1_title",
+"label": "Title",
+"default": "Shop By Color",
+"info": "i.e \"Shop by Color\"."
+}
+],
+
+"blocks": [
+{
+"type": "image",
+"name": "Color",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Color name"       
+},
+{
+"type": "color",
+"id": "color",
+"label": "Image"
+}
+]
+} 	
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}

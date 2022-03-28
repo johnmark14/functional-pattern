@@ -1,0 +1,73 @@
+<ul class="inline-list social-icons social-links-type-4">
+  {% if settings.social_twitter_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text twitt hexagon" target="blank" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.twitter' | t: name: shop.name, platform: 'Twitter' }}">
+        <span class="">{{ 'layout.footer.twitter' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_facebook_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text fb hexagon" target="blank" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.facebook' | t: name: shop.name, platform: 'Facebook' }}">
+        <span class="">{{ 'layout.footer.facebook' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_pinterest_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text pin hexagon" target="blank" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.pinterest' | t: name: shop.name, platform: 'Pinterest' }}">
+        <span class="">{{ 'layout.footer.pinterest' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_google_plus_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text google hexagon" target="blank" href="{{ settings.social_google_plus_link }}" title="{{ 'layout.footer.google' | t: name: shop.name, platform: 'Google Plus' }}" rel="publisher">
+        <span class="">{{ 'layout.footer.google' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_instagram_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text ins" target="blank" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.instagram' | t: name: shop.name, platform: 'Instagram' }}">
+        <span class="">{{ 'layout.footer.instagram' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_tumblr_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text tumblr" target="blank" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.tumblr' | t: name: shop.name, platform: 'Tumblr' }}">
+        <span class="">{{ 'layout.footer.tumblr' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_youtube_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text youtube" target="blank" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.youtube' | t: name: shop.name, platform: 'YouTube' }}">
+        <span class="">{{ 'layout.footer.youtube' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_vimeo_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text vimeo" target="blank" href="{{ settings.social_vimeo_link }}" title="{{ 'layout.footer.vimeo' | t: name: shop.name, platform: 'Vimeo' }}">
+        <span class="">{{ 'layout.footer.vimeo' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_rss_link != blank %}
+    <li>
+      <a style="border:1px solid {{ section.settings.footer_social_link_border }};color:{{ section.settings.footer_social_link }}" class="icon-fallback-text rss" target="blank" href="{{ settings.social_rss_link }}" title="{{ 'layout.footer.RSS' | t: name: shop.name, platform: 'RSS' }}">
+        <span class="">{{ 'layout.footer.RSS' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_linkedin_link != blank %}
+    <li>
+      <a class="icon-fallback-text linked-in" target="blank" href="{{ settings.social_linkedin_link }}" title="{{ 'layout.footer.linkedin' | t: name: shop.name, platform: 'linked-in' }}">
+        <span class="fas fa-linked-in" aria-hidden="true"></span>
+      </a>
+    </li>
+  {% endif %}
+</ul>

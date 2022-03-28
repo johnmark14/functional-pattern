@@ -1,0 +1,58 @@
+<div class="index-section testimonial-type2 p-relative">
+  
+  {% assign quoteStyle = 'data-quote-slider2' %}
+  {% assign quoteNav = 'data-quote-Nav2' %}  
+  {% assign data-count = product.metafields.accentuate.testimonials_content.size %}
+  {% assign content = product.metafields.accentuate.testimonials_content %}
+  {% assign name = product.metafields.accentuate.testimonial_name %}
+  
+  <div id="QuotesSection-testimonial-type-2" data-section-id="testimonial-type-2" data-section-type="quotes-section" class="quotes-section quotes-style2">
+    <div class="container-fluid">
+      <div class="grid-uniform"> 
+        <div class="dt-sc-hr-invisible-large"></div>
+        <div class="module home-testimonials ready">
+
+          <div class="module-body">
+            <div class="home-testimonials-container">
+
+              <div class="quotes-slider text-center" slick-initialized {{ quoteStyle }} data-count="{{ data-count }}">             
+                {% for photo in product.metafields.accentuate.testimonial_photo %}
+                <div class="quotes-slide--{{ forloop.index0 }}">
+                  <div class="grid__item">
+                    <div><span class="quote-icon">{% include 'icon-quote' %}</span></div>
+                    <div class="short-desc mt-40">{{ 'testimonials' }}</div>
+                    
+                    <div class="quote rte-setting"><h3>{{ content[forloop.index0].html }}</h3></div>
+                    
+                    <div class="rating mt-40 d-flex" style="color: #E51446;">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <div class="client-img mt-40"> 
+                      <img class="quote-icon" src="{{ photo[0].src }}"/>
+                    </div>
+                    <div class="client-info mt-20">                      
+                      <h3 class="quote-author">{{ name[forloop.index0] }}</h3>                                 
+                    </div>       
+                    <div class="">
+                      <p class="quote-job desc-text">{{ 'Verified Buyer' }}</p>                   
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}      
+              </div>               
+              <div class="quotes-arrow-nav carousel-arrow" {{ quoteNav }}></div>
+
+            </div>
+          </div>        
+        </div>
+        <div class="dt-sc-hr-invisible-large"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

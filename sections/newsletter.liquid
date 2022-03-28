@@ -1,0 +1,162 @@
+<div data-section-id="{{ section.id }}" data-section-type="home-newsletter-block" class="home-newsletter-block" style="{% if section.settings.image_1 != blank %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-repeat:no-repeat;background-size: cover;{% endif%};">  
+  <div class="newsletter-block {{ section.settings.newsletter_style }}">
+    <div class="overlay"></div>
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="">
+
+      <div class="news-inner-block">
+        {% if section.settings.title != blank %}
+        <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+        <div class="wow bounce"> 
+          {% if section.settings.news_desc != blank %}
+          <p class="f-bk" style="color:{{section.settings.text_color}}"> {{ section.settings.news_desc }}</p>
+          {% endif %}          
+          <h3 class="newslet_title " style="color:{{ section.settings.title_color }};">{{ section.settings.title }}</h3>          
+        </div> 
+        </div>  
+        {% endif %}         
+
+        <div class="mc-embedded-subscribe-form wow fadeInUp animated">       
+          {% form 'customer' %}
+           {{ form.errors | default_errors }}
+          {% if form.posted_successfully? %}
+          <p class="note form-success">{{ 'general.newsletter_form.mailing_list_success_message' | t }}</p>
+          {% else %}
+		  <div class="contact-input">	            
+            <input type="email" id="NewsletterFormEmail" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" class="mail" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" >
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <button type="submit" class="btn subscribe" name="subscribe" value="" >{{ section.settings.button }}</button>   
+          </div>
+
+          {% endif %}
+         
+          {% endform %}  
+
+        </div>
+      </div>
+    </div>
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>
+</div>
+
+<style>
+
+  .newsletter-block form input[type="email"]{color:{{section.settings.input_txt_color}};border:1px solid {{section.settings.news_border_clr}};}
+  .newsletter-block form input[type="email"]{background-color:{{ section.settings.input_bg_color }}; border:1px solid {{section.settings.news_border_clr | color_modify: 'alpha', 0.5 }}; }
+  .newsletter-block form .btn{color:{{section.settings.btn_txt_color}}; background:{{section.settings.btn_bg_color}};}
+
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "index-section newsletter-section",  
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image",
+      "info": "Size: 409x496"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "news_desc",
+      "label": "Desc",
+      "default": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Heading Position",
+      "options": [
+        {
+          "value": "default",
+          "label": "Full center"
+        },
+        {
+          "value": "full-left",
+          "label": "Full left"
+        },
+        {
+          "value": "full-right",
+          "label": "Full right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "newsletter_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "style1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style2",
+          "label": "Style 2"
+        },
+        {
+          "value": "style3",
+          "label": "Style 3"
+        }
+      ],
+      "default": "style1"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "news_border_clr",
+      "label": "Border Color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "input_bg_color",
+      "label": "Input Bg color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "input_txt_color",
+      "label": "Input Text color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Button",
+      "default": "Subscribe"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt_color",
+      "label": "Button Text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Bg color",
+      "default": "#000"
+    }
+  ]
+}
+{% endschema %}

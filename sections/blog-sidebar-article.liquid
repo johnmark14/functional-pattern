@@ -1,0 +1,51 @@
+{% if section.settings.show_recent_articles %}
+<div class="widget widget_recent_article">
+  <h4>{{ 'blogs.sidebar.recent_articles' | t }}<span class="right"></span></h4>
+  <ul class="recent_article">
+    {% for article in blogs[blog.handle].articles limit: section.settings.blog_article_limit %}
+    <li class="article-item">
+      {% if section.settings.show_recent_articles_img %}
+      {% if article.image %}
+      <div class="article-image">
+        {% assign image_alt = article.title | escape %}
+        {{ article | img_url: 'master' | img_tag: image_alt, 'article__image' | link_to: article.url }}
+      </div>
+      {% endif %}     
+      {% endif %}
+      <div class="article-description">
+        <h6>
+          <a href="{{ article.url }}">{{ article.title }}</a></h6>
+        <p>{{ article.content | strip_html | truncatewords: 5 }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+ {% schema %}
+{
+"name": "Blog Article",
+"settings": [
+
+{
+        "type": "checkbox",
+        "id": "show_recent_articles",
+        "label": "Show Recent Articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_recent_articles_img",
+        "label": "Show Recent Articles Image",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "blog_article_limit",
+        "label": "Article limit",
+"default": "3"
+      }
+]
+}
+{% endschema %}

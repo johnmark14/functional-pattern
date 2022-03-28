@@ -1,0 +1,73 @@
+{% unless section.settings.show_section == false %}  
+  <div class="grid-uniform">    
+    <div class="with-popup">
+      <div class="{% if section.settings.full %} container-bg no-padding {% else %}container{% endif %}">                      
+        {% if product.metafields.course_video.course_video != blank %}          
+          <div class="video-image video-wrapper">
+            
+            {% assign video = product.metafields.course_video.course_video %}
+            <div class="p-relative">
+              <video loop>
+                <source src="{{ video.src }}" type="video/mp4">                                    
+              </video>
+              <a href="{{ video.src }}" class="jas-popup-url v-play-icon"><i class="fas fa-play icons" aria-hidden="true"></i></a>                                  
+            </div>                                                                                                      
+
+            {% style %}
+              .video-text i{
+                color: {{ section.settings.icon_color }};
+                border: 2px solid {{ section.settings.icon_color }};
+              }
+              .video-summary{
+                color: {{ section.settings.text_color }};                		
+              }
+            {% endstyle %}
+
+            {% if section.settings.video_text != blank %}
+              <h4 class="video-summary">{{ section.settings.video_text | escape }}</h4>
+            {% endif %}
+
+          </div>                                 
+        {% endif%}
+      </div>                        
+    </div>
+  </div>
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Course Video",
+    "class": "course-video-hero",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show section",
+		"default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "full",
+        "label": "Show Full width"
+      }, 
+      {
+        "type": "text",
+        "id": "video_text",
+        "label": "Video Text",
+        "default": "Video Text Here"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label":"Text color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "icon_color",
+        "label":"Play Icon color",
+        "default": "#000"
+      }
+    ]
+  }
+{% endschema %}

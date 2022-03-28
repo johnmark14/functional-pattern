@@ -1,0 +1,38 @@
+{% include 'product-course' %}
+
+{% unless product.metafields.accentuate.course_features_title == blank and product.metafields.accentuate.course_features_content == blank %}
+  {% section 'course-features' %}
+{% endunless %}
+
+{% section 'product-bundle-block' %}
+
+{% assign collection_handle = handle | handleize %}
+{% if collections[collection_handle] != blank  %}
+	{% section 'course-product-children' %}
+{% endif %}
+
+{% unless product.metafields.accentuate.text_block == blank and product.metafields.accentuate.video_background_image == blank %}
+  {% section 'course-video-block' %}
+{% endunless %}
+
+{% if product.metafields.accentuate.related_results != blank %}
+  {% section 'course-product-related-results' %}
+{% endif %}
+
+{% unless product.metafields.accentuate.testimonials_content == blank and product.metafields.accentuate.testimonial_name == blank and product.metafields.accentuate.testimonial_photo == blank %}
+  {% section 'course-product-testimonial' %}
+{% endunless %}
+
+{% unless product.metafields.answer.answer == blank and product.metafields.accentuate.question_c == blank and product.metafields.accentuate.answer_c == blank %}
+  {% section 'course-faqs' %}
+{% endunless %}
+
+<div class="container">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="text-center">
+    <p class="f-bk">Course Reviews</p>
+    <h3>See what others are saying!</h3>
+  </div>
+  {% render 'okendo-reviews-widget', product: product %}
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>

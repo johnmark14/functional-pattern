@@ -1,0 +1,35 @@
+
+<script>
+  var inv_qty = {};
+  {% for var in product.variants %}
+  inv_qty[{{- var.id -}}] = {{ var.inventory_quantity | default: 0 }};
+  {% endfor %}
+</script>
+
+<p class="variant-inventory" data-size="{{ current_variant.inventory_quantity }}"></p>
+<div class="progress-bar">
+  <span class="progress" data-size="{{ current_variant.inventory_quantity }}"></span>
+</div>
+
+
+
+<style type="text/css">
+  .progress-bar {
+    height: 10px;
+    width: 100%;
+    background-color: #f5f5f5;
+    margin-bottom: 15px;
+    position: relative;
+  }
+
+  .progress {
+    background-color: #3bab3c;
+    height: 10px;    
+    display: block;
+    -webkit-transition: width 0.7s ease;
+    -moz-transition: width 0.7s ease;
+    -ms-transition: width 0.7s ease;
+    -o-transition: width 0.7s ease;
+    transition: width 0.7s ease;
+  }
+</style>

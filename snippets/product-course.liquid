@@ -1,0 +1,206 @@
+{% assign isCertification = false %}   
+{% assign productTags = product.tags | join: ', ' %}
+{% if productTags contains 'Advanced / Practitioner' %}
+{% assign isCertification = true %}   
+{% else %}
+{% endif %}    
+
+
+{% if product.metafields.accentuate.video_hero_bg_course != blank %}
+  <div class="course-video-hero" id="course-video-hero">
+    <div class="no-padding">
+      
+      {% assign video = product.metafields.accentuate.video_hero__courses %}
+      
+      {% for bg_img in product.metafields.accentuate.video_hero_bg_course %}
+        <div class="video-wrapper with-popup p-relative">       
+          <div class="p-video">
+            <img id="course-video" class="course-video" src="{{ bg_img.src }}" />
+<!--             <video id="course-video" class="course-video" poster="{{ bg_img.src }}">
+              <source src="{{ video }}" type="video/mp4">   
+              <source src="{{ video }}" type="video/ogg">
+            </video>                         -->
+            {% if product.metafields.accentuate.video_hero__courses != blank %}
+              {% if product.metafields.accentuate.video_button_label_course != blank %}
+                <a class="jas-popup-url" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+                <h4 class="video-summary">{{ product.metafields.accentuate.video_button_label_course }}</h4> 
+              {% else %}
+                <a class="jas-popup-url no-video-summary" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+              {% endif %}
+            {% endif %}
+          </div>                                                                                                                    
+        </div>  
+      {% endfor %}
+    </div>
+  </div>
+{% endif%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign compare_at_price = current_variant.compare_at_price -%}
+{%- assign price = current_variant.price -%}
+
+<div class="container product-section p-relative">
+  <div itemscope itemtype="http://schema.org/Product">
+    <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">  
+    <meta itemprop="name" content="{{ product.title | escape }}" />
+    <meta itemprop="sku" content="{{ product.variants.first.sku }}"/>
+    <meta itemprop="gtin14" content="{{ product.variants.first.barcode }}"/>
+    <meta itemprop="brand" content="{{ product.vendor }}"/>
+    <meta itemprop="description" content="{{ product.description | strip_html | escape }}"/>
+    <meta itemprop="image" content="https:{{ product.featured_image.src | img_url: 'grande' }}"/>
+    <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+      <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+      <meta itemprop="price" content="{{ product.price |money_without_currency  |strip_html }}">
+      <meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition" content="http://schema.org/NewCondition" />
+      {% if product.available == true %}<meta itemprop="availability" content="http://schema.org/InStock"/>{% else %}<meta itemprop="availability" content="http://schema.org/OutOfStock"/>{% endif %}
+    </div>
+  </div>
+    
+  <div class="grid-uniform">
+    <div class="product-image-section grid__item wide--two-fifths post-large--two-fifths large--two-fifths">
+      <div class="product-img-box">
+		&nbsp;
+      </div>
+    </div>
+
+    <div class="product_single_detail_section grid__item wide--three-fifths post-large--three-fifths large--three-fifths">
+      <h2 class="product-single__title">{{ product.title }}</h2>    
+      {% render 'okendo-reviews-product-rating-summary', product: product %}       
+      {% if product.description %}
+        <div class="product-description rte p-summary p-relative">
+          {{ product.description }}        
+        </div>
+
+        {% if isCertification == true %}
+          <p class="pdp-msg">
+            <a href="#" class="learn-more-label scroll-to" data-scroll-to-id="shopify-section-course-product-children">View Upcoming Courses</a>
+          </p>
+		{% endif %}
+      {% endif %}
+
+      {% assign variant = product.selected_or_first_available_variant %}
+      <link  href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+	  
+      {% if isCertification == false %}
+        <div class="product_single_price">
+          {% include 'product-price', variant: current_variant %}               
+        </div>
+	  {% endif %}
+      
+      {% form 'product', product, id: "AddToCartForm", class: "product-form" %}
+        <div class="selector-wrapper-secton">
+          {% assign hide_default_title = false %}
+          {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+          {% assign hide_default_title = true %}
+          {% endif %}           
+          {% if settings.enable_color_swatch %}           
+          {% for option in product.options %}
+          {% include 'swatch' with option %}
+          {% endfor %}
+          {% endif %}              
+          <select name="id" id="productSelect" class="product-single__variants" {% if hide_default_title %} style="display:none"{% endif %}>
+            {% for variant in product.variants %}
+            <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }}</option>
+            {% endfor %}
+          </select>
+        </div>          
+
+        {% include 'qty' %}
+
+
+        {% if isCertification == false %}
+        <div class="product_button_section">
+          <button type="submit" name="add" id="AddToCart" class="btn" data-cart-toggle>
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i><span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
+
+          {% if section.settings.payment_button %}
+          {{ form | payment_button }}
+          {% endif %}
+        </div>
+        {% else %}
+        <!--       <br /><br />
+  <h4>Scroll down for upcoming courses</h4> -->
+        {% endif %} 
+
+
+
+      {% endform %}                  
+
+    </div> 
+  </div>     
+
+</div>
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{{ 'jquery.fancybox.min.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.fancybox.min.js' | asset_url | script_tag }}
+<script>
+  
+  $( ".scroll-to" ).click(function(e) {
+    e.preventDefault();
+    var scroll_to_id = $(this).data('scroll-to-id');
+    $('html, body').animate({
+        scrollTop: $("#"+scroll_to_id).offset().top
+    }, 500);    
+  });  
+
+  
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      translations: {
+      add_to_cart : "{{ 'products.product.add_to_cart' | t }}",
+      sold_out : "{{ 'products.product.sold_out' | t }}",
+      unavailable : "{{ 'products.product.unavailable' | t }}"
+    } 
+                       });
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+
+    {% if settings.enable_linked_option %}
+    {% if product.available and product.options.size > 1 %}
+    Shopify.linkOptionSelectors({{ product | json }});
+    {% endif %}
+    {% endif %}
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+    $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+                                         {% endif %}
+                                         // Hide selectors if we only have 1 variant and its title contains 'Default'.
+                                         {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+                                         $('.selector-wrapper').hide();
+    $('.selector-wrapper-secton').hide();
+    {% endif %}
+
+    // Auto-select first available variant on page load. Otherwise the product looks sold out.
+    {% assign found_one_in_stock = false %}
+    {% for variant in product.variants %}
+    {% if variant.available and found_one_in_stock == false %}
+    {% assign found_one_in_stock = true %}
+    {% for option in product.options %}
+    $('.single-option-selector:eq({{ forloop.index0 }})').val({{ variant.options[forloop.index0] | json }}).trigger('change');
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+
+    $('.product-single .single-option-selector').wrap('<div class="selector-arrow">');
+  });   
+
+  $(".bundleCTA").click(function() {
+    $([document.documentElement, document.body]).animate({
+      scrollTop: $("#bundler-target-element div").offset().top
+    }, 1000);
+  });
+    
+
+</script>

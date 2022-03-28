@@ -1,0 +1,167 @@
+{% assign number_of_comments = article.comments_count %}
+{% if comment and comment.created_at %}
+{% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+
+
+
+
+  <div class="nytimes-template">
+    <div class="">
+      <article itemscope itemtype="http://schema.org/Article">
+        <div class="blog-wrapper">
+
+          <h1 class="article-title">{{ article.title }}</h1>          
+          <h2 class="article-excerpt">{{ article.excerpt }}</h2>
+		  <hr />
+          {% include 'social-sharing' %}
+		</div>
+        
+		{% if article.metafields.accentuate.featured_video_embedded_url != blank %}
+            <div class="article-featured-video">
+              {% for video in article.metafields.accentuate.featured_video_embedded_url %}
+                <div class="video-wrapper with-popup p-relative">       
+                  <div class="p-video">
+                    <video class="article-video" preload="auto" loop poster="{% if article.image %}{{ article | img_url: '820x'}}{% endif %}">
+                      <source src="{{ video.src }}" type="video/mp4">                                    
+                    </video>
+                    <a href="{{ video.src }}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>                 
+                  </div>                                                                                                                    
+                </div>              
+              {% endfor %}
+            </div>
+          {% else %}
+            {% if article.image %}
+            <div class="article-featured-image">
+              {% assign image_alt = article.title | escape %}
+              {{ article | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+            </div>
+            {% endif %}          
+
+          {% endif %}        
+        
+        <div class="blog-description">
+          
+          <div class="blog-meta">
+            <div class="author">by {{ article.author }}</div>
+            <div class="date">
+              <span data-datetime="{{ article.published_at | date: '%Y-%m' }}"><span>{{ article.published_at | date: '%b. %d, %Y' }}</span></span>             
+            </div>    
+          </div>        
+
+          
+          <p>{{ article.content }}</p>
+
+
+        </div>        
+        <div class="">
+          <div class="blog_section_detail">            
+                        
+
+            <div class="blog-meta-group">
+            {% if article.tags.size > 0 and section.settings.show_blog_4_tag %}
+            <div class="blog-tag">
+              <i class="fas fa-tag"></i>
+              {% for tag in article.tags %}
+              <a class="blog-tags" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %} <span class="meta-sep">&#44;</span> {% endunless %}
+              {% endfor %}
+            </div>
+            {% endif %}
+
+
+
+            </div>
+            
+            {% if blog.next_article or blog.previous_article %}
+            <div class="action-btn">
+              {% if blog.previous_article %}
+              <div class="btn-left">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+              </div>    
+              {% endif %}
+
+              {% if blog.next_article %}
+              <div class="btn-right">
+                {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+            {% if blog.comments_enabled? %}
+            <hr class="hr--clear hr--small">
+            <div id="comments">
+              {% if comment and comment.created_at %}
+              <p class="note form-success">
+                {% if blog.moderated? %}
+                {{ 'blogs.comments.success_moderated' | t }}
+                {% else %}
+                {{ 'blogs.comments.success' | t }}
+                {% endif %}
+              </p>
+              {% endif %}
+
+              {% if number_of_comments > 0 %}
+              {% paginate article.comments by 5 %}
+              <h6> {% if blog.comments_enabled? %}
+                {% assign number_of_comments = article.comments_count %}
+                <p class="comments-count">{{  number_of_comments }} {{ 'blogs.comments.comments' | t }}</p>
+                {% endif %}  
+              </h6>
+              <ul>               
+                {% if comment and comment.created_at %}
+                <li id="{{ comment.id }}" class="comment first{% if article.comments_count == 0 %} last{% endif %}">
+                  {% include 'comment' %}
+                </li>
+                {% endif %}
+                {% for comment in article.comments %}
+                <li id="{{ comment.id }}" class="comment{% unless number_of_comments > article.comments_count %}{% if forloop.first %} first{% endif %}{% endunless %}{% if forloop.last %} last {% endif %}">
+                  {% include 'comment' %}
+                </li>
+                {% endfor %}
+              </ul>
+              {% if paginate.pages > 1 %}
+              <hr class="--clear hr--small">
+              <div class="text-center">
+                {% include 'pagination-default' %}
+              </div>
+              {% endif %}
+              <hr class="hr--clear hr--small">
+              {% endpaginate %}
+              {% endif %}
+
+              {% form 'new_comment', article %}
+
+              <h6>{{ 'blogs.comments.title' | t }}</h6>
+
+              {{ form.errors | default_errors }}
+
+              <div class="grid-uniform">
+                <div class="grid__item wide--one-half post-large--one-half large--one-half">
+                  <label for="CommentAuthor" class="label--hidden">{{ 'blogs.comments.name' | t }}</label>
+                  <input {% if form.errors contains "author" %} class="error"{% endif %} type="text" name="comment[author]" placeholder="{{ 'blogs.comments.name' | t }}" id="CommentAuthor" value="{{ form.author }}" autocapitalize="words">
+                </div>
+                <div class="grid__item wide--one-half post-large--one-half large--one-half">
+                  <label for="CommentEmail" class="label--hidden">{{ 'blogs.comments.email' | t }}</label>
+                  <input {% if form.errors contains "email" %} class="error"{% endif %} type="email" name="comment[email]" placeholder="{{ 'blogs.comments.email' | t }}" id="CommentEmail" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+                </div>
+               
+                <label for="CommentBody" class="label--hidden">{{ 'blogs.comments.message' | t }}</label>
+                <textarea {% if form.errors contains "body" %} class="error"{% endif %} name="comment[body]" id="CommentBody" placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>
+                  
+              </div>
+              {% if blog.moderated? %}
+              <p><small>{{ 'blogs.comments.moderated' | t }}</small></p>
+              {% endif %}
+              <button type="submit" class="btn"><span>{{ 'blogs.comments.post' | t }}</span></button>
+              {% endform %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    </div>
+  
+</div>
+

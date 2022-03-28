@@ -1,0 +1,35 @@
+{% if settings.collection_infinite_scrolling %}
+{% if paginate.next %}
+<div class="infinite-scrolling">
+  <a href="{{ paginate.next.url }}" title="{{ 'collections.general.load_more' | t }}" class="btn">{{ 'collections.general.load_more' | t }}</a>   
+</div>
+{% endif %}
+{% else %}
+<ul class="pagination-custom text-center">
+  {% if paginate.previous %}
+  <li><a class="enable-arrow" href="{{ paginate.previous.url }}" title="{{ paginate.previous.title }}"><span class="fas fa-angle-left"></span></a></li>
+  {% else %}
+  <li class="disabled"><span class="fas fa-angle-left"></span></li>
+  {% endif %}
+
+  {% for part in paginate.parts %}
+  {% if part.is_link %}
+  <li>
+    <a href="{{ part.url }}" title="">{{ part.title }}</a>
+  </li>
+  {% else %}
+  {% if part.title == paginate.current_page %}
+  <li class="active"><span>{{ part.title }}</span></li>
+  {% else %}
+  <li><span>{{ part.title }}</span></li>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+  <li><a class="enable-arrow" href="{{ paginate.next.url }}" title="{{ paginate.next.title }}"><span class="fas fa-angle-right"></span></a></li>
+  {% else %}
+  <li class="disabled"><span class="fas fa-angle-right"></span></li>
+  {% endif %}
+</ul>
+{% endif %}

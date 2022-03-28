@@ -1,0 +1,42 @@
+{% unless blog.metafields.accentuate.background_image_blog == blank %}
+  <div class="video-hero">
+    <div class="no-padding">
+      
+      {% assign video = blog.metafields.accentuate.video_blog %}
+      
+      {% for bg_img in blog.metafields.accentuate.background_image_blog %}
+        <div class="video-wrapper with-popup p-relative">       
+          <div class="p-video">
+            <video class="hero-video" poster="{{ bg_img.src }}">
+              <source src="{{ video }}" type="video/mp4">   
+              <source src="{{ video }}" type="video/ogg">
+            </video>                        
+            {% if video != blank %}
+              {% if blog.metafields.accentuate.button_label_blog != blank %}
+                <a class="jas-popup-url" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+                <h4 class="video-summary">{{ blog.metafields.accentuate.button_label_blog }}</h4> 
+              {% else %}
+                <a class="jas-popup-url no-video-summary" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+              {% endif %}
+            {% endif %}
+          </div>                                                                                                                    
+        </div>  
+      {% endfor %}
+    </div>
+  </div>
+{% endunless %}
+
+{% unless blog.metafields.accentuate.title_blog == blank and blog.metafields.accentuate.description_blog == blank %}
+  <div class="rich-text-section p-relative">
+    <div class="container">
+      <div class="section-header text-center">
+        <h1 class="custom-h1" style="color: #000000;">{{ blog.metafields.accentuate.title_blog | escape }}</h1>
+      </div>
+      <div class="rte text-center" style="color: #000000;">{{ blog.metafields.accentuate.description_blog.html }}</div> 
+    </div>
+  </div>  
+{% endunless %}
+
+{% section 'blog-articles' %}
+<!-- {% section 'newsletter' %} -->
+{% section 'contact-grid-banner' %}

@@ -1,0 +1,27 @@
+{% unless section.settings.show_section == false %}
+<div class="practioners-hero">
+  {%- assign img_url = section.settings.image_desktop | img_url: '2000x' -%}
+  {%- assign mobile_img_url = section.settings.image_mobile | img_url: '767x' -%}        
+
+  {% if section.settings.image_desktop != blank %}
+  <img src="{{ img_url }}" class="lazyload medium-down--hide" alt="{{ section.settings.image_desktop.alt }}" />
+  {% else %}
+  <img src="//via.placeholder.com/1920x940"   class="lazyload medium-down--hide" alt="{{ section.settings.image_desktop.alt }}">
+  {% endif %}
+
+  {% if  section.settings.image_mobile != blank %}
+  <img src="{{ mobile_img_url }}"  class="lazyload wide--hide post-large--hide large--hide" alt="{{ section.settings.image_mobile.alt }}" />
+  {% else %}
+  <img src="//via.placeholder.com/767x750"   class="lazyload wide--hide post-large--hide large--hide" alt="{{ section.settings.image_mobile.alt }}">
+  {% endif %}  
+</div>
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Hero Section",
+	"class": "hero practioners-hero-section",
+    "settings": [
+	]
+  }
+{% endschema %}

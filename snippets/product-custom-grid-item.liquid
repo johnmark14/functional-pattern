@@ -1,0 +1,133 @@
+
+{% if template contains 'product' %}
+{% assign grid_item_width = '' %}
+{% endif %}
+{% unless current_collection == blank %}
+{% assign current_collection = collection %}
+{% endunless %}
+{% assign on_sale = false %}
+{% assign sale_text = 'products.product.sale' | t %}
+
+{% if variant.title %}
+{%- assign compare_at_price = variant.compare_at_price -%}
+{%- assign price = variant.price -%}
+{%- assign available = variant.available -%}
+{% else %}
+{%- assign compare_at_price = 1999 -%}
+{%- assign price = 1999 -%}
+{%- assign available = true -%}
+{% endif %}
+{%- assign money_price = price | money -%}
+
+{% if compare_at_price > price %}
+{% assign on_sale = true %}
+{% endif %}
+{% assign sold_out = true %}
+{% assign sold_out_text = 'products.product.sold_out' | t %}
+{% if available %}
+{% assign sold_out = false %}
+{% endif %}
+{% assign img_size='large' %}
+<li class="item-row  {% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}" id="product-{{ product.id }}">
+
+  <div class="products product-hover-9">
+    <div class="product-container">  
+      {% if settings.count_down_enable and settings.count_down_collections %}
+      {% assign dealTime = settings.home_productdeal_time | split: ' ' | join: ' ' | split: ' ' %}
+      {% include 'deal-snippet' %}
+      {% endif %}
+      <a href="{{ product.url | within: collection }}" class="grid-link">              
+        {% unless sold_out %}
+        {% if on_sale and settings.collections_show_sale_circle %}
+        <div class="featured-tag">
+          <span class="badge badge--sale">          
+            <span class="gift-tag badge__text{% if sale_text.size > 7 %} badge__text--small{% endif %}">{{ 'products.product.sale' | t }}</span>
+          </span>
+        </div>
+        {% endif %}
+        {% endunless %}
+        {% if sold_out and settings.collections_show_sold_out_circle %}
+        <span class="badge badge--sold-out">
+          <span class="badge__text{% if sold_out_text.size > 9 %} badge__text--small{% endif %}">{{ 'products.product.sold_out' | t }}</span>
+        </span>
+        {% endif %}   
+        <div class="ImageOverlayCa"></div>
+        {% if settings.secondary_image_use %}
+
+        {% if product.images.size > 1 %}
+        <div class="reveal"> 
+          <span class="product-additional">      
+            <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+          </span>
+          <img  src="{{ product.images.last | product_img_url: img_size }}" class="hidden-feature_img" alt="{{ product.images.last.alt | escape }}" />
+        </div> 
+
+        {% else %}
+
+        <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+        {% endif %}
+
+        {% else %}
+        <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+
+        {% endif %}
+      </a>
+      <div class="product_right_tag  {% if on_sale %} offer_exist {% endif %}">
+        {% if on_sale %}{% include 'offer-price' %} {% endif %} 
+        {% include 'new-label' %}
+      </div>
+      <div class="ImageWrapper">
+        <div class="product-button"> 
+
+          {% include 'btn-compare' %}
+
+          {% if settings.enable_quick_view %}       
+          <a title="{{ 'products.product.quick_view' | t }}" href="javascript:void(0)" id="{{ product.handle }}" class="quick-view-text" data-view="{{ product.handle }}">                      
+            <i class="far fa-eye"></i> 
+          </a>       
+          {% endif %}
+
+          {% if settings.enable_wishlist %}       
+          {% include 'wishlist-icon' %}         
+          {% endif %} 
+
+        </div>
+        {% if settings.display_item_size %}
+        {% include 'items-size' %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="product-detail">
+      {% if settings.product_review %}     <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> {% endif %}
+      <a href="{{ product.url | within: collection }}" class="grid-link__title">{{ product.title }}</a> 
+      <div class="grid-link__meta">
+        {% include 'product-price', variant: product %}         
+      </div>
+      {% if settings.show_ex_tax %}
+      <span class="sales_tax_label">{{ settings.ex_tax }}</span>
+      {% endif %}
+      {% if settings.enable_add_cart %}
+      {% if product.available %}   
+      {% assign variantCount = product.variants | size %}          
+      {% if variantCount > 1 %}
+      <a  title="{{ 'products.product.product_link' | t }}" href="{{ product.url }}">                      
+        <i class="fas fa-link"></i> 
+      </a>
+      {% else %}
+      <form  action="/cart/add" method="post" class="gom variants clearfix" id="cart-form-{{ product.id }}">                                    
+        <input type="hidden" name="id" value="{{ product.variants[0].id }}" />  
+        <a class="add-cart-btn" title="{{ 'products.product.add_to_cart' | t }}">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+      </form>  
+      {% endif %}	
+      {% endif %}
+      {% endif %} 
+      {% include 'item-swatch' %}
+
+
+    </div>
+
+  </div>
+</li>
+

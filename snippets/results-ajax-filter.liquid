@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="results-tags-wrapper text-center">
+    <ul class="advanced-filters mt-40">
+      <li class="f-bk advanced-filter"><a href=""> All</a></li>
+      {% assign tags_count = 0 %}
+      {% for tag in blog.all_tags %}
+		{% assign tags_count = tags_count | plus: 1 %}                                      
+          {% if current_tags contains tag %}
+              <li class="advanced-filter active-filter f-bk {% if tags_count > 6 %}d-none{% else %}visible{% endif %}" data-group="{{ cat_item }}" data-handle="/tagged/{{ tag | handle }}">{{ tag | remove_first: cat_item | remove_first: '_' | link_to_remove_tag: tag }}</li>
+          {% else %}
+              <li class="advanced-filter f-bk {% if tags_count > 6 %}d-none{% else %}visible{% endif %}" data-group="{{ blog.handle }}" data-handle="/tagged/{{ tag | handle }}"> {{ tag | link_to_tag: tag }} </li>  
+          {% endif %}              
+      {% endfor %}      
+    </ul>
+    {% if tags_count >= 6 %}
+    	<div class="mt-40"><a class="f-bk more-filters" style="color: #E51446; cursor: pointer;"> + more filters</a></div>
+    {% endif %}
+  </div>
+</div>
+ 
+<script>
+  $(function() {
+    $(document).on('click', '.more-filters', function(e){
+      e.preventDefault();                                
+      $('.d-none').attr('class', 'advanced-filter f-bk visible');
+      $(this).hide();      
+    });                                          
+  });
+</script> 

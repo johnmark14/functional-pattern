@@ -1,0 +1,333 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="circled-block-inner" style="float:left;width:100%;{% if section.settings.image_bg != blank %} background-image:url('{{ section.settings.image_bg | img_url: 'master' }}');background-repeat:no-repeat;background-position:left top; {% endif %} background-color:{{ section.settings.bg_color }};">  
+  <div class="{% if section.settings.full %}container-bg{% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="container">
+      {% if section.settings.heading != blank or section.settings.desc  %}
+      <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+      <div class="border-title">
+        {% if section.settings.heading != blank %}  <h2 style="color:{{ section.settings.heading_clr }}">{{ section.settings.heading }}</h2> {% endif %}
+        {% if section.settings.desc != blank %} <p style="color:{{ section.settings.desc_color }}">{{ section.settings.desc }}</p> {% endif %}      
+      </div>
+      </div>
+      {% endif %}
+    </div>  
+
+    <div class="grid-uniform">
+      {% if section.blocks.size > 0 %}       
+      {% for block in section.blocks %}    
+      {% case section.blocks.size %}
+      {% when 1 %}
+      {%- assign column = 'grid__item one-block' -%}
+      {% when 2 %}
+      {%- assign column = 'grid__item wide--one-half post-large--one-half large--one-half two-blocks' -%}
+      {% when 3 %}        
+      {%- assign column = 'grid__item wide--one-third post-large--one-third large--one-half three-blocks' -%}
+      {% when 4 %}        
+      {%- assign column = 'grid__item wide--one-quarter post-large--one-quarter large--one-half four-blocks' -%}
+      {% endcase %}
+
+      <div class="{{column}} animated wow animated fadeInUp animated">
+        {% if block.settings.link_1 != blank %}  <a href="{{ block.settings.link_1 }}"> {% endif %}
+        <div class="ovrly31 overlay_1">
+          {% if block.settings.image_1 != blank %}
+
+          <img class="banner_half_img" src="{{ block.settings.image_1 | img_url: 'master' }}" alt="{{ block.settings.title_1 }}" />
+
+          <div class="ovrly"></div>
+          {% else %}
+          <img src="//via.placeholder.com/600x600">
+          {% endif%}           
+
+          <div class="ch-info" {% if block.settings.overlay1 %} style="background: {{ block.settings.overlay_1 | color_modify: 'alpha', 0.8 }};"{% endif %}>
+            {% if block.settings.icon_img_1 != blank %}
+            <img src="{{ block.settings.icon_img_1 | img_url: 'master' }}" alt="{{ block.settings.title_1 }}" />
+            {% endif %}
+
+            <div class="ch-info-content">
+              {% if block.settings.titleshadow_3 != blank %}
+              <h6 style="text-transform:uppercase;color:{{ block.settings.shadowtext_color_3 }}">{{ block.settings.titleshadow_3 }}</h6>
+              {% endif %}
+
+              {% if block.settings.title_3_overlay != blank %}
+              <h3 style="color:{{ block.settings.title_color_3 }}">{{ block.settings.title_3_overlay }}</h3>
+              {% endif %}
+              {% if block.settings.text_3_desc != blank %}
+              <h4 style="color:{{ block.settings.text_color_3 }}">{{ block.settings.text_3_desc }}</h4>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% if block.settings.link_1 != blank %} </a> {% endif %}
+        <div class="featured-content featured-content--{{ block.id }}">   
+          {% if block.settings.title_top_1 != blank %}
+          <h6 style="color:{{ block.settings.title_top_1_clr }};">{{ block.settings.title_top_1 }}</h6>
+          {% endif %}
+          {% if block.settings.title_1 != blank %}
+          <h4><a href="{{ block.settings.link_1 }}" style="color:{{ block.settings.title_1_clr }};">{{ block.settings.title_1 }}</a></h4>
+          {% endif %}
+          {% if block.settings.text_1 != blank %}
+          <p style="color:{{ block.settings.text_1_clr }};">{{ block.settings.text_1}}</p>    
+          {% endif %} 
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %} 
+      <div class="view_more">
+        {% if section.settings.button_2 != blank %}
+        <a class="btn two" href="{{ section.settings.link_button }}">{{ section.settings.button_2}}</a>    
+        {% endif %} 
+      </div>
+    </div>          
+  </div>   
+</div>
+
+<style>
+
+  {% if section.settings.heading_image_need %} .home-circled-blocks .border-title h2:after { background-image:url({{ section.settings.heading_image | img_url: 'master' }}); } {% endif %}
+
+  {% for block in section.blocks %}    
+  
+  .home-circled-blocks .ovrly31 img { border:10px solid {{ block.settings.border_clr }}; }  
+  .home-circled-blocks .grid__item:hover .featured-content--{{ block.id }} h4 a { color:{{ block.settings.title_1_hover_clr }} !important; }  
+  
+  {% endfor %}
+
+</style>
+
+{% schema %}
+{
+"name": "Rounded Text Columns",
+"class": "index-section home-circled-blocks",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg color",
+"default": "#f5f5f5"
+},
+{
+"type": "image_picker",
+"id": "image_bg",
+"label": "Image",      
+"info": "Size: 1920x1770"
+},
+{
+"type": "checkbox",
+"id": "heading_image_need",
+"label": "Show Heading Image ?"
+
+},	
+{
+"type": "image_picker",
+"id": "heading_image",
+"label": "Image",
+"info": "Size: 105x17"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Rounded Text Columns"
+},
+{
+"type": "color",
+"id": "heading_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "desc",
+"label": "Description",
+"default": "Short Description"
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Description Color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "text",
+"id": "button_2",
+"label": "Button text",
+"default": "View all"
+},
+{
+"type": "url",
+"id": "link_button",
+"label": "Link URL"
+}
+],
+"blocks": [
+{
+"type": "image",
+"name": "Block",
+"settings": [ 
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 600x600"
+},
+{
+"type": "text",
+"id": "title_top_1",
+"label": "Small text",
+"default": "Small text"
+},
+{
+"type": "color",
+"id": "title_top_1_clr",
+"label": "Small text color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "title_1_hover_clr",
+"label": "Heading hover color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_1",
+"label": "Description",
+"default": "Few Lines of Short Description"
+},
+{
+"type": "color",
+"id": "text_1_clr",
+"label": "Description color",
+"default": "#000"
+},
+
+{
+"type": "checkbox",
+"id": "overlay1",
+"label": "Overlay",
+"default": true
+},
+{
+"type": "color",
+"id": "overlay_1",
+"label": "Overlay",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "border_clr",
+"label": "Border Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "titleshadow_3",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},
+{
+"type": "color",
+"id": "shadowtext_color_3",
+"label":"Text color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "title_3_overlay",
+"label": "Heading",
+"default": "50% Offer"
+},
+{
+"type": "color",
+"id": "title_color_3",
+"label":"Title color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_3_desc",
+"label": "Description",
+"default": "Short Text" 
+},
+{
+"type": "color",
+"id": "text_color_3",
+"label":"Text color",
+"default": "#000"
+},
+
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Rounded Text Columns",
+"category": "Image",
+"blocks": [
+{
+"type": "image"
+},
+{
+"type": "image"
+},        
+{
+"type": "image"
+}
+]
+}
+]
+}
+{% endschema %}

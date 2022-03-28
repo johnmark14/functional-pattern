@@ -1,0 +1,156 @@
+{% if section.blocks.size > 0 %}
+
+<div class="container">
+  <div class="featured-collection-inner text-center">   
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="collection-info">
+      <div class="section-header">
+        <div class="border-title">  
+          {% if section.settings.small_title != blank %}
+          <p style="color:{{settings.color_heading_type1_color }};" class="f-bk">{{ section.settings.small_title }}</p>
+          {% endif %}          
+          {% if section.settings.title != blank %}
+          <div>
+            <h3 class="section-header__title" style="color:margin-top: 15px;">    
+              {{ section.settings.title }}
+            </h3>
+          </div>
+          {% endif %}   
+          {% if section.settings.left_link != blank %}
+          <a href="{{ section.settings.left_link }}" class="link_text" style="color: {{ section.settings.left_link_txt_clr }};">{{ section.settings.left_link_text }}</a>
+          {% endif %} 
+        </div>
+      </div>    
+      <div class="nav_list_type2_items"></div>
+    </div>     
+    <div class="grid-uniform">  
+        <div class="owl-carousel owl-theme ListType3">         
+        {% for block in section.blocks %}          
+      	  {%- assign product = all_products[block.settings.product_picker] -%}
+          
+          {% assign grid_item_width = 'grid__item' %}
+   
+          <div class="item-row {{ grid_item_width }} products border-line">
+            <div class="collection-image">
+              <a href="{{ product.url | within: collection }}" class="grid-link">
+                <img src="{{ product.featured_image.src | img_url: '360x360' }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+              </a>
+            </div>
+            <div class="collection-content flexible">
+              <h4><a href="{{ product.url | within: collection }}" class="grid-link__title">{{ product.title }}</a></h4>
+              <div class="grid-link__meta">
+                {% include 'product-price', variant: product %}  
+              </div> 
+            </div>
+          </div>
+          
+        {% endfor %}   
+       </div>  
+      <div class="dt-sc-hr-invisible-medium"></div>
+      {% if section.settings.bottom_link != blank and section.settings.bottom_link_text != blank %}
+        <div class="text-center">
+        <a href="{{ section.settings.bottom_link }}" class="btn btn-primary">{{ section.settings.bottom_link_text }}</a>
+        </div>
+      {% endif %}       
+      <div class="dt-sc-hr-invisible-large"></div>
+    </div>    
+  </div>
+</div>
+{% endif %}
+
+<style>
+/*   .list-collection-product-items .list-collection-products .pickgradient-products:hover .pickgradient.grid-link::before {opacity:1;}
+  .list-collection-product-items .owl-prev a:hover, .list-collection-product-items .owl-next a:hover { background:{{ section.settings.bottom_link_txt_clr }}; }   */
+</style>
+
+
+{% schema %}
+  {
+    "name": "Featured Collections",
+    "class": "index-section featured-collection",
+    "settings": [  
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Heading",
+        "default": "<p>Featured Collections</p>"
+      },	
+      {
+        "type": "textarea",
+        "id": "small_title",
+        "label": "Description"
+      },	
+      {
+        "type": "header",
+        "content": "Bottom Settings"
+      },
+      {
+        "type": "text",
+        "id": "bottom_link_text",
+        "label": "Bottom Link Text",
+        "default": "Link"
+      },	
+      {
+        "type": "url",
+        "id": "bottom_link",
+        "label": "Bottom Link"   	  
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",    
+        "settings": [    
+          {
+            "type": "product",
+            "id": "product_picker",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Collections",
+        "category": "Collection",
+        "blocks": [
+          {
+          	"type": "product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<script type="text/javascript">        
+  $(document).ready(function(){
+    var ListType3 = $(".ListType3");
+    ListType3.owlCarousel({
+      loop:false,
+      autoPlay: false,
+      stagePadding: 50,
+      margin:15,        
+      nav:false,
+      navContainer: ".nav_list_type2_items",
+      navText: ['<a class="prev-arrow"><i class="fa fa-arrow-left"></i></a>',' <a class="next-arrow"><i class="fa fa-arrow-right"></i></a>'],
+      dots: false,
+      responsive:{
+        0:{
+          items:1
+        },
+        568:{
+          items:2
+        },
+        720:{
+          items:3
+        },
+        1024:{
+          items: 3
+        }
+      }
+    });   
+  }); 
+
+</script>
+{% stylesheet %}
+{% endstylesheet %}

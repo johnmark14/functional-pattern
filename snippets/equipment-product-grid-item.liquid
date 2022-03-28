@@ -1,0 +1,213 @@
+{% if template contains 'product' %}
+{% assign grid_item_width = '' %}
+{% endif %}
+{% unless current_collection == blank %}
+{% assign current_collection = collection %}
+{% endunless %}
+{% assign on_sale = false %}
+{% assign sale_text = 'products.product.sale' | t %}
+{% if product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+{% assign sold_out = true %}
+{% assign sold_out_text = 'products.product.sold_out' | t %}
+{% if product.available %}
+{% assign sold_out = false %}
+{% endif %} 
+
+{% assign img_size='large' %}
+
+{% assign isAffiliate = false %}   
+{% if product.tags contains 'affiliate' %}
+{% assign isAffiliate = true %}   
+{% else %}
+{% endif %}   
+
+
+
+<div class="grid__item item-row {{ grid_item_width }} {% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}" id="product-{{ product.id }}" {% if section.settings.collection_infinite_scrolling %}{% if forloop.index > section.settings.total_products_load %} style="display:none"  data-wow-duration="1{{ forloop.index }}" {% endif %}{% endif %}>
+  <div class="products product-hover-11">
+    <div class="product-container">  
+
+      {% if isAffiliate %}
+      	{% assign product_url = product.metafields.accentuate.affiliate_url %}      	
+      {% else %}    
+     	 {% assign product_url = product.url | within: collection %}
+      {% endif %}
+      
+      {% if settings.count_down_enable and settings.count_down_collections %}
+      {% assign dealTime = settings.home_productdeal_time | split: ' ' | join: ' ' | split: ' ' %}
+      {% include 'deal-snippet' %}
+      {% endif %}
+      
+      <a  {% if isAffiliate %} onclick="handleAffliateModal('{{ product_url }}')" data-toggle="modal" data-target="#redirect_modal-{{ product.id  }}" {% else %} href="{{ product_url }}" {% endif %} class="grid-link">          
+      <!--<a href="{{ product_url }}" {% if isAffiliate %} onclick="handleAffliateModal" data-toggle="modal" data-target="#redirect_modal-{{ product.id  }}"{% endif %} class="grid-link">-->          
+
+        {% unless sold_out %}
+        {% if on_sale and settings.collections_show_sale_circle %}
+        <div class="featured-tag">
+          <span class="badge badge--sale">          
+            <span class="gift-tag badge__text{% if sale_text.size > 7 %} badge__text--small{% endif %}">{{ 'products.product.sale' | t }}</span>
+          </span>
+        </div>
+        {% endif %}
+        {% endunless %}
+        {% if sold_out and settings.collections_show_sold_out_circle %}
+        <span class="badge badge--sold-out">
+          <span class="badge__text{% if sold_out_text.size > 9 %} badge__text--small{% endif %}">{{ 'products.product.sold_out' | t }}</span>
+        </span>
+        {% endif %} 
+
+        <div class="ImageOverlayCa"></div>
+        {% if settings.secondary_image_use %}
+
+        {% if product.images.size > 1 %}
+        <div class="reveal"> 
+          <span class="product-additional">   
+            <a href="{{ product.url | within: collection }}" class="grid-link">  
+              <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+            </a>
+          </span>
+          <a href="{{ product.url | within: collection }}" class="grid-link">  
+            <img  src="{{ product.images.last | product_img_url: img_size }}" class="hidden-feature_img" alt="{{ product.images.last.alt | escape }}" />
+          </a>
+        </div> 
+
+        {% else %}
+        <a href="{{ product.url | within: collection }}" class="grid-link">  
+          <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+        </a>
+        {% endif %}
+
+        {% else %}
+        <a href="{{ product.url | within: collection }}" class="grid-link">  
+          <img src="{{ product.featured_image.src | img_url: img_size }}" class="featured-image" alt="{{ product.featured_image.alt | escape }}">
+        </a>
+        {% endif %} 
+      </a>
+
+      <div class="product_right_tag  {% if on_sale %} offer_exist {% endif %}">
+        {% if on_sale %}{% include 'offer-price' %} {% endif %}  
+        {% include 'new-label' %}
+      </div>
+      <div class="ImageWrapper">
+        <div class="link_icon">
+          {% if settings.display_item_size %}
+          {% include 'items-size' %}
+          {% endif %}
+        </div>
+
+        <div class="product-button"> 
+          {% if settings.enable_add_cart %}
+          {% if product.available %}   
+          {% assign variantCount = product.variants | size %}          
+          {% if variantCount > 1 %}
+          <a  title="{{ 'products.product.product_link' | t }}" href="{{ product.url }}">                      
+            <i class="fas fa-link"></i> 
+          </a>
+          {% else %}
+          <form  action="/cart/add" method="post" class="variants clearfix" id="cart-form-{{ product.id }}">                                    
+            <input type="hidden" name="id" value="{{ product.variants[0].id }}" />  
+            <a class="add-cart-btn" title="{{ 'products.product.add_to_cart' | t }}">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+          </form>  
+          {% endif %}	
+          {% endif %}
+          {% endif %} 
+    {% include 'btn-compare' %}
+
+          {% if settings.enable_wishlist %}       
+          {% include 'wishlist-icon' %}         
+          {% endif %} 
+
+          {% if settings.enable_quick_view %}       
+          <a href="javascript:void(0)" title="{{ 'products.product.quick_view' | t }}" id="{{ product.handle }}" class="quickview-button quick-view-text product_link" data-view="{{ product.handle }}"><i class="fa fa-search"></i></a>       
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="product-detail flexible">
+      {% if settings.display_vendor %}<p class="product-vendor"><span>{{ product.vendor }}</span></p>{% endif %}
+      <a {% if isAffiliate %} onclick="handleAffliateModal('{{ product_url }}')" data-toggle="modal" data-target="#redirect_modal-{{ product.id  }}" {% else %} href="{{ product_url }}" {% endif %}  class="grid-link__title">
+        {{ product.title }}
+      </a>
+      {% if product.metafields.accentuate.affiliate_text %}<div style="margin: -5px 0 10px 0; font-size: 13px;">{{ product.metafields.accentuate.affiliate_text }}</div>{% endif %}
+      
+      {% if settings.product_review %} <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> {% endif %}   
+		
+
+      
+      
+      {% if product.metafields.accentuate.swatch_hex_colour != blank %}	
+
+        <div class="product-swatch">
+          <span>available in</span>
+
+          <ul>
+
+            {% for photo in product.metafields.accentuate.swatch_hex_colour %}
+            <li><div class="swatch" style="background-color: {{ product.metafields.accentuate.swatch_hex_colour[forloop.index0] }};"></div></li>
+            {% endfor %} 
+
+
+          </ul>
+        </div>
+
+      {% endif %}
+
+
+      
+      
+      
+      
+      {% assign isInnovations = false %}   
+      {% assign productTags = product.tags | join: ', ' %}
+      {% if productTags contains 'innovations' %}
+      	<div class="mt-20">
+      		<p class="product-tag">innovations</p>
+      	</div>
+      {% else %}
+        <div class="grid-link__meta">
+          {% include 'product-price', variant: product %}  
+        </div>       
+      {% endif %}      
+
+
+      
+<!--       <div class="product_desc grid_list">{{ product.description | strip_html | truncate: 150 }}</div> -->
+<!--       {% include 'item-swatch' %}       -->
+    </div>
+  </div>
+</div>
+
+{% if isAffiliate %}
+  <div id="redirect_modal-{{ product.id  }}" class="results_modal modal modal-grid modal-redirect fade" role="dialog" >  
+    <div class="modal-close p-absolute">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>                    
+    </div>
+    <div class="modal-content">
+      <div class="modal-body text-center" style="padding: 50px;">
+        <h3>Forwarding to Retailer...</h3> 
+<!--         <p>Click here <a href="{{ product_url }}">{{ product_url }}</a> if you are not redirected after 5 seconds</p> -->
+        <small>By using third-party features and tools, you agree that your relationships with the third-party service providers will be governed by the applicable third party companies’ separate terms of use that differ from ours.</small>
+        <br />        <br />
+
+        <a class="btn btn-primary" href="{{ product_url }}">Go to retailer</a>
+      </div> 
+    </div>  
+  </div>
+
+<script>
+// 	const article = document.querySelector('#redirect_modal-{{ product.id  }}');
+  
+  
+//   function handleAffliateModal(affiliateUrl){
+// //     alert(affiliateUrl);
+//     setTimeout("location.href = '"+affiliateUrl+"';",1500);
+// //     window.location.href= '/collections/wholesale';
+//   }
+  
+</script>
+{% endif %} 

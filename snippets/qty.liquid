@@ -1,0 +1,115 @@
+<div class="product-single__quantity {% if product.variants.size == 1 %}no-variants{% endif %}">
+  <div class="quantity-box-section {% unless section.settings.product_quantity_enable %} hide {% endunless %}">
+    <label>{{ 'products.product.quantity' | t }}</label>
+    <div class="quantity_width">
+      {% if settings.single_product_layout_type != 'layout_style_3' and  settings.single_product_layout_type != 'layout_style_4' %}
+      <div class="dec button">-</div>
+      {% endif %}
+      <input type="number" id="quantity" name="quantity" value="1" min="1">
+      {% if settings.single_product_layout_type != 'layout_style_3' and  settings.single_product_layout_type != 'layout_style_4' %}
+      <div class="inc button">+</div>
+      {% endif %}
+
+      <p class="min-qty-alert" style="display:none">{{ 'products.product.quantity_note' | t }}</p>
+    </div>
+  </div>
+  {% if settings.display_subtotal  %} 
+  <div class="total-price">
+    <label>{{ 'cart.general.subtotal' | t }} </label><span>{{ product.price | money }}</span>
+  </div>
+  {% endif %}
+</div>
+
+
+<script>
+  jQuery(".button").on("click", function() {
+    var oldValue = jQuery("#quantity").val(),
+        newVal = 1;
+
+    if (jQuery(this).text() == "+") {
+      newVal = parseInt(oldValue) + 1;
+    } else if (oldValue > 1) {
+      newVal = parseInt(oldValue) - 1;
+    }
+
+    jQuery(".product-single #quantity").val(newVal);
+    {% if settings.display_subtotal  %} 
+    updatePricing();
+    {% endif %}
+  });
+  
+  
+  
+  {% if settings.display_subtotal %} 
+  //update price when changing quantity
+  function updatePricing() {
+    
+    
+    //try pattern one before pattern 2
+    var regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;
+    var unitPriceTextMatch = jQuery('.product-single #ProductPrice').text().match(regex);
+   
+    if (!unitPriceTextMatch) {
+      regex = /([0-9]+[.|,][0-9]+)/g;
+      unitPriceTextMatch = jQuery('.product-single #ProductPrice').text().match(regex);        
+    }
+   
+    if (unitPriceTextMatch) {
+      var unitPriceText = unitPriceTextMatch[0];     
+      var unitPrice = unitPriceText.replace(/[.|,]/g,'');
+      var quantity = parseInt(jQuery('.product-single  #quantity').val());
+      var totalPrice = unitPrice * quantity;
+
+      var totalPriceText = Shopify.formatMoney(totalPrice, window.money_format);
+      regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;     
+      if (!totalPriceText.match(regex)) {
+        regex = /([0-9]+[.|,][0-9]+)/g;
+      } 
+      totalPriceText = totalPriceText.match(regex)[0];
+
+      var regInput = new RegExp(unitPriceText, "g"); 
+      var totalPriceHtml = jQuery('.product-single #ProductPrice').html().replace(regInput ,totalPriceText);
+
+      jQuery('.product-single .total-price span').html(totalPriceHtml);     
+    }
+  }
+
+  jQuery('.product-single #quantity').on('change', updatePricing);
+  {% endif %}
+  
+  
+  
+  var t = false
+
+jQuery('input').focus(function () {
+    var $this = jQuery(this)
+    
+    t = setInterval(
+
+    function () {
+        if (($this.val() < 1 ) && $this.val().length != 0) {
+            if ($this.val() < 1) {
+                $this.val(1)
+            }
+
+          
+            jQuery('.min-qty-alert').fadeIn(1000, function () {
+                jQuery(this).fadeOut(500)
+            })
+        }
+    }, 50)
+})
+
+jQuery('input').blur(function () {
+    if (t != false) {
+        window.clearInterval(t)
+        t = false;
+    }
+})
+
+
+  
+  
+  
+</script>
+

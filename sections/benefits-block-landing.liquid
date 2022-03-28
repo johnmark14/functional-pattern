@@ -1,0 +1,36 @@
+
+   
+{% for benefit_data in page.metafields.accentuate.cbl_benefit_1_image %}
+
+
+  {% if page.metafields.accentuate.cbl_benefits_title[forloop.index0] != blank %}
+  <div class="content-block-title" style="padding-bottom: 0px;">
+    <h2 style="margin-bottom: 0px;">{{ page.metafields.accentuate.cbl_benefits_title[forloop.index0] }}</h2>
+  </div>
+  {% endif %}
+
+
+
+
+  <div class="grid-wrapper grid-{{ page.metafields.accentuate.cbl_benefits_card_size[forloop.index0] }}">
+    <div class="grid-number">
+      <img src="{{ page.metafields.accentuate.cbl_benefit_1_image[forloop.index0][0].src }}" />
+      <span>{{ page.metafields.accentuate.cbl_label_benefit_1[forloop.index0] }}</span>
+    </div>
+    <div class="grid-number">
+      <img src="{{ page.metafields.accentuate.cbl_benefit_2_image[forloop.index0][0].src }}" />
+      <span>{{ page.metafields.accentuate.cbl_label_benefit_2[forloop.index0] }}</span>
+    </div>
+    <div class="grid-number">
+      <img src="{{ page.metafields.accentuate.cbl_benefit_3_image[forloop.index0][0].src }}" />
+      <span>{{ page.metafields.accentuate.cbl_label_benefit_3[forloop.index0] }}</span>
+    </div>
+    <div class="grid-number">
+      <img src="{{ page.metafields.accentuate.cbl_benefit_4_image[forloop.index0][0].src }}" />
+      <span>{{ page.metafields.accentuate.cbl_label_benefit_4[forloop.index0] }}</span>
+    </div>
+  </div>
+
+	
+
+{% endfor %}

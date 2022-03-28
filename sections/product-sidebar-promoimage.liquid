@@ -1,0 +1,76 @@
+{% if section.blocks.size > 0 %}  
+    <div class="widget widget_promo_img">
+      <ul id="promo-carousel">
+        {% for block in section.blocks %}
+        {% if block.settings.promo_img != blank %}
+        <li>
+          <a href="{{ block.settings.promo_link }}" title="{{ block.settings.promo_title }}"> 
+            <img src="{{ block.settings.promo_img | img_url : '500x500' }}" alt="{{ block.settings.promo_title }}" title="{{ block.settings.promo_title }}" /> 
+          </a>
+            <h5>{{ block.settings.promo_title }} </h5>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+ {% endif %}
+ {% schema %}
+  {
+    "name": "Sidebar Promo Images",
+
+    "max_blocks": 3,
+    "settings": [],
+"blocks": [
+{
+"type": "content",
+      "name": "Promo  banner",
+      "settings": [	
+      {
+        "type": "image_picker",
+        "id": "promo_img",
+        "label": "Image"
+      },
+	{
+        "type": "url",
+        "id": "promo_link",
+        "label": "URL"
+      },
+      {
+        "type": "text",
+        "id": "promo_title",
+        "label": "Heading"
+      }
+]
+}
+]	
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+$(document).ready(function(){
+     $("#promo-carousel").owlCarousel({ 
+      autoPlay: 3000, //Set AutoPlay to 3 seconds 
+        items: 1,
+        itemsCustom: false,
+        itemsDesktop: [1199, 1],
+        itemsDesktopSmall: [980, 1],
+        itemsTablet: [630, 1],
+        itemsTabletSmall: false,
+        itemsMobile: [479, 1],
+        singleItem: false,
+        itemsScaleUp: false,
+        responsive: true,
+        responsiveRefreshRate: 200,
+        responsiveBaseWidth: window,
+        autoPlay: false,
+        stopOnHover: false,
+        navigation: false,
+        pagination:true
+ 
+  });
+});
+      
+{% endjavascript %}

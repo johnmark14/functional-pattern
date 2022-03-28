@@ -1,0 +1,34 @@
+<div class="container">
+{% include 'product-equipment' %}
+</div>
+{% schema %}
+{
+  "name": "Product Settings",
+  "class": "product-equipment-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "display_product_thumb_img",
+      "label": "Display thumb image?",
+      "default": true
+    },            
+    {
+      "type": "checkbox",
+      "id": "product_quantity_enable",
+      "label": "Show quantity selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cart",
+      "label": "Enable add to cart",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_button",
+      "label": "Enable Buy Now",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+<!-- {% if page.metafields.accentuate.cbl_image != blank %} -->
+
+
+{% assign video_url = page.metafields.accentuate.cbl_video %}    
+{% for media_bg_data in page.metafields.accentuate.cbl_image %}
+
+
+{% if page.metafields.accentuate.cbl_title[forloop.index0] != blank %}
+<div class="content-block-title {{ page.metafields.accentuate.cbl_bg_colour[forloop.index0] }}">
+  <h2>{{ page.metafields.accentuate.cbl_title[forloop.index0] }}</h2>
+</div>
+{% endif %}
+
+
+
+{% if page.metafields.accentuate.cbl_block_type[forloop.index0] == 'full width' %}
+
+
+  <div class="content-block-section full-width  {{ page.metafields.accentuate.cbl_bg_colour[forloop.index0] }} {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] != blank %} hasBG {% endif %}" {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] != blank %} style="background-image: url('{{ media_bg_data[0].src }}')" {% endif %}>
+
+    <div class="container p-relative">
+
+      {% capture media_layout %}
+      <div class="video-wrapper with-popup p-relative">
+      {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] == blank %}
+          <img src="{{ media_bg_data[0].src }}" />
+      {% endif %}
+      </div>    
+      {% endcapture %}
+
+      {% capture text_layout %}
+      <div class="cb-content">
+        {{ page.metafields.accentuate.text_block_html[forloop.index0] }}
+      </div>    
+      {% endcapture %}    
+
+      <div class="p-relative">
+        {{ media_layout }}
+        {{ text_layout }}
+      </div>
+    </div>
+  </div>
+
+
+{% else %}
+
+
+
+
+  <div class="content-block-section video-addbox {{ page.metafields.accentuate.cbl_bg_colour[forloop.index0] }} {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] != blank %} hasBG {% endif %}" >
+
+    {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] != blank %} 
+    <div class="bg-cover bg-desktop" style="background-image: url('{{media_bg_data[0].src }}')"></div>    
+    <div class="bg-cover bg-mobile" style="background-image: url('{{page.metafields.accentuate.cbl_image_mobile[forloop.index0][0].src }}')"></div>
+    {% endif %}
+    
+    <div class="container p-relative">
+
+      {% capture media_layout %}
+      <div class="video-wrapper with-popup p-relative">
+      {% if page.metafields.accentuate.cbl_image_is_bg[forloop.index0] == blank %}
+          {% if video_url[forloop.index0] != blank %}
+          <div class="p-video">
+            <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+              <source src="{{  video_url[forloop.index0] }}" type="video/mp4">                                    
+            </video>
+            <a href="{{ video_url[forloop.index0] }}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>              
+          </div>          
+          {% else %}
+          <div class="p-video">
+            <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+              <source src="{{ video_url[forloop.index0].src }}" type="video/mp4">                                    
+            </video>              
+          </div>
+          {% endif %}
+      {% endif %}
+      </div>    
+      {% endcapture %}
+
+      {% capture text_layout %}
+      <div class="course-content-inner">
+        {{ page.metafields.accentuate.text_block_html[forloop.index0] }}
+      </div>    
+      {% endcapture %}    
+
+      <div class="p-relative video-text-block-inner">
+        {% if page.metafields.accentuate.cbl_position_of_text_block[forloop.index0] == 'right' %}
+        <div class="grid-uniform video-banner-block v1 d-flex">
+          <div class="video-image grid__item">
+            {{ media_layout }}
+          </div>      
+          <div class="course-content grid__item ">
+            {{ text_layout }}
+          </div>
+        </div>
+        {% else %}
+        <div class="grid-uniform video-banner-block v2 d-flex">
+          <div class="course-content grid__item ">
+            {{ text_layout }}
+          </div>
+          <div class="video-image grid__item">
+            {{ media_layout }}
+          </div>
+        </div>
+        {% endif %}    
+      </div>
+
+
+    </div>
+
+  </div>
+
+{% endif %}
+
+
+
+
+
+{% endfor %}
+<!-- {% endif %} -->

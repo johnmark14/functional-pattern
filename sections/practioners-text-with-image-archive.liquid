@@ -1,0 +1,241 @@
+
+
+<div class="container">
+  <div class="grid-uniform text-center form-container">
+    <div class="form-wrapper">
+      <select id="countries" class="form-control">
+        <option value="" disabled selected>Country</option>
+      </select>
+      <select id="cities" class="form-control" style="display: none;">
+        <option value="" disabled selected>City</option>
+      </select>
+      <button id="search" class="btn btn-primary"><span class="btn-text">Search</span><span class="btn-loading ring-loader"><div></div><div></div><div></div></span></button>
+      <a href="javascript: location.reload();" id="btnClear">clear</a>
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="practitioners-container">
+    <div class="grid-uniform" id="practitioners">
+    </div>
+    <div class="text-center">
+    	<a href="" id="triggerLoadMore" class="btn btn-primary">Load More</a>
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-medium"></div>
+</div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close">&times;</span>
+      <div class="d-flex modal-content-inner">
+        <div class="modal-avater grid__item one-half"><img class="avatar" id="practitioners--avatar"/></div>
+        <div class="modal-practitioners-inner grid__item one-half">
+          <h2 class="name"><span id="practitioners--first_name"></span><br /><span id="practitioners--last_name"></span></h2>
+          <p class="level" id="practitioners--level"></p>
+          <p class="address" id="practitioners--address"></p>
+          <div class="contact" id="practitioners--contact">
+            <a href='' class='contact-trigger' data-email='${practitioner.email}'>Contact <span id="practitioners--name"></span></a>
+            <div class="practitioner-form-wrapper">
+              <div class="form-con" >
+                {formbuilder:42364}
+                <p class="testimonials" id="practitioners--testimonials"></p>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+<script>
+  $(function() {
+    const BASE_URL = 'https://fp-practitioners-api.pwstaging.com.au';
+
+    const $countries = $('#countries');
+    const $cities = $('#cities');
+    const $search = $('#search');    
+    const $close = $('#close');
+    const $practitioners = $('#practitioners');
+    const $modal = $('#modal');
+    const $loadMore = $( "#triggerLoadMore" );
+
+    let countries = {};
+    let practitioners = {};
+    const getCountires = async () => {
+      const res = await fetch(`${BASE_URL}/api/countries`);
+      countries = await res.json();
+
+      for(objKey in countries) {
+        const o = new Option(countries[objKey].name, countries[objKey].code);
+        /// jquerify the DOM object 'o' so we can use the html method
+        $(o).html(countries[objKey].name);
+        $countries.append(o);
+      }
+    };
+
+
+    const getPractitioners = async (country, city, page) => {
+      const apiURL = `${BASE_URL}/api/practitioners?page=${page}&country_code=${country}&city=${city}`;
+
+      console.log(city);
+      console.log("APIURL: " + apiURL);
+      const res = await fetch(apiURL);
+      console.log(res.json);
+      return await res.json();
+    };
+    
+
+
+    const showModal = (practitioner) => {
+      $('#practitioners--avatar').attr('src', practitioner.avatar ? practitioner.avatar : 'https://via.placeholder.com/360');
+      $('#practitioners--first_name').text(practitioner.first_name);
+      $('#practitioners--last_name').text(practitioner.last_name);
+      $('#practitioners--level').html(`<i class="fas fa-check-circle"></i> ${practitioner.level}`);
+      $('#practitioners--address').html(`<span>Training out of</span><br /> ${practitioner.address.city}, ${practitioner.address.country.name}`);
+      
+      $('#practitioners--name').text(practitioner.first_name);
+      
+      
+      // Prefill the recipient address
+      $('#hidden').val(practitioner.email);
+        practitioner.testimonials.forEach(t => {
+          console.log(t)
+        $('#practitioners--testimonials').append($(`<div class="testimonial-content">${t}</div>`));
+      });
+
+      $modal.show();
+    }
+    
+    
+
+    $countries.on('change', (e) => {
+      const country = $('#countries option:selected').val();
+      $cities.empty();
+      countries[country].cities.forEach(c => {
+        const o = new Option(c, c);
+        $(o).html(c);
+        $cities.append(o);
+      });
+      $cities.show();
+    });
+
+    
+    const initPractitionerSearch = async (page, empty) => {
+      
+        const country = $('#countries option:selected').val();
+        const city = $('#cities option:selected').val();
+
+    
+//       if (country !== '' && city !== '') {
+        $search.addClass('loading');
+        const result = await getPractitioners(country, city, page);
+    
+    	console.log(result);
+//     	console.log(result.meta);
+    
+
+        practitioners = result.data;
+		
+      	if(empty){ $practitioners.empty(); }
+     
+        result.data.forEach(p => {
+           
+          const prac_city = p.address ? p.address.city : '';          
+          const prac_country = p.address ? p.address.country.name : '';
+
+          const $practitioner = $(`<div class="practitioner-content grid__item item-row wide--one-third post-large--one-third large--one-third medium--one-half small--one-half" id="practitioner${p.uuid}" data-uuid="${p.uuid}">
+              <div class="practitioners"><a class="avatar_wrapper"><button class="avatar avatar_btn" type="button" data-uuid="${p.uuid}"></button><img class="avatar" src="${p.avatar ? p.avatar : 'https://via.placeholder.com/360'}" data-uuid="${p.uuid}"/></a>
+			  <div class="practitioner-content-inner flexible">
+              <h3 class="name">${p.first_name}<br/>${p.last_name}</h3>          
+			  <p class="address">${prac_city} ${prac_country}</p>
+			  
+
+            </div></div></div>`);
+
+          $practitioners.append($practitioner);
+        });
+    
+      
+    
+      const res_current_page = result.meta.current_page;
+      const res_next_page = res_current_page + 1;
+      const res_last_page = result.meta.last_page;
+      
+      if(res_current_page < res_last_page){
+		$loadMore.addClass('active');
+        var load_more_button = document.querySelector('#triggerLoadMore');
+        load_more_button.setAttribute('data-current-page', res_current_page);        
+        load_more_button.setAttribute('data-next-page', res_next_page);
+        load_more_button.setAttribute('data-last-page', res_last_page);        
+      } else {
+        $loadMore.removeClass('active');
+      }
+     
+      $search.removeClass('loading');      
+    };
+    
+    
+    
+    $search.on('click', async (e) => {
+        await initPractitionerSearch(1, true);
+    	$('#btnClear').show();
+    });
+  
+
+    $( "#triggerLoadMore" ).click(function(e) {
+      e.preventDefault();
+      var next_page = document.getElementById('triggerLoadMore').getAttribute('data-next-page');
+      initPractitionerSearch(next_page, false);
+    }); 	
+
+     
+  
+    $( document ).ready(function() {
+        setTimeout(function(){
+        initPractitionerSearch(1, true);
+    }, 1000);
+    });  
+  
+  
+    $(document).on('click', '.grid__item', (e) => {
+      const uuid = $(e.target).data('uuid');
+      if (uuid !== undefined){
+        const practitioner = practitioners.find(p => p.uuid === uuid);
+        showModal(practitioner);
+      }
+    });
+  
+ 
+    $(document).on('click', '.contact-trigger', (e) => {
+      e.preventDefault();
+      const practitioner_email = $(e.target).data('email');
+      $(e.target.nextElementSibling.classList.add("active"));
+    });
+ 
+  
+    $close.on('click', (e) => {
+      $modal.hide();
+    });
+
+    getCountires();  
+  });
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Text with image section",
+	"class": "practioners-text-with-image-section",
+    "settings": [
+	],
+    "blocks": [
+      {      
+        "name": "Text and image",
+        "type": "image",
+        "settings": [
+        ]
+      }    
+    ]
+  }
+{% endschema %}

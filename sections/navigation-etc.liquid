@@ -1,0 +1,647 @@
+{% include 'style-navigation' %}
+
+<div class="wrapper-navigation" data-sticky-pc>
+
+
+  <div class="main-menu jas-mb-style">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="mb-area">
+            {% if settings.display_fixtop_menu %}
+
+            {% include 'mobile-search' %} 
+
+            {% endif %}
+            <div class="left">
+              <nav class="nav-bar" role="navigation">
+                {% include 'adv-site-nav' %}
+              </nav>       
+            </div>
+
+            <div class="right-header header-items" data-append-header-pc>
+
+
+              <div class="appentMb " data-append-header-mb>
+
+                {% if shop.customer_accounts_enabled or section.settings.display_wishlist %}
+                <ul class="menu_bar_right wide--hide">
+
+
+                  <li class="wishlist">            
+                    <a  href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}">{{ 'products.wishlist.wishlist_name' | t }}<i class="fas fa-heart post-large--hide large--hide medium-down--hide"></i></a>            
+                  </li>
+
+                  {% if shop.customer_accounts_enabled %} 
+                  <li class="customer_account"> 
+                    <div class="header-account_links">
+                      <ul> 
+                        {% if customer %}
+                        <li>
+                          <a href="/account" title="{{ 'layout.customer.account' | t }}" data-value="value 1"><i class="fa fa-user post-large--hide large--hide medium-down--hide"></i><span class="wide--hide ">{{ 'layout.customer.account' | t }}</span></a>
+                        </li>
+                        <li class="logout-link">
+                          <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}" data-value="value 1"><i class="fa fa-sign-out-alt post-large--hide large--hide medium-down--hide"></i><span class="wide--hide ">{{ 'layout.customer.log_out' | t }}</span></a>
+                        </li>
+                        {% else %}
+                        <li>
+                          <a href="/account/login" title="{{ 'layout.customer.log_in' | t }}" data-value="value 1"><i class="fa fa-user post-large--hide large--hide medium-down--hide"></i><span class="wide--hide">{{ 'layout.customer.log_in' | t }}</span></a>
+                        </li>
+
+                        {% endif %}  
+
+                      </ul>   
+
+                    </div>
+
+                  </li>
+                  {% endif %} 
+
+                </ul>
+                {% endif %}  
+
+
+                
+              
+
+
+            <div class="right">
+              <ul class="header-5-icon">
+                  {% if settings.enable_multiple_currencies or settings.enable_shopify_payments_currencies %}
+                <li class="header_currency">
+                  <ul class="tbl-list">
+                    <li class="currency dropdown-parent uppercase currency-block">            
+                      {% include 'currencies-switcher' %}
+                    </li>
+                  </ul>
+                </li>  
+                {% endif %}
+
+                {% if shop.customer_accounts_enabled or section.settings.display_wishlist %}
+
+                <li class="menu-right-icon post-large--hide large--hide medium-down--hide">
+                  <div class="menu_bar_right">
+                    <div class="slidedown_section">
+                      <a  id="Togglemodal" title="{{ 'layout.customer.log_in' | t }}" class="icon-cart-arrow"><i class="fas fa-user" aria-hidden="true"></i> </a>
+                      <div id="slidedown-modal">
+                        <div class=" post-large--hide large--hide medium-down--hide">
+                          <ul>
+
+                            {% if shop.customer_accounts_enabled or section.settings.display_wishlist %}
+                            <li>
+                              <div class="customer_account">                          
+                                <ul>
+                                  {% if shop.customer_accounts_enabled %}
+                                  {% if customer %}
+                                  <li>
+                                    <a href="/account" title="{{ 'layout.customer.account' | t }}"><i class="fas fa-user" aria-hidden="true"></i> {{ 'layout.customer.account' | t }}</a>
+                                  </li>
+                                  <li class="logout-link">
+                                    <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}" data-value="value 1"><i class="fas fa-sign-out-alt"></i>{{ 'layout.customer.log_out' | t }}</a>
+                                  </li>
+                                  {% else %}
+                                  <li>
+                                    <a href="/account/login" title="{{ 'layout.customer.log_in' | t }}"> <i class="fas fa-sign-in-alt icons" aria-hidden="true"></i> {{ 'layout.customer.log_in' | t }}</a>
+                                  </li>
+                                  <li>
+                                    <a href="/account/register" title="{{ 'layout.customer.create_account' | t }}">  <i class="fas fa-user" aria-hidden="true"></i> {{ 'layout.customer.create_account' | t }}</a>
+                                  </li>          
+                                  {% endif %}  
+                                  {% endif %} 
+                                  {% if section.settings.display_wishlist %}
+                                  <li>
+                                    <a href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}"> <i class="far fa-heart" aria-hidden="true"></i> {{ 'products.wishlist.wishlist_name' | t }}</a>
+                                  </li>
+                                  {% endif %}
+                                </ul>
+                              </div>     
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {% endif %}
+
+                {% if section.settings.display_minicart %}
+                <li class="header-bar__module cart header_cart">
+                  {% include 'mini-cart' %} 
+                </li> 
+                {% endif %} 
+
+
+
+                {% if section.settings.display_search %}    
+
+                {% if settings.search_model == 'search_type2' %}
+                <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+                  <div class="header-search">
+                    <a href="#" class="site-header__link site-header__search" id="search_trigger">
+                      <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+                    </a>
+                  </div>
+                </li>
+                {% endif %}
+                {% if settings.search_model == 'search_type3' %}
+                <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+                  <div class="header-search">
+                    <a href="/search" class="site-header__link site-header__search js-drawer-open-top">
+                      <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+                    </a>
+                  </div>
+                </li>
+                {% endif %}
+                
+                {% if settings.search_model == 'search_type1' %}
+
+                  {% include 'adv-search-model' %}
+
+                  {% endif %}
+
+
+                {% if settings.search_model == 'search_type1' %}
+                {% unless settings.display_fixtop_menu %}
+                {% include 'mobile-search' %}
+                {% endunless %}
+                {% endif %}
+
+                {% endif %} 
+              </ul>
+            </div>
+               </div>
+            </div>
+          </div>
+
+       
+
+<style>
+@media (min-width:1200px) {
+    {% unless section.settings.logo_fix != blank %}
+    .header-lang-style2 .is-sticky .main-menu,
+    .wrapper_header_default .is-sticky .main-menu {
+        width: -moz-calc(100% - 112px);
+        width: -webkit-calc(100% - 112px);
+        width: -ms-calc(100% - 112px);
+        width: calc(100% - 112px);
+        margin-left: 112px;
+    }
+    {% endunless %}
+}
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "Navigation",
+	"max_blocks": 15,
+    "settings": [  
+	  {
+        "type": "header",
+        "content": "Fixed Top Menu"
+      },
+      {
+"type": "link_list",
+"id": "pick_menu",
+"label": "Pick Menu",
+"default": "main-menu"
+},
+	  {
+        "type": "image_picker",
+        "id": "logo_fix",
+        "label": "Logo image when enable Fixed Top Menu",
+		"info": "95px x 44px recommended"
+      },
+{
+"type": "checkbox",
+"id": "display_minicart",
+"label": "Display minicart"
+},
+
+{
+"type": "checkbox",
+"id": "display_wishlist",
+"label": "Display wishlist"
+},  
+{
+"type":"checkbox",
+"id": "display_search",
+"label": "Display Search"	
+},
+	  {
+        "type": "header",
+        "content": "Navigation Text alignment"
+      },
+
+	  {
+        "type": "select",
+        "id": "alignment",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+        ]
+      },
+	  {
+		"type" : "header",
+		"content" : "Settings"
+	  },
+	  
+	  
+	  {
+		"type" : "text",
+		"id" : "font_size_mnu_lv1",
+		"label" : "Font size Menu level 1",
+		"default" : "13px",
+		"info" : "======================="
+	  },
+	  
+	  {
+		"type" : "text",
+		"id" : "font_size_mnu_lv2",
+		"label" : "Font size Menu level 2",
+		"default" : "12px",
+		"info" : "======================="
+	  },
+	 
+	
+	  {
+		"type" : "text",
+		"id" : "font_size_mnu_lv3",
+		"label" : "Font size Menu level 3",
+		"default" : "12px",
+		"info" : "======================="
+	  },
+	  {
+		"type" : "header",
+		"content" : "Label"
+	  },
+	  {
+		"type" : "checkbox",
+		"id" : "enable_sale",
+		"label" : "Display Label Sale",
+		"default" : true
+	  },
+	  {
+		"type" : "text",
+		"id" : "lb_sale",
+		"label" : "Label sale",
+		"default" : "Sale"
+	  },
+	  {
+		"type" : "textarea",
+		"id" : "sale_item",
+		"label" : "Label Sale Items"
+	  },
+	  {
+		"type" : "color",
+		"id" : "bg_lb_sale",
+		"label" : "Background color label sale",
+		"default" : "#ef6454"
+	  },
+	  {
+		"type" : "color",
+		"id" : "color_lb_sale",
+		"label" : "Text Color label sale",
+		"default" : "#fff"
+	  },
+	  {
+		"type" : "checkbox",
+		"id" : "enable_new",
+		"label" : "Display Label New",
+		"default" : true
+	  },
+	  {
+		"type" : "text",
+		"id" : "lb_new",
+		"label" : "Label New",
+		"default" : "New"
+	  },
+	  {
+		"type" : "textarea",
+		"id" : "new_item",
+		"label" : "Label New Items"
+	  },
+	  {
+		"type" : "color",
+		"id" : "bg_lb_new",
+		"label" : "Background color label New",
+		"default" : "#06bfe2"
+	  },
+	  {
+		"type" : "color",
+		"id" : "color_lb_new",
+		"label" : "Text Color label New",
+		"default" : "#fff"
+	  },
+	  {
+		"type" : "checkbox",
+		"id" : "enable_hot",
+		"label" : "Display Label Hot",
+		"default" : true
+	  },
+	  {
+		"type" : "text",
+		"id" : "lb_hot",
+		"label" : "Label Hot",
+		"default" : "Hot"
+	  },
+	  {
+		"type" : "textarea",
+		"id" : "hot_item",
+		"label" : "Label Hot Items"
+	  },
+	  {
+		"type" : "color",
+		"id" : "bg_lb_hot",
+		"label" : "Background color label Hot",
+		"default" : "#ffbb49"
+	  },
+	  {
+		"type" : "color",
+		"id" : "color_lb_hot",
+		"label" : "Text Color label Hot",
+		"default" : "#fff"
+	  },
+	  {
+        "type": "header",
+        "content": "Mega Menu"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_megamenu",
+        "label": "Display Mega Menu?",
+        "default": true
+      }
+	],
+	"blocks": [
+	  {
+	  	"type": "style_1",
+      	"name": "Style 1",
+      	"settings": [
+		  {
+			"type" : "header",
+			"content" : "Column Menu"
+		  },
+		  {
+            "type": "text",
+            "id": "megamenu_items_1",
+            "label": "Mega Menu Items for Style 1",
+            "default": "Catalog",
+            "info": "Use \"|\" when use language , For ex: Collections | Sammlungen "
+          },		  		  
+		  {
+			"type" : "header",
+			"content" : "Product"
+		  },
+		  {
+            "type": "text",
+            "id": "title_featured_product",
+            "label": "Title Product",
+			"default" : "Featured Products"
+          },
+		  {
+            "type": "product",
+            "id": "featured_product",
+            "label": "Product"
+          },
+		  {
+			"type" : "header",
+			"content" : "Banner"
+		  },	  
+		  {
+            "type": "image_picker",
+            "id": "banner_first_style_1",
+            "label": "Upload a new image",
+            "info": "210px x 337px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_first_style_1",
+			"label": "Link image "
+		  }
+		]
+      },	  
+	  {
+	  	"type": "style_2",
+      	"name": "Style 2",
+      	"settings": [
+		  {
+			"type" : "header",
+			"content" : "Column Menu"
+		  },
+		  {
+            "type": "text",
+            "id": "megamenu_items_2",
+            "label": "Mega Menu Items for Style 2",
+            "default": "Catalog",
+            "info": "Use \"|\" when use language , For ex: Collections | Sammlungen "
+          },
+		  {
+			"type" : "header",
+			"content" : "Banner"
+		  },
+		  {
+            "type": "image_picker",
+            "id": "banner_first_style_2",
+            "label": "Upload a new image 1",
+            "info": "210px x 165px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_first_style_2",
+			"label": "Link image 1 ",
+			"info": "=============="
+		  },	  
+		  {
+            "type": "image_picker",
+            "id": "banner_second_style_2",
+            "label": "Upload a new image 2",
+            "info": "210px x 165px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_second_style_2",
+			"label": "Link image 2 ",
+			"info": "=============="
+		  },		  
+		  {
+            "type": "image_picker",
+            "id": "banner_third_style_2",
+            "label": "Upload a new image 3",
+            "info": "210px x 337px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_third_style_2",
+			"label": "Link image 3"
+		  }
+		]
+      },	  
+	  {
+	  	"type": "style_3",
+      	"name": "Style 3",
+      	"settings": [		  
+		  {
+            "type": "text",
+            "id": "megamenu_items_3",
+            "label": "Mega Menu Items for Style 3",
+            "default": "Catalog",
+            "info": "Use \"|\" when use language , For ex: Collections | Sammlungen "
+          }
+		]
+      },	
+	  {
+	  	"type": "style_4",
+      	"name": "Style 4",
+      	"settings": [
+		  {
+			"type" : "header",
+			"content" : "Column Menu"
+		  },
+		  {
+            "type": "text",
+            "id": "megamenu_items_4",
+            "label": "Mega Menu Items for Style 4",
+            "default": "Catalog",
+            "info": "Use \"|\" when use language , For ex: Collections | Sammlungen "
+          },		  		  		  
+		  {
+			"type" : "header",
+			"content" : "Banner"
+		  },	  
+		  {
+            "type": "image_picker",
+            "id": "banner_first_style_4",
+            "label": "Upload a new image",
+            "info": "210px x 320px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_first_style_4",
+			"label": "Link image"
+		  }
+		]
+      },	  
+	{
+	  	"type": "style_5",
+      	"name": "Style 5",
+      	"settings": [
+		  {
+            "type": "text",
+            "id": "title",
+            "label": "Style 5",
+            "default": "Style 5"
+          },
+		  {
+            "type": "text",
+            "id": "megamenu_items_5",
+            "label": "Mega Menu Items for Style 5",
+            "default": "Catalog"
+          },
+		  
+		{
+            "type": "image_picker",
+            "id": "banner_first_style_5",
+            "label": "Upload a new image",
+            "info": "610px x 338px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_first_style_5",
+			"label": "Link image 1"
+		  },
+		 {
+            "type": "image_picker",
+            "id": "banner_second_style_5",
+            "label": "Upload a new image",
+            "info": "610px x 338px recommended"
+          },
+		  {
+			"type": "url",
+			"id": "link_banner_second_style_5",
+			"label": "Link image 2"
+		  }
+		]
+      },
+ {
+      "type": "style_6",
+        "name": "Style 6",
+        "settings": [
+      {
+            "type": "text",
+            "id": "title",
+            "label": "Style 6",
+            "default": "Style 6"
+          },
+      {
+            "type": "text",
+            "id": "megamenu_items_6",
+            "label": "Mega Menu Items for Style 6",
+            "default": "Catalog"
+          },
+      
+          {
+            "type": "image_picker",
+            "id": "banner_first_style_6",
+            "label": "Upload a new image",
+            "info": "400px x 600px recommended"
+          },
+      {
+      "type": "url",
+      "id": "link_banner_first_style_7",
+      "label": "Link image 1"
+      },
+      
+      {
+            "type": "image_picker",
+            "id": "banner_second_style_6",
+            "label": "Upload a new image",
+            "info": "400px x 600px recommended"
+          },
+      {
+      "type": "url",
+      "id": "link_banner_second_style_6",
+      "label": "Link image 2"
+      }
+      
+     
+    ]
+      },
+{
+      "type": "style_7",
+        "name": "Style 7",
+        "settings": [
+       {
+            "type": "text",
+            "id": "title",
+            "label": "Style 7",
+            "default": "Style 7"
+          },
+     {
+            "type": "text",
+            "id": "megamenu_items_7",
+            "label": "Mega Menu Items for Style 7",
+            "default": "Vendor"
+          }
+       
+      
+     
+    ]
+      }
+	]
+  }
+{% endschema %}

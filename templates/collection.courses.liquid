@@ -1,0 +1,75 @@
+{% if collection.metafields.accentuate.video_course_collection != blank or collection.image != blank %} 
+  {% assign video = collection.metafields.accentuate.video_course_collection %}  
+  <div class="course-collection-hero">
+    <div class="no-padding"> 
+      {% if video != blank %}
+        <div class="video-wrapper with-popup p-relative">       
+          <div class="p-video">
+            <video class="course-collection-video" poster="{% if collection.image %}{{ collection.image | img_url: 'master'}}{% endif %}">
+              <source src="{{ video }}" type="video/mp4">   
+              <source src="{{ video }}" type="video/ogg">
+            </video>
+            {% if collection.metafields.accentuate.button_label_course_collection != blank %}
+              <a class="jas-popup-url" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+              <h4 class="video-summary">{{ collection.metafields.accentuate.button_label_course_collection }}</h4> 
+            {% else %}
+              <a class="jas-popup-url no-video-summary" href="{{ video }}"><i class="fas fa-play icons" aria-hidden="true"></i></a>
+            {% endif %}
+          </div>                                                                                                                    
+        </div>
+      {% else %}
+        {% if collection.image %}
+          <div class="image-wrapper">
+            <img alt="{{ collection.image.alt }}" src="{{ collection.image | img_url: 'master' }}">
+          </div>
+        {% endif %}
+      {% endif%}      
+    </div>
+  </div>
+{% else collection.metafields.accentuate.video_course_collection == blank and  collection.image == blank%}
+  <style>
+    .collection-content{
+      margin-top: 0px !important;
+    }    
+  </style>
+{% endif%}
+
+<div class="collection-content text-center p-relative"> 
+  <div class="section-header">
+    <h1 class="section-header--title">{{ collection.title }}</h1>
+  </div>
+  <div class="rte">
+    {{ collection.description }}
+  </div>  
+</div>
+
+<div class="collection-course">  
+  <div class="container">
+    {% section 'collection-courses-template' %}
+  </div>
+</div>
+
+{% unless collection.metafields.accentuate.question == blank and collection.metafields.accentuate.answer == blank %}
+<div class="faq-section">
+  <div class="container">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="text-center">
+      <p class="f-bk">Faqs</p>
+      <h3>HAVE QUESTIONS? WE HAVE ANSWERS!</h3>
+    </div>
+    <div class="dt-sc-hr-invisible-medium"></div>
+    <div class="faqs-wrapper">
+      <div class="dt-sc-toggle-frame-set">
+        {% assign count = collection.metafields.accentuate.question.size %}  
+        {% for i in (1..count) %}             
+          <h4 class="dt-sc-toggle-accordion"><a href="#">{{ collection.metafields.accentuate.question[forloop.index0] }}</a></h4>
+          <div class="dt-sc-toggle-content {% if forloop.last %} last{% endif %}"}>
+            <div class="dt-sc-block">{{ collection.metafields.accentuate.answer[forloop.index0].html }}</div>
+          </div>      	         
+        {% endfor %}                 
+      </div>
+      <div class="dt-sc-hr-invisible-large"></div>
+    </div>
+  </div>
+</div>
+{% endunless %}

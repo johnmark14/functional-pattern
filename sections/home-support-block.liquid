@@ -1,0 +1,391 @@
+{% if section.blocks.size > 0 %}
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}    
+
+<div class="support-block-inner" style="background: {{ section.settings.sectionbg_color }}; margin-top:{{top}}px; margin-bottom:{{bottom}}px;">  
+  <div class="grid-uniform">
+    <div class="{% if section.settings.full %}container-bg{% else %}container{% endif %}">  
+        <div class="grid__item">
+          {% if section.settings.heading != blank or section.settings.sub_heading != blank  %}
+          <div class="dt-sc-hr-invisible-medium"></div>
+          <div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+          <div class="border-title wow fadeInDown animated">
+            {% if section.settings.heading != blank %}
+            <h2 style="color:{{section.settings.heading_color }}">{{ section.settings.heading }}</h2>  
+            {% endif %}
+             {% if section.settings.sub_heading != blank %}
+            <h2 style="color:{{section.settings.sub_heading_color }}">{{ section.settings.sub_heading }}</h2>  
+            {% endif %}
+            {% if section.settings.title_img != blank %}
+            <div class="tilte_img">
+              <img src="{{ section.settings.title_img | img_url: '177x37' }}" alt="" title=""  />
+            </div>
+            {% endif %}
+          </div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="support-blk-section {{ section.settings.block_style }}">
+          <ul class="support_block">         
+            {% if section.blocks.size > 0 %}      
+            {% for block in section.blocks %}
+            {% case section.blocks.size %}
+            {% when 1 %}
+            {%- assign block_width = 'one-whole text-center' -%}
+            {% when 2 %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+            {% when 3 %}
+            {%- assign block_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+            {% when 4 %}
+            {%- assign block_width = 'wide--one-quarter post-large--one-quarter large--one-half medium--one-half small-grid__item' -%}
+            {% else %}
+            {%- assign block_width = 'wide--one-fifth post-large--one-fifth large--one-fifth medium--one-third small-grid__item' -%}
+            {% endcase %}
+
+            {% if block.type == 'class' %}
+            <li class="grid__item {{ block_width }} wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load }}ms">
+              <div class="support_section {{section.settings.position}}">  
+                <div class="support-wrapper">
+                  <div class="support_icon">    
+                    {% if block.settings.class != blank %}
+                    {% if section.settings.block_style == 'style1' or section.settings.block_style == 'style2' or section.settings.block_style == 'style3' %}
+                    <a href="{{ block.settings.link }}" class="icon" style="color:{{ section.settings.class_color }};"><i class="{{ block.settings.class }}"></i></a>
+                    {% endif %}
+                    {% if section.settings.block_style == 'style4' and section.settings.position != 'align-right' %}
+                    <a href="{{ block.settings.link }}" class="icon" style="color:{{ section.settings.class_color }};"><i class="{{ block.settings.class }}"></i></a>
+                    {% endif %}                    
+                    {% endif %}
+                    
+                    {% if section.settings.block_style == 'style4' %}
+                    {% if block.settings.title != blank  %}  
+                    <h4 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h4>
+                    {% endif %} 
+                    {% endif %}
+                    
+                    {% if block.settings.class != blank %}
+                    {% if section.settings.block_style == 'style4' and section.settings.position == 'align-right' %}
+                    <a href="{{ block.settings.link }}" class="icon" style="color:{{ section.settings.class_color }};"><i class="{{ block.settings.class }}"></i></a>
+                    {% endif %}
+                    {% endif %}
+                  </div>                  
+
+                  <div class="support_text"> 
+                    {% if section.settings.block_style != 'style4' %}
+                    {% if block.settings.title != blank  %}  
+                    <h4 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h4>
+                    {% endif %} 
+                    {% endif %}
+                    
+                    {% if block.settings.desc != blank  %}  
+                    <p style="color:{{ section.settings.desc_color }};" class="desc">{{ block.settings.desc }}</p>
+                    {% endif %}                       
+                  </div>                  
+                </div>
+              </div>    
+            </li>  
+            {% endif %}
+            {% if block.type == 'icon' %}
+            <li class="grid__item {{ block_width }} wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load }}ms">
+              <div class="support_section {{section.settings.position}}">  
+                <div class="support-wrapper">                  
+                  <div class="icon-img">                    
+                    
+                    {% if section.settings.block_style == 'style1' or section.settings.block_style == 'style2' or section.settings.block_style == 'style3' %}
+                    {% if block.settings.icon != blank %}
+                    <a href="{{ block.settings.link }}"> <img src="{{ block.settings.icon | img_url: 'medium' }}" alt="{{ block.settings.title }}" /></a>
+                    {% else %}
+                    <img src="//via.placeholder.com/90x90">
+                    {% endif%} 
+                    {% endif %}
+                    {% if section.settings.block_style == 'style4' and section.settings.position != 'align-right' %}
+                    {% if block.settings.icon != blank %}
+                    <a href="{{ block.settings.link }}"> <img src="{{ block.settings.icon | img_url: 'medium' }}" alt="{{ block.settings.title }}" /></a>
+                    {% else %}
+                    <img src="//via.placeholder.com/50x50">
+                    {% endif%} 
+                    {% endif %}
+                    
+                    
+                    {% if section.settings.block_style == 'style4' %}
+                    {% if block.settings.title != blank  %}  
+                    <h4 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h4>
+                    {% endif %} 
+                    {% endif %}
+                    
+                    
+                    {% if section.settings.block_style == 'style4' and section.settings.position == 'align-right' %}
+                    {% if block.settings.link != blank %}
+                    <a href="{{ block.settings.link }}">{% endif %} 
+                      {% if block.settings.icon != blank %}
+                      <img src="{{ block.settings.icon | img_url: 'medium' }}" alt="{{ block.settings.title }}" />
+                       {% else %}
+                    <img src="//via.placeholder.com/50x50">
+                    {% endif%}
+                      
+                    {% if block.settings.link != blank %}
+                    </a>
+                    {% endif %}
+                   
+                    {% endif %}
+                    
+                  </div>
+
+                  <div class="support_text"> 
+                    {% if section.settings.block_style != 'style4' %}
+                    {% if block.settings.title != blank  %}  
+                    <h4 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h4>
+                    {% endif %} 
+                    {% endif %}
+                    
+                    {% if block.settings.desc != blank  %}  
+                    <p style="color:{{ section.settings.desc_color }};" class="desc">{{ block.settings.desc }}</p>
+                    {% endif %}                     
+                  </div>                      
+                </div>
+              </div>    
+            </li>  
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </ul>
+        </div>        
+      </div>      
+  </div>
+  <div class="dt-sc-hr-invisible-medium"></div>
+</div>
+
+<style>
+
+  .support-block-type .support_section .support-wrapper:hover .support_text h4::after { background:{{section.settings.iconhovertext_color}}!important;} 
+  .support-block-type .support_section .support-wrapper .support_text h4::after { background: {{section.settings.border_color}}!important;}
+  .support-block-type .support-wrapper:hover .support_icon a::before {background:{{section.settings.iconhoverbg_color}};}
+  .support-block-type .support-wrapper:hover .support_icon a {color:{{section.settings.iconhovertext_color}} !important;}
+
+</style>
+
+{% endif %}
+
+{% schema %}
+{
+"name": "Support Block",
+"class": "index-section support-block-type",
+"max_blocks":5,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading"
+},
+{
+"type": "color",
+"id": "heading_color",
+"label": "Heading Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "sub_heading",
+"label": "Sub Heading"
+},
+{
+"type": "color",
+"id": "sub_heading_color",
+"label": "Sub Heading Color",
+"default":"#000"
+},
+{
+"type": "image_picker",
+"id": "title_img",
+"label": "Title Image",
+"info": "Size: 69x23"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "header",
+"content": "General Color"
+},
+{
+"type": "color",
+"id": "sectionbg_color",
+"label": "Section Bg Color",
+"default":"#fff"
+},
+{
+"type": "color",
+"id": "class_color",
+"label": "Icon color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "iconhovertext_color",
+"label": "Icon Hover Text Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Title Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Description Color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "block_style",
+"label": "Style",
+"options": [
+{
+"value": "style1",
+"label": "Style 1"
+},
+{
+"value": "style2",
+"label": "Style 2"
+},
+{
+"value": "style3",
+"label": "Style 3"
+},
+{
+"value": "style4",
+"label": "Style 4"
+}
+],
+"default": "style1"
+},
+{
+"type": "select",
+"id": "position",
+"label": "Icon position",
+"options": [
+{
+"value": "align-center",
+"label": "Center"
+},
+{
+"value": "align-left",
+"label": "Left"
+},
+{
+"value": "align-right",
+"label": "Right"
+}      
+],
+"default": "align-left"
+}
+],
+"blocks": [
+{
+"type": "icon",
+"name": "Icon",        
+"settings": [
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon"        
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "desc",
+"label": "Description",  
+"default": "Lorem ipsum dolor sit amet"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Link"          
+}      
+]
+},
+{
+"type": "class",
+"name": "Class",        
+"settings": [
+{
+"type": "text",
+"id": "class",
+"label": "Font Awesoem class",
+"default": "fa fa-plus"   
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "desc",
+"label": "Description",
+"default": "Lorem ipsum dolor sit amet"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Link"          
+}
+]
+}
+],
+"presets": [
+{
+"name": "Support Block",
+"category": "Text",
+"blocks": [
+{
+"type": "icon"
+},
+{
+"type": "class"
+},
+{
+"type": "icon"
+}
+]
+}
+]
+}
+{% endschema %}

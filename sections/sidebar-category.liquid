@@ -1,0 +1,105 @@
+{%- assign sidebar_linklist = section.settings.linkedlist -%}
+
+{% if section.settings.enable_sidecategory %} 
+<div class="widget widget_product_categories">
+  {% if section.settings.linkedlist_title != blank %}
+  <h4>
+    {{ section.settings.linkedlist_title }}
+  </h4>  
+  {% endif %}
+  {% if linklists[sidebar_linklist].links.size > 0 %}
+  <ul class="product-categories dt-sc-toggle-frame-set">
+    {% for link in linklists[sidebar_linklist].links %}
+    {% assign child_list_handle = link.title | handle %}             
+    {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+    <li class="cat-item cat-item-39 cat-parent first">
+      <i></i>
+      <a class="{% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title | escape }}</a> <span class="dt-sc-toggle"></span>
+
+      {% if linklists[child_list_handle].links.size > 0 %}        
+      <ul class="children dt-sc-toggle-content ">
+        {% for child_link in linklists[link.handle].links %}
+        {% assign sub_sub_link_handle = child_link.title | handle %} 
+        <li class="second">
+          <i></i>             
+          <a class="{% if child_link.active %}active{% endif %}" href="{{ child_link.url }}">{{ child_link.title | escape }}</a>
+          {% if linklists[sub_sub_link_handle].links.size > 0 %}<span class="dt-sc-toggle"></span>   {% endif %}
+          {% if linklists[sub_sub_link_handle].links.size > 0 %}    
+          <ul class="third children dt-sc-toggle-content">
+            {% for sub_sub_link in linklists[child_link.handle].links %}
+            <li> <a class="{% if sub_sub_link.active %}active{% endif %}" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title | escape }}</a></li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          {% endif %}
+
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% else %}
+    <li class="cat-item cat-item-39 cat-parent">
+      <i></i><a class=" {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title | escape }}</a> 
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif  %}
+</div>
+{% endif %}
+
+{% schema %}
+{
+"name": "Collection",   
+"settings": [
+{
+"type": "checkbox",
+"id": "enable_sidecategory",
+"label": "Enable category",
+"default":false
+},
+{
+"type": "link_list",
+"id": "linkedlist",
+"label": "Linklist"
+},
+{
+"type": "text",
+"id": "linkedlist_title",
+"label": "Heading"
+}     
+]
+
+}
+{% endschema %}
+
+
+
+{% javascript %}
+$(document).ready(function(){
+$(".dt-menu-expand").click(function(event){
+event.preventDefault();
+if( $(this).hasClass("dt-mean-clicked") ){
+$(this).html('<i class="fas fa-plus"></i>');
+if( $(this).prev('ul').length ) {
+$(this).prev('ul').slideUp(400);
+} else {
+$(this).prev('.megamenu-child-container').find('ul:first').slideUp(600);
+}
+} else {
+$(this).html('<i class="fas fa-minus"></i>');
+if( $(this).prev('ul').length ) {
+$(this).prev('ul').slideDown(400);
+} else{
+$(this).prev('.megamenu-child-container').find('ul:first').slideDown(2000);
+}
+}
+
+$(this).toggleClass("dt-mean-clicked");
+return false;
+});
+
+});
+
+{% endjavascript %}

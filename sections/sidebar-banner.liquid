@@ -1,0 +1,85 @@
+{% if section.blocks.size > 0 %}  
+    <div class="widget widget_promo_img">
+      <ul class="owl-carousel owl-theme promo-carousel promo-carousel-{{ section.id }}">
+        {% for block in section.blocks %}
+        {% if block.settings.promo_img != blank %}
+        <li>
+          <a href="{{ block.settings.promo_link }}" title="{{ block.settings.promo_title }}"> 
+            <img src="{{ block.settings.promo_img | img_url : '500x500' }}" alt="{{ block.settings.promo_title }}" title="{{ block.settings.promo_title }}" /> 
+                      </a>
+            <h5>{{ block.settings.promo_title }} </h5>
+
+        </li>
+        {% else %}
+        <li>
+        <a href="{{ block.settings.promo_link }}" title="{{ block.settings.promo_title }}"> 
+<img src="//via.placeholder.com/320x450">      </a>
+          
+            <h5>{{ block.settings.promo_title }} </h5>
+        </li>
+        
+        
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+ {% endif %}
+ {% schema %}
+  {
+    "name": "Sidebar Promo Images",
+
+    "max_blocks": 3,
+    "settings": [],
+"blocks": [
+{
+"type": "content",
+      "name": "Promo  banner",
+      "settings": [	
+      {
+        "type": "image_picker",
+        "id": "promo_img",
+        "label": "Image"
+      },
+	{
+        "type": "url",
+        "id": "promo_link",
+        "label": "URL"
+      },
+      {
+        "type": "text",
+        "id": "promo_title",
+        "label": "Heading"
+      }
+]
+}
+]	
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+     $(".promo-carousel-{{ section.id }}").owlCarousel({ 
+        loop:false,
+       // margin:10,
+        nav:false,       
+        dots: true,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:1
+            },
+            1000:{
+                items:1
+            }
+        }
+ 
+  });
+});
+      
+</script>

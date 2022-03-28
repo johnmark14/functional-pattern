@@ -1,0 +1,357 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{%- assign limit = section.settings.column_desktop | times: section.settings.rows_desktop -%}
+
+{% if section.settings.layout_setup == '75%' %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--three-quarters large--three-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '50%' %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '67%' %}
+{% assign column1  = 'grid__item wide--two-thirds post-large--two-thirds large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-third post-large--two-third large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '100%' %}
+{% assign column1  = 'grid__item full-width' %}
+{% assign column2  = 'grid__item full-width' %}
+{% else %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% endif %}
+
+<div class="full_width_tab" style="float:left;width:100%;background-color:{{ section.settings.type_bg }};">
+  <div class="{% if section.settings.full %}container-bg{% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="wrapper">
+      <div class="grid-uniform">  
+
+        {% if section.settings.alignment == 'left' %}
+        <div class="dt-sc-tabs brand_names {{column2}} product-tab-type-3-left">   
+          <div class="tabs-inner">
+          {% if section.settings.title_1 != blank %}   
+          <div class="border-title "> 
+            <h4 style="background:{{ section.settings.title_bg_color }};color:{{ section.settings.title_1_color }}">{{ section.settings.title_1 }}</h4>
+          </div>
+          {% endif%}  
+          <div class="grid wow fadeInUp animated">    
+            <ul class="brand_list">
+            {% for block in section.blocks %}             
+            {% if block.settings.brand_name != blank %}
+            <li><a href="#"><span>{{ block.settings.brand_name }}</span></a></li>      
+            {% endif%}
+            {% endfor %}
+            </ul>
+          </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% for block in section.blocks %}             
+        <ul class="dt-sc-tabs-content brand_tab {{column1}}"> 
+          <div class="dt-sc-tabs-container"> 
+            <ul class="dt-sc-tabs hide">                        
+              {%- assign collection = collections[block.settings.collection] -%} 
+              <li><a href="#" class="tabs-{{ block.id }}-{{forloop.index }}">{{ collection.title }} </a></li>                                                                   
+            </ul>
+
+            <div class="dt-sc-tabs-content">
+              <ul class="grid-uniform">
+                {% case section.settings.column_desktop %}
+                {% when '2' %}
+                {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small--one-half' -%}
+                {% when '3' %}
+                {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small--one-half' -%}
+                {% when '4' %}
+                {%- assign grid_item_width = 'wide--one-quarter post-large--one-third large--one-third medium--one-half small--one-half' -%}
+                {% when '5' %}
+                {%- assign grid_item_width = 'wide--one-fifth post-large--one-third large--one-third medium--one-half small--one-half' -%}            
+                {% endcase %} 
+                {% for product in collection.products limit: limit %}
+                {% include 'product-grid-item' , grid_item_width:grid_item_width %} 
+                {% else %}
+                {% for i in (1..8) %}
+                <li class="grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item item-row  on-sale" id="product-{{ i }}">
+                  <div class="products">
+                    <div class="product-container">
+                      <a href="#" class="grid-link"> 
+                        {% if forloop.index == 3 %}
+                        <div class="featured-tag">
+                          <span class="badge badge--sale">
+                            <span class="gift-tag badge__text badge__text--small">{{ 'products.product.sale' | t }}</span>
+                          </span>
+                        </div>{% endif %}
+
+                        <div class="reveal"> 
+                          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                          {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }} 
+                        </div>
+                      </a>                          
+                    </div>
+                    <div class="product-detail"> 
+                      <a href="#" class="grid-link__title">Sample title {{ i }}</a>
+
+                      <div class="grid-link__meta">
+                        <div class="product_price"> <span class="money" data-currency-usd="$320.00">$0.00</span> </div>
+                        <del class="grid-link__sale_price"><span class="money" data-currency-usd="$756.00">$0.00</span></del> </div>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %} 
+                {% endfor %}
+              </ul>                              
+            </div>
+
+          </div><!--End tabs container-->
+        </ul>         
+        {% endfor %}   
+
+        {% if section.settings.alignment == 'right' %}
+        <div class="dt-sc-tabs brand_names grid__item {{column2}} product-tab-type-3-right"> 
+          <div class="tabs-inner">
+          {% if section.settings.title_1 != blank %}   
+          <div class="border-title "> 
+            <h4 style="background:{{ section.settings.title_bg_color }};color:{{ section.settings.title_1_color }}">{{ section.settings.title_1 }}</h4>
+          </div>
+          {% endif%}  
+          <div class="grid wow fadeInUp animated">
+            <ul class="brand_list">
+            {% for block in section.blocks %}             
+            {% if block.settings.brand_name != blank %}
+            <li><a href="#"><span>{{ block.settings.brand_name }}</span></a></li>      
+            {% endif%}
+            {% endfor %}
+            </ul>
+          </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>   
+</div>
+
+<style>
+  
+  {% if section.settings.tab_image != blank %} 
+  .product-tab-type-3 .dt-sc-tabs .tabs-inner { background-image:url({{ section.settings.tab_image | img_url: 'master' }}); }
+   {% endif %}
+  
+  .product-tab-type-3 .brand_list li a { color:{{ section.settings.tag_clr }}; background: {{section.settings.tabactive_bg_clr}} }
+  .product-tab-type-3 .brand_list li a:hover, .product-tab-type-3 .brand_list li a.current {color:{{ section.settings.tag_hover_clr }};background: {{section.settings.tabactive_hover_bg_clr}};}
+  
+  .product-tab-type-3 .image_link_txt { background:{{ section.settings.button_bg_clr }};color:{{ section.settings.button_txt_clr }}; } 
+  .product-tab-type-3 .image_link_txt:hover { background:{{ section.settings.button_hover_bg_clr }};color:{{ section.settings.button_hover_txt_clr }}; } 
+
+</style>
+
+<script type="text/javascript">
+
+  $(document).on('click', '.brand_names li a.current', function(){
+    var brandName = $(this).text();
+    console.log(brandName);
+    $('.brand_title').text(brandName);
+  });
+
+</script>
+
+{% schema %}
+{
+"name": "Product Tab 3",
+"class": "index-section product-tab-type-3",
+"max_blocks": 10,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "select",
+"id": "layout_setup",
+"label": "Layout Grid Style",
+"options": [
+{
+"value": "75%",
+"label": "75/25"
+},
+{
+"value": "50%",
+"label": "50/50"
+},
+{
+"value": "67%",
+"label": "67/33"
+},
+{
+"value": "100%",
+"label": "100/100"
+}
+],
+"default": "75%"
+},
+{
+"type": "color",
+"id": "type_bg",
+"label": "Bg color",
+"default": "#fff"
+},   
+{
+"type": "image_picker",
+"id": "tab_image",
+"label": "Tab Background Image",
+"info": "Size: 200x300"
+}, 
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Product Tab 3"
+},
+{
+"type": "color",
+"id": "title_1_color",
+"label":"Heading color",
+"default": "#000"
+}, 
+{
+"type": "color",
+"id": "tag_clr",
+"label": "Tag Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "tabactive_bg_clr",
+"label": "Tag Bg Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "tag_hover_clr",
+"label": "Tag Hover Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "tabactive_hover_bg_clr",
+"label": "Tag Hover Bg Color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "alignment",
+"label": "Brand block alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}        
+]
+},
+{
+"type": "select",
+"id": "rows_desktop",
+"label": "Rows",
+"info": "For desktop screen",
+"options": [ 
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}        
+],
+"default": "2"
+},
+{
+"type": "select",
+"id": "column_desktop",
+"label": "Products per row",
+"info": "For desktop screen",
+"options": [       
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}     
+],
+"default": "4"
+},
+{
+"type": "select",
+"id": "multigrid",
+"label": "Tab Type",
+"info": "Tab Grid Styles",
+"options": [       
+{
+"value": "single",
+"label": "Single Row Carousel"
+},
+{
+"value": "multi",
+"label": "Multi Row Carousel"
+}        
+],
+"default": "single"
+}
+],
+"blocks": [	
+{
+"type": "collection",
+"name": "Collections",
+"settings": [
+{
+"id": "brand_name",
+"type": "text",
+"label": "Brand name",
+"default": "Brand name"
+},	
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Product Tab 3",
+"category": "Collection",
+"blocks": [ ]
+}
+]
+}
+{% endschema %}

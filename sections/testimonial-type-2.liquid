@@ -1,0 +1,292 @@
+{% assign quoteStyle = 'data-quote-slider2' %}
+{% assign quoteNav = 'data-quote-Nav2' %}
+
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div id="QuotesSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="quotes-section" class="quotes-section quotes-style2" {% if section.settings.image_1 != blank %} style="position:relative;background-image:url('{{ section.settings.image_1 | img_url: 'master' }}');background-repeat:no-repeat;background-size:cover;"{% endif%}>
+  <div class="container-fluid">
+    {% if section.blocks.size > 0 %}
+    <div class="grid-uniform" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+      <div class="dt-sc-hr-invisible-large"></div>
+      <div class="module home-testimonials ready">
+        {% if section.settings.heading != blank %}
+        <div class="container">
+          <div class="module-header full-position-{{section.settings.content_position}}"> 
+            <div class="border-title">
+              {% if section.settings.heading != blank %}
+              <h2 class="hero__overlay-title separator">{{ section.settings.heading }}</h2>
+              {% endif %}       
+              {% if section.settings.sub_heading != blank %} 
+              <div class="short-desc">
+                <p style="color:{{ section.settings.sub_heading_clr }}">{{ section.settings.sub_heading }}</p>
+              </div>  
+              {% endif %}
+            </div>
+          </div>          
+        </div> 
+        {% endif %}
+        
+        <div class="module-body">
+          <div class="home-testimonials-container">
+
+            <div class="quotes-slider text-center" slick-initialized {{ quoteStyle }} data-count="{{ section.blocks.size }}">             
+              {% for block in section.blocks %}
+              <div class="quotes-slide--{{ forloop.index0 }} quotes-slide--{{ block.id }} " {{ block.shopify_attributes }}>    
+
+
+
+                <div class="grid__item">
+                  <div><span class="quote-icon">{% include 'icon-quote' %}</span></div>
+                  <div class="short-desc mt-40">testimonials</div>
+                  {% if block.settings.quote != blank %}
+                  <div class="quote rte-setting"><h3 style="color: {{ block.settings.quote_color }};">{{ block.settings.quote }}</h3></div>
+                  {% endif %}
+                  <div class="rating mt-40 d-flex" style="color: {{ block.settings.quote_color }};">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="client-img mt-40"> 
+                    {% if block.settings.icon != blank %}
+                    <img class="quote-icon" src="{{ block.settings.icon | img_url: "medium" }}" alt="{{ block.settings.quote }}" />
+                    {% else %}
+                    <img src="//via.placeholder.com/220x220">
+                    {% endif%}
+                  </div>
+                  <div class="client-info mt-20">
+                    {% if block.settings.author != blank %}
+                    <h3 class="quote-author">{{ block.settings.author | escape }}</h3>
+                    {% endif %}                                  
+                  </div>       
+                  <div class="">
+                    {% if block.settings.job != blank %}
+                    <p class="quote-job desc-text">{{ block.settings.job | escape }}</p>
+                    {% endif %}                     
+                  </div>
+                  {% if section.settings.button_1 != blank %}
+                  <a class="btn btn1" href="{{ section.settings.link_1 }}" style="color:{{ section.settings.button_1_txt}};background:{{ section.settings.button_1_bg}};">{{ section.settings.button_1}}</a>    
+                  {% endif %} 
+                </div>
+              </div>
+              {% endfor %}      
+            </div>               
+            <div class="quotes-arrow-nav carousel-arrow" {{ quoteNav }}></div>
+
+          </div>
+        </div>        
+      </div>
+      <div class="dt-sc-hr-invisible-large"></div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+
+  #QuotesSection-{{ section.id }}  { background-color: {{ section.settings.color_bg }}; }  
+  #QuotesSection-{{ section.id }} .quote-author { color: {{ section.settings.author_color }}; }  
+  #QuotesSection-{{ section.id }} .quote-job { color: {{ section.settings.design_color }}; }
+  #QuotesSection-{{ section.id }} .quote { color:{{ section.settings.des_color }} }
+
+  /* Slider */
+  .quotes-style2 .slick-slider { position: relative; display: block; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; -khtml-user-select: none; -ms-touch-action: pan-y; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
+  .quotes-style2 .slick-list { position: relative; display: block; overflow: hidden; margin: 0; padding: 0; }
+  .quotes-style2 .slick-list:focus { outline: none; }
+  .quotes-style2 .slick-list.dragging { cursor: pointer; cursor: hand; }
+  .quotes-style2 .slick-slider .slick-track,.quotes-style2 .slick-slider .slick-list { -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -ms-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  .quotes-style2 .slick-track { position: relative; top: 0; left: 0; display: block; margin-left: auto; margin-right: auto; }
+  .quotes-style2 .slick-track:before,.quotes-style2 .slick-track:after { display: table; content: ''; }
+  .quotes-style2 .slick-track:after { clear: both; }
+  .quotes-style2 .slick-loading .slick-track { visibility: hidden; }
+  .quotes-style2 .slick-slide { display: none; float: left; height: 100%; min-height: 1px; }
+  .quotes-style2 [dir='rtl'] .slick-slide { float: right; }
+  .quotes-style2 .slick-slide img { display: block; }
+  .quotes-style2 .slick-slide.slick-loading img { display: none; }
+  .quotes-style2 .slick-slide.dragging img { pointer-events: none; }
+  .quotes-style2 .slick-initialized .slick-slide { display: block; }
+  .quotes-style2 .slick-loading .slick-slide { visibility: hidden; }
+  .quotes-style2 .slick-vertical .slick-slide { display: block; height: auto; border: 1px solid transparent; }
+  .quotes-style2 .slick-arrow.slick-hidden { display: none; }
+
+  #shopify-section-{{section.id}} .quotes-style2 .btn1:hover { color:{{ section.settings.hover_button_1_txt }} !important; background-color:{{ section.settings.hover_button_1_bg }} !important; }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonial Type 2",
+  "class": "index-section testimonial-type2 p-relative",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Style value (Margin)",
+      "default":"0,0",
+      "info":"Top(px),Bottom(px)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Background Image",
+      "info": "Size: 1920x1280"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What our customers say"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Heading Position",
+      "options": [
+        {
+          "value": "default",
+          "label": "Full center"
+        },
+        {
+          "value": "full-left",
+          "label": "Full left"
+        },
+        {
+          "value": "full-right",
+          "label": "Full right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub Heading"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "author_color",
+      "label": "Author Color",
+      "default":"#000"
+    },
+    {
+      "type": "color",
+      "id": "design_color",
+      "label": "Designation Color",
+      "default":"#333"
+    },
+    {
+      "type": "color",
+      "id": "des_color",
+      "label": "Description Color",
+      "default":"#696969"
+    },
+    {
+    "type": "text",
+    "id": "button_1",
+    "label": "Button text",
+    "default": "Shop Now"
+    },
+    {
+      "type": "color",
+      "id": "button_1_bg",
+      "label": "Button bg color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_1_txt",
+      "label": "Button text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "hover_button_1_bg",
+      "label": "Button hover bg",
+      "default": "#272727"
+    },
+    {
+      "type": "color",
+      "id": "hover_button_1_txt",
+      "label": "Button hover text",
+      "default": "#fff"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Text",
+          "info": "Best results if text does not exceed 400 characters",
+          "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>"
+        },
+        {
+          "type": "color",
+          "id": "quote_color",
+          "label": "Quote Text color",
+          "default": "#000000"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Avator"          
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Author Name"
+        },
+        {
+          "type": "text",
+          "id": "job",
+          "label": "Author's Dsignation",
+          "default": "Designation"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Type 2",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

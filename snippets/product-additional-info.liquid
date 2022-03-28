@@ -1,0 +1,13 @@
+{% if section.settings.show_video %}
+{% for block in section.blocks %}  
+{% case block.type %}
+{% when 'html' %}
+{% assign sel_product = block.settings.select_product_name %}
+{% if product.handle == sel_product %}    
+<div class="product-additional-info">
+  {{ block.settings.html }}
+</div>
+{% endif %}
+{% endcase %}
+{% endfor %}    
+{% endif %}

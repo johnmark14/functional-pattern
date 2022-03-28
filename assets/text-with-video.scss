@@ -1,0 +1,412 @@
+.hero-section{
+  img{
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+  }
+  .video-wrapper{          
+    overflow: hidden;
+    clear: both;
+  }
+  i{
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;    
+    margin: auto;    
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    
+    @media screen and (min-width: 421px){
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      bottom: 100px;
+      
+      &:before{
+        position: relative;
+        left: 3px;
+      }
+    }
+    @media screen and (max-width: 420px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 30px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 35px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 40px;
+    }    
+  }
+  .video-summary{
+    position: absolute;    
+    left: 0;
+    right: 0;    
+    margin: auto;
+    width: 100%;    
+    text-align: center;
+    max-width: 400px;
+    color: #fff;
+    
+    @media screen and (min-width: 421px){
+      height: 80px;
+      line-height: 80px;
+      bottom: 100px;
+      top: 150px;
+    }    
+    @media screen and (max-width: 420px){
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 55px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 50px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 60px;
+    }    
+  }
+  .hero-video{
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    
+    @media screen and (max-width: 420px){
+      min-height: 220px;
+    }
+  }
+}
+.page-content{
+  .rte{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #000000;
+  }
+  @media screen and (min-width: 1200px){
+/*     margin-top: -62px; */
+    margin: 55px 0 0;
+    
+    .rte{
+      margin: 0 auto 110px;
+      line-height: 44px;
+      font-size: 34px;
+    }
+  }
+  @media screen and (min-width: 1400px){
+    .rte{
+      width: 45%;
+    }
+  }
+  @media screen and (min-width: 1200px) and (max-width: 1399px){
+    .rte{
+      width: 80%;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1199px){
+/*     margin-top: -33px; */
+    
+    .rte{
+      width: 60%;
+      margin: 0 auto 70px;
+      line-height: 28px;
+      font-size: 24px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    margin: 55px 0 0;
+    padding: 0 20px;
+    
+    .rte{
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 30px;
+	  margin: 0 auto 70px;           
+    }
+  }
+}
+// Video with text block
+.video-block-section{
+  position: relative;  
+  overflow: hidden;
+  clear: both;
+
+  img{
+    width: 100%;
+    object-fit: cover;
+    
+    @media only screen and (min-width: 1679px){
+      min-height: 480px;
+    }
+    @media only screen and (min-width: 1600px) and (max-width: 1678px){
+      min-height: 420px;
+    }    
+    @media only screen and (min-width: 1440px) and (max-width: 1599px){
+      min-height: 400px;
+    }
+    @media only screen and (min-width: 1200px) and (max-width: 1439px){
+      min-height: 360px;
+    }
+    @media only screen and (min-width: 968px) and (max-width: 1199px){
+      min-height: 320px;
+    } 
+    @media only screen and (max-width: 967px){
+      min-height: 250px;
+    }    
+  }
+  i{
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;    
+    margin: auto;    
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    
+    @media screen and (min-width: 541px){
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      bottom: 60px;
+      
+      &:before{
+        position: relative;
+        left: 3px;
+      }
+    }
+    @media screen and (min-width: 421px) and (max-width: 540px){
+      bottom: 50px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      
+      &:before{
+        position: relative;
+        left: 3px;
+      }
+    }    
+    @media screen and (max-width: 420px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 30px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 35px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 35px;
+    }    
+  }
+  .video-summary{
+    position: absolute;    
+    left: 0;
+    right: 0;    
+    margin: auto;
+    width: 100%;    
+    text-align: center;
+    max-width: 400px;
+    color: #fff;
+    
+    @media screen and (min-width: 541px){
+      height: 80px;
+      line-height: 80px;
+      bottom: 80px;
+      top: 170px;
+    } 
+    @media screen and (min-width: 421px) and (max-width: 540px){
+      bottom: 50px;
+      height: 80px;
+      line-height: 80px;
+    }
+    @media screen and (max-width: 420px){
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 50px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 40px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 25px;
+    }    
+  }
+  .section-heading{
+    @media screen and (max-width: 967px){
+      padding: 0 20px;
+    }
+    @media screen and (max-width: 567px){
+      h2{
+        font-size: 36px;
+        line-height: 36px;
+      }
+    }
+  }
+  .video-banner-block{
+    width: 100%;    
+    overflow: hidden;
+    position: relative;
+
+    @media screen and (min-width: 1440px){
+      height: calc(100vh - 265px);
+    }
+    @media screen and (min-width: 968px) and (max-width: 1439px){
+      min-height: 550px;
+    }
+    @media screen and (max-width: 967px){
+      overflow: inherit;
+      display: grid;
+      
+      .video-image, .course-content{
+        float: none;
+        clear: both;
+      }
+      .course-video{
+        display: inherit;
+      }
+      .course-content{
+        order: 2;
+      }
+    }    
+    .course-content{
+      background-color: #EFEFEF;          
+
+      @media screen and (min-width: 968px){
+        position: absolute;        
+      }
+      @media screen and (min-width: 1680px){
+        padding: 100px;
+        height: 100%;
+      }
+      @media screen and (min-width: 1440px) and (max-width: 1679px){
+        padding: 85px;
+        height: 100%;
+      }
+      @media screen and (min-width: 1200px) and (max-width: 1439px){
+        padding: 80px;
+        height: 100%;
+      }
+      @media screen and (min-width: 1024px) and (max-width: 1199px){
+        padding: 70px;
+      }
+      @media screen and (min-width: 968px) and (max-width: 1023px){
+        padding: 60px;
+      }
+      @media screen and (min-width: 568px) and (max-width: 967px){
+        padding: 40px;
+      }
+      @media screen and (min-width: 420px) and (max-width: 567px){
+        padding: 35px 20px;
+      }
+      @media screen and (min-width: 375px) and (max-width: 419px){
+        padding: 30px 20px;
+      }
+      @media screen and (max-width: 374px){
+        padding: 25px 20px;
+      }
+    }
+    &.v1{
+      .course-content{        
+        @media screen and (min-width: 968px){
+          width: 62%;
+          -webkit-transform: translate(60%, 0%);
+          -ms-transform: translate(60%, 0%);
+          transform: translate(60%, 0%);
+        }
+        @media screen and (min-width: 1681px){
+          .course-content-inner{
+            width: 55%;
+            margin-left: auto;
+          }
+        }
+        @media screen and (min-width: 1440px) and (max-width: 1680px){
+          .course-content-inner{
+            width: 70%;
+            margin-left: auto;
+          }
+        }
+        @media screen and (min-width: 968px) and (max-width: 1439px){
+          .course-content-inner{
+            width: 75%;
+            margin-left: auto;
+          }
+        }
+      }
+    }
+    &.v2{
+      .course-content{
+        @media screen and (min-width: 968px){
+          width: 62%; 
+          -webkit-transform: translate(0%, 0%);
+          -ms-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+        }
+        @media screen and (min-width: 1681px){
+          .course-content-inner{
+            width: 55%;
+            margin-right: auto;
+          }
+        }
+        @media screen and (min-width: 1440px) and (max-width: 1680px){
+          .course-content-inner{
+            width: 70%;
+            margin-right: auto;
+          }
+        }
+        @media screen and (min-width: 968px) and (max-width: 1439px){
+          .course-content-inner{
+            width: 75%;
+            margin-right: auto;
+          }
+        }
+      }
+      .video-image{
+        @media screen and (min-width: 968px){
+          position: absolute;
+          right: 0;
+        }
+      }
+    }    
+    .video-image{    
+      position: relative;
+      z-index: 9;
+
+      @media screen and (min-width: 1681px){
+        width: 60%;
+      }
+      @media screen and (min-width: 968px) and (max-width: 1680px){
+        width: 50%;
+      }
+    }    
+  }
+  .course-video{
+    width: 100%;
+  }
+  .video-text-block-inner{
+    @media screen and (min-width: 1600px){
+      margin-bottom: 110px;
+    }
+    @media screen and (min-width: 1200px) and (max-width: 1599px){
+      margin-bottom: 90px;
+    }
+    @media screen and (max-width: 1199px){
+      margin-bottom: 70px;
+    }
+  }
+}

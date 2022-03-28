@@ -1,0 +1,209 @@
+{% if section.blocks.size > 0 %}
+
+{% assign- autoplay = section.settings.autoplay -%}
+{% assign- autoplaySpeed = section.settings.slideshow_speed -%}
+{% assign- fade = section.settings.slideshow_transition -%}
+{% assign- dots =  section.settings.dots -%}
+<div class="container-bg no-padding">
+  <div class="overlay"></div>
+  <div class="grid-uniform video-banner-block">     
+    <div class="dt-sc-hr-invisible-large"></div>  
+    <div class="video-content p-relative grid__item two-fifths post-large--one-third large--grid__item medium--grid__item text-left"> 
+      <div class="content-inner container-bg">                  
+        {% if section.settings.title_1 != blank %}
+        <h2 class="custom-h1">{{ section.settings.title_1 }}</h2>
+        {% endif %}
+        {% if section.settings.subtitle != blank %}
+        <div><h2 class="custom-h2" style="color:white">{{ section.settings.subtitle }}</h2></div>
+        {% endif %}
+        {% if section.settings.desc_text != blank %}
+        <div class="desc-text" style="color:white">{{ section.settings.desc_text }}</div>
+        {% endif %}  
+        <div class="mt-40 d-flex">
+          {% if section.settings.button_1 != blank and section.settings.button_url != blank %}
+          <a class="btn btn-primary" href="{{ section.settings.button_url }}">{{ section.settings.button_1 }}</a>    
+          {% endif %}
+          {% if section.settings.link != blank and section.settings.link_url != blank %}
+          <a class="btn btn-link-white" href="{{ section.settings.link_url }}">{{ section.settings.link }}</a>    
+          {% endif %}
+        </div>
+      </div>
+    </div>             
+
+    <div class="video-image grid__item three-fifths post-large--two-thirds large--grid__item medium--grid__item">                          
+      <div class="">  
+        <div class="home-slideshow-type-1" id="slideshow-{{section.id}}">
+          <div class="variable-width slideshow" {% if section.blocks.size > 1 %} data-init-slideshow data-dots="{{ dots }}" data-autoplay="{{ autoplay }}" data-autoplay-speed="{{ autoplaySpeed }}" data-fade="{{ fade }}"{% endif %}>
+            {% for block in section.blocks %}
+            <div class="slick-list slider_style_1 slider-{{ block.id }}-list"> 
+              {%- assign img_url = block.settings.image | img_url: '2000x' -%}
+              {%- assign mobile_img_url = block.settings.mobile_image | img_url: '767x' -%}        
+
+              {% if block.settings.image != blank %}
+              <img src="{{img_url}}" class="slide-img medium-down--hide" alt="{{ block.settings.image.alt }}" />
+              {% else %}
+              <img src="//via.placeholder.com/1920x940"   class="slide-img medium-down--hide" alt="{{ block.settings.image.alt }}">
+              {% endif %}
+
+              {% if  block.settings.mobile_image != blank %}
+              <img src="{{mobile_img_url}}"  class="slide-img wide--hide post-large--hide large--hide" alt="{{ block.settings.image.alt }}" />
+              {% else %}
+              <img src="//via.placeholder.com/767x750"   class="slide-img wide--hide post-large--hide large--hide" alt="{{ block.settings.image.alt }}">
+              {% endif %}            
+            </div>            
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>        
+
+  </div>
+</div>
+{% endif %}
+
+{% style %}
+  #shopify-section-{{ section.id }}{
+      background-color: #000000;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Slideshow Type 3",
+  "class": "index-section index-slideshow-type-1 slideshow-type-3",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings for Textblock"
+	},
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Offer",
+	  "default": "<p>Offer Text</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "desc_text",
+      "label": "Description Text",
+	  "default": "<p>Add text here</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_1",
+      "label": "Button text",
+      "default": "Shop Now"
+    }, 
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label":"Button Text color",
+      "default": "#000"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Url"
+    }, 
+    {
+      "type": "text",
+      "id": "link",
+      "label": "Link text",
+      "default": "Link"
+    }, 
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link Url"
+    }, 
+    {
+      "type": "header",
+      "content": "Settings for Slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Slideshow Auto Play",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "slideshow_speed",
+      "label": "Change slides every",
+      "options": [
+        { "value": "5000", "label": "5 seconds" },
+        { "value": "6000", "label": "6 seconds" },
+        { "value": "7000", "label": "7 seconds" },
+        { "value": "8000", "label": "8 seconds" },
+        { "value": "9000", "label": "9 seconds" },
+        { "value": "10000", "label": "10 seconds" }
+      ],
+      "default": "5000"
+    },
+    {
+      "type": "select",
+      "id": "slideshow_transition",
+      "label": "Slideshow transition effect",
+      "options": [
+        {
+        "value": "false",
+        "label": "Slide"
+        },
+        {
+        "value": "true",
+        "label": "Fade"
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "type" : "radio",
+      "id" : "dots",
+      "label" : "Show Dots for Slideshow (Desktop)",
+      "options": [
+        {
+        "value": "true",
+        "label": "True"
+        },
+        {
+        "value": "false",
+        "label": "False"
+        }
+      ],
+      "default": "true"
+    }
+  ],
+  "blocks": [
+    {      
+      "name": "Add slidehow",
+	  "type": "slidehow",
+      "settings": [
+        {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    	},
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image",
+          "info": "767x750 recommended"
+        }
+      ]
+    }    
+  ],
+  "presets": [
+    {
+      "name": "Slideshow Type 3",
+      "category": "Slider"
+    }
+  ]
+}
+{% endschema %}

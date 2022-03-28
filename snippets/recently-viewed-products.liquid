@@ -1,0 +1,113 @@
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+
+<section class="recently-viewed-products">
+    <div class="dt-sc-hr-invisible-medium"></div>
+
+   {% if section.settings.recently_viewed_products_title != '' %} 
+  <div class="section-header section-header--small">
+    <div class="border-title">    
+     <h3>{{ section.settings.recently_viewed_products_title  }}</h3>    
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-very-small"></div>
+  {% endif %}
+  <div class="">
+  <div class="products-grid grid-uniform" id="recently-viewed-products-grid">
+    </div>
+  </div>
+</section>
+
+
+{% raw %}
+<script id="recently-viewed-product-grid-template"  type="text/x-jquery-tmpl">
+{% endraw %}
+<div class="grid__item{% raw %} wide--one-quarter post-large--one-third large--one-third medium--one-half small--one-half">
+  <div id="product-${id}" class="inner product-item{{if !available}} sold-out {{/if}}{{if compare_at_price_min > price_min}} on-sale {{/if}}">
+    <div class="inner-top products">
+      <div class="product-top">
+        <div class="product-image">
+          <a href="${url}" class="product-grid-image">
+            <img src="${Shopify.Products.resizeImage(featured_image, "master")}" alt="${featured_image.alt}"/>
+            
+          </a>
+        </div>
+        
+        {{if compare_at_price_min > price_min || !available}}
+        <div class="product-label">
+          {{if compare_at_price_min > price_min}} 
+            <strong class="label"> {% endraw %}{{ 'products.product.sale' | t }}{% raw %}</strong>
+          {{/if}}
+          {{if !available}}
+            <strong class="sold-out-label"> {% endraw %}>{{ 'products.product.sold_out' | t }}{% raw %}</strong>
+          {{/if}}
+        </div>
+        {{/if}}
+      </div>
+  
+      <div class="product-bottom product-detail">
+         
+        {% endraw %}        
+        {% raw %}
+          <a class="product-title grid-link__title" href="${url}">${title} </a>
+        {% endraw %}        
+        {% raw %}
+        
+        <span class="shopify-product-reviews-badge" data-id="${id}"></span>         
+
+        <div class="price-box grid-link__meta">   
+        {{if compare_at_price_min > price_min}} 
+          <p class="sale">
+          <del class="old-price grid-link__sale_price"> {{html Shopify.formatMoney(compare_at_price_min)}}</del>
+            <span class="special-price grid-link__org_price">{{if price_varies}}{% endraw %}{% raw %}{{/if}}{{html Shopify.formatMoney(price_min)}}</span>              
+  		  </p>
+        {{else}}
+          <p class="regular-product">
+            <span class="special-price grid-link__org_price">{{if price_varies}}{% endraw %}{% raw %}{{/if}}{{html Shopify.formatMoney(price_min)}}</span>
+          </p>
+        {{/if}}
+        </div>
+    
+        <div class="action">
+          <form action="/cart/add" method="post" class="variants" id="product-actions-${id}" enctype="multipart/form-data" style="padding:0px;">    
+            {{if !available}} 
+            <input class="btn add-to-cart-btn" type="submit" {% endraw %} value="{{ 'products.product.unavailable' | t }}{% raw %}" disabled="disabled"/>
+            {{else variants.length > 1 }}
+            <input class="btn" type="button" onclick="window.location.href='${url}'" {% endraw %} value="{{ 'products.product.select_options' | t }}{% raw %}"/>
+            {{else}}
+            <input type="hidden" name="id" value="${variants[0].id}" />      
+            <input class="btn add-to-cart-btn" type="submit" {% endraw %} value="{{ 'products.product.add_to_cart' | t }}{% raw %}"/>
+            {{/if}}
+          </form>
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+{% endraw %}
+
+<script>
+  
+/**
+ * Module to show Recently Viewed Products
+ *
+ * Copyright (c) 2014 Caroline Schnapp (11heavens.com)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
+Shopify.Products=function(){var e={howManyToShow:3,howManyToStoreInMemory:10,wrapperId:"recently-viewed-products",templateId:"recently-viewed-product-template",onComplete:null};var t=[];var n=null;var r=null;var i=0;var s={configuration:{expires:90,path:"/",domain:window.location.hostname},name:"shopify_recently_viewed",write:function(e){jQuery.cookie(this.name,e.join(" "),this.configuration)},read:function(){var e=[];var t=jQuery.cookie(this.name);if(t!==null&&t!=undefined){e=t.split(" ")}return e},destroy:function(){jQuery.cookie(this.name,null,this.configuration)},remove:function(e){var t=this.read();var n=jQuery.inArray(e,t);if(n!==-1){t.splice(n,1);this.write(t)}}};var o=function(){n.show();if(e.onComplete){try{e.onComplete()}catch(t){}}};var u=function(){if(t.length&&i<e.howManyToShow){jQuery.ajax({dataType:"json",url:"/products/"+t[0]+".js",cache:false,success:function(e){r.tmpl(e).appendTo(n);t.shift();i++;u()},error:function(){s.remove(t[0]);t.shift();u()}})}else{o()}};return{resizeImage:function(e,t){if(t==null){return e}if(t=="master"){return e.replace(/http(s)?:/,"")}var n=e.match(/\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?/i);if(n!=null&&n!=undefined){var r=e.split(n[0]);var i=n[0];return(r[0]+"_"+t+i).replace(/http(s)?:/,"")}else{return null}},showRecentlyViewed:function(i){var i=i||{};jQuery.extend(e,i);t=s.read();r=jQuery("#"+e.templateId);n=jQuery("#"+e.wrapperId);e.howManyToShow=Math.min(t.length,e.howManyToShow);if(e.howManyToShow&&r.length&&n.length){u()}},getConfig:function(){return e},clearList:function(){s.destroy()},recordRecentlyViewed:function(t){var t=t||{};jQuery.extend(e,t);var n=s.read();if(window.location.pathname.indexOf("/products/")!==-1){var r=window.location.pathname.match(/\/products\/([a-z0-9\-]+)/)[1];var i=jQuery.inArray(r,n);if(i===-1){n.unshift(r);n=n.splice(0,e.howManyToStoreInMemory)}else{n.splice(i,1);n.unshift(r)}s.write(n)}}}}()
+
+
+Shopify.Products.showRecentlyViewed({ 
+  howManyToShow: {{ section.settings.number_of_recently_viewed_products }}, 
+  wrapperId: 'recently-viewed-products-grid', 
+  templateId: 'recently-viewed-product-grid-template',
+  onComplete: function() {
+  if (jQuery("#recently-viewed-products-grid").children().length > 0) {
+  jQuery(".recently-viewed-products").show();  
+}
+  }
+});
+</script>

@@ -1,0 +1,13 @@
+{% if section.settings.show_real_time_visitor %}
+<div class="realTime">
+  <div class="avatar"></div>
+  <div class="counter_real_time" data-counter-max="{{section.settings.real_time_max}}" data-interval-time="{{section.settings.real_interval_time | append: '000'}}">{{'products.real_time_visit.text'| t: visitCount: 'VisitCount' | split: 'VisitCount' | first }}<span id="number_counter">+<span>{{'now' | date: '%S'}}</span></span>{{'products.real_time_visit.text'| t: visitCount: 'VisitCount' | split: 'VisitCount' | last }}</div>
+</div>
+{%endif %}
+
+<style type="text/css">
+   #number_counter {
+    background: {{ section.settings.bg_count }}; 
+    color: {{ section.settings.bg_count_text }}; 
+   }
+</style>

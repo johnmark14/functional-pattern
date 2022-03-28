@@ -1,0 +1,627 @@
+
+{% if settings.product_page_sidebar == "left_sidebar" or  settings.product_page_sidebar == "right_sidebar" %}
+{% assign mid_width = "grid__item wide--three-quarters post-large--three-quarters" %}
+{% else %}
+{% assign mid_width = "grid__item" %}
+{% endif %}
+
+
+{% include 'single-product-layout-type-4' %}
+
+
+
+
+
+<style>
+  
+  .product_single_detail_section #AddToCart { {% if section.settings.use_cart_width %} width:100%;padding:{{ section.settings.cart_size }};font-size:{{ section.settings.cart_font_size }}px; {% else %} width:50%;  {% endif %}  float:left;background: {{ section.settings.color_cart }};border:none;color: {{ section.settings.color_button_cart_text }};margin-bottom:10px;margin-right:10px; }
+.product_single_detail_section #AddToCart:hover { background:{{ section.settings.cart_hover_btn }};color: {{ section.settings.cart_hover_btn_text }};border-color: {{ section.settings.cart_hover_btn }}; }
+  .product_single_detail_section .add-to-wishlist { {% if section.settings.use_cart_width %} width:100%; {% else %} width:calc(50% - 10px );  {% endif %} }
+  .product_single_detail_section .add-to-wishlist .btn { {% if section.settings.use_cart_width %} width:100%; {% endif %} }
+
+  
+  @media (max-width: 567px) { 
+    .product_single_detail_section .add-to-wishlist { {% if section.settings.use_cart_width %} width:100%; {% else %}width:100%;  {% endif %}}
+    .product_single_detail_section #AddToCart { {% if section.settings.use_cart_width %} width:100%; {% else %} width:100%;  {% endif %}}}
+  
+  
+  
+  .product_single_detail_section .add-to-wishlist .btn  { {% unless section.settings.use_cart_width %} width:100%;  {% endunless %} }
+  
+{% if section.settings.use_cart_width %}  @media (max-width: 1599px) { .product_single_detail_section #AddToCart { padding:{{ section.settings.small_cart_size }};font-size:{{ section.settings.small_cart_font_size }}px; }} {% endif %}
+
+</style>
+
+
+
+
+ {% schema %}
+{
+"name": "Product Page",
+"settings": [
+
+
+
+
+{
+        "type": "checkbox",
+        "id": "display_product_sku",
+        "label": "Display Product sku?",
+        "default": true
+      },
+
+      {
+        "type": "checkbox",
+        "id": "display_product_type",
+        "label": "Display Product Type?",
+        "default": true
+      },
+      
+      {
+        "type": "checkbox",
+        "id": "display_vendor_type",
+        "label": "Display Vendor Type"
+      },
+      
+      {
+        "type": "checkbox",
+        "id": "color_tooltip",
+        "label": "Enable color Tooltip?",
+        "default": true
+      },
+      
+      {
+        "type": "checkbox",
+        "id": "product_quantity_enable",
+        "label": "Show quantity selector"
+      },
+
+{
+        "type": "checkbox",
+        "id": "enable_size_chart",
+        "label": "Enable Size Chart",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable wishlist",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "enable_cart",
+        "label": "Enable add to cart",
+        "default": true
+      },
+{
+        "type": "color",
+        "id": "color_cart",
+        "label": "Cart buttons Bg",
+        "default": "#204a80"
+      },
+      {
+        "type": "color",
+        "id": "color_button_cart_text",
+        "label": "Cart button text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "cart_hover_btn",
+        "label": "Cart hover buttons",
+        "default": "#ff003a"
+      },
+      {
+        "type": "color",
+        "id": "cart_hover_btn_text",
+        "label": "Cart hover buttons text",
+        "default": "#fff"
+      },
+{
+        "type": "checkbox",
+        "id": "use_cart_width",
+        "label": "Use Cart Full Width",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_size",
+        "label": "Cart Size",
+        "default": "14px 28px"
+      },
+      {
+        "type": "text",
+        "id": "cart_font_size",
+        "label": "Font Size",
+        "default": "34"
+      },
+      {
+        "type": "text",
+        "id": "small_cart_size",
+        "label": "Small Cart Size",
+        "default": "14px 28px"
+      },
+      {
+        "type": "text",
+        "id": "small_cart_font_size",
+        "label": "Small Font Size",
+        "default": "34"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_button",
+        "label": "Enable Buy Now",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "short_desc",
+        "label": "Enable Short description",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "social_sharing_products",
+        "label": "Enable product sharing",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "secure_pay_enable",
+        "label": "Enable Secure Payments"
+      },
+      {
+        "type": "image_picker",
+        "id": "secure_pay",
+        "label": "Secure Payments Image"
+      },
+      {
+      "type" : "checkbox",
+      "id" : "display_back_in_stock",
+      "label" : "Display Back In Stock",
+      "default" : true
+      },
+      {
+      "type" : "textarea",
+      "id" : "text",
+      "label" : "Text Someone recently bought", 
+      "default" : "Thanks! We will notify you when this product becomes available!"
+      },
+      {
+      "type" : "text",
+      "id" : "text1",
+      "label" : "Link Text", 
+      "default" : "Click Here"
+      },
+      {
+      "type" : "text",
+      "id" : "text2",
+      "label" : "Text 1", 
+      "default" : "to be notified by email when"
+      },
+      {
+      "type" : "text",
+      "id" : "text3",
+      "label" : "Text 3", 
+      "default" : "becomes available"
+      },
+      {
+      "type" : "text",
+      "id" : "error",
+      "label" : "Error Text", 
+      "default" : "Please provide a valid email address."
+      },
+{
+      "type" : "checkbox",
+      "id" : "show_video",
+      "label" : "Show Video", 
+      "default" : false
+      },
+     {
+        "type": "checkbox",
+        "id": "product_tab1",
+        "label": "Enable Product Description",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_tab1_heading",
+        "label": "Tab 1 heading",
+        "default": "Product Description"
+      },
+      
+    
+      {
+      "type": "checkbox",
+      "id": "product_tab2",
+      "label": "Enable Shipping details",
+      "default": true
+      },
+      {
+      "type": "text",
+      "id": "product_tab2_heading",
+      "label": "Tab 2 heading",
+      "default": "Additional information"
+      },
+     
+      {
+        "type": "checkbox",
+        "id": "product_tab3",
+        "label": "Enable Product Review",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_tab3_heading",
+        "label": "Tab 3 heading",
+        "default": "Reviews"
+      },
+      
+      {
+        "type": "checkbox",
+        "id": "product_related_enable",
+        "label": "Enable related products"
+      },
+      {
+        "type": "text",
+        "id": "related_prds_heading",
+        "label": "Main Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_image_need",
+        "label": "Show Heading Image ?"
+      },
+      {
+        "type": "image_picker",
+        "id": "heading_image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "related_prds_title",
+        "label": "Small Heading"
+      },
+      {
+        "type": "header",
+        "content": "Recently Viewed Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_recently_viewed_products",
+        "label": "Display Recently Viewed Products?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "recently_viewed_products_title",
+        "label": "Title of recently viewed products",
+        "default": "Recently Viewed Products"
+      },
+      {
+        "type": "text",
+        "id": "number_of_recently_viewed_products",
+        "label": "Number of recently viewed products",
+        "default": "8"
+      },
+
+{
+        "type": "header",
+        "content": "-- Product Real time Visitor"
+        },
+        {
+        "type": "checkbox",
+        "id": "show_real_time_visitor",
+        "label": "Show fake real time Visitor",
+        "default": true
+        },
+        {
+        "type": "range",
+        "id": "real_time_max",
+        "min": 10,
+        "max": 1000,
+        "step": 10,
+        "label": "Max fake real time Visitor",
+        "default": 100
+        },
+        {
+        "type": "range",
+        "id": "real_interval_time",
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "unit": "sec",
+        "label": "Interval time",
+        "default": 2
+        },
+        {
+        "type": "color",
+        "id": "bg_count_text",
+        "label": "Count text color",
+        "default": "#fff"
+        },
+        {
+        "type": "color",
+        "id": "bg_count",
+        "label": "Count background color",
+        "default": "#e53939"
+        },
+ {
+            "type" : "header",
+            "content" : "The number of products has been sold"
+        },
+        {
+            "type" : "checkbox",
+            "id" : "show_sold_in",
+            "label" : "Enabled",
+            "default" : true
+        },
+        {
+            "type" : "textarea",
+            "id" : "item_prd",
+            "label" : "The number of products",
+            "default" : "3,5,6,7,8,10,12,15"
+        },
+        {
+            "type" : "text",
+            "id" : "item_prds",
+            "label" : "Text Sold in",
+            "default" : "sold in last"
+        },
+        {
+            "type" : "textarea",
+            "id" : "hours_prs",
+            "label" : "Hours",
+            "default" : "10,15,16,17,18,20,25,35"
+        },
+        {
+            "type" : "text",
+            "id" : "item_hours",
+            "label" : "Text Hours",
+            "default" : "hours"
+        },
+ {
+            "type" : "header",
+            "content" : "Upsell Bundled Products"
+        },
+        {
+            "type" : "checkbox",
+            "id" : "dpl_grouped_product",
+            "label" : "Display Grouped Product",
+            "default" : true
+        },
+        {
+            "type": "text",
+            "id": "grouped_title",
+            "label": "Grouped Title",
+            "default": "Frequently Bought Together",
+            "info": "Use for Grouped Product Style 2"
+        },
+        {
+            "type": "textarea",
+            "id": "grouped_choose_options_text",
+            "label": "Grouped Choose Options Text",
+            "default": "Please choose options for all selected products"
+        },
+        {
+            "type": "text",
+            "id": "choose_options",
+            "label": "Choose Options Button",
+            "default": "Choose Options"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_bundle_discount",
+            "label": "Enable Bundle Discount",
+            "default": true
+        },
+        {
+            "type": "textarea",
+            "id": "bundle_discount_text",
+            "label": "Bundle Discount Text",
+            "default": "Get a [discount]% discount buying these products together | Erhalten Sie einen Rabatt von [discount]%, wenn Sie diese Produkte zusammen kaufen ",
+            "info":"Use [discount] to show discount rate"
+        },
+{
+            "type": "header",
+            "content": "Countdown"
+        },
+        
+        {
+            "type": "text",
+            "id": "text_countdown",
+            "label": "Text Countdown",
+            "default": "Limited-Time Offers, End in:"
+        },
+        {
+            "type": "text",
+            "id": "progressbar_1",
+            "label": "Progressbar 1",
+            "default": "Please hurry, only "           
+        },        
+        {
+            "type": "text",
+            "id": "total_items",
+            "label": "Total Items",
+            "default": "100",
+            "info": "Use for Countdown Style 2"
+        },
+        {
+            "type": "text",
+            "id": "min_items_left",
+            "label": "Min Items Left",
+            "default": "8",
+            "info": "Use for Countdown Style 2"
+        },
+        {
+            "type": "text",
+            "id": "max_items_left",
+            "label": "Max Items Left",
+            "default": "26",
+            "info": "Use for Countdown Style 2"
+        },
+        {
+            "type": "color",
+            "id": "progressbar_color",
+            "label": "Progressbar Color",
+            "default": "#f5f5f5",
+            "info": "Use for Countdown style 2"
+        },
+        {
+            "type": "color",
+            "id": "progressbar_active_color",
+            "label": "Progressbar Active Color",
+            "default": "#69c69c",
+            "info": "Use for Countdown style 2"
+        },
+{
+"type": "header",
+"content": "Coupon Code"
+},
+
+{
+"type": "text",
+"id": "title1",
+"label": "CODE 1 Title",
+"default": "{CODE: ABER10OFF}"
+},
+{
+"type": "richtext",
+"id": "ctext1",
+"label": "CODE 1 Text",
+"default": "<p>Extra 10<b>%</b> off Buy 1</p>"
+},
+{
+"type": "text",
+"id": "title2",
+"label": "CODE 2 Title",
+"default": "{CODE: ABER15OFF}"
+},
+{
+"type": "richtext",
+"id": "ctext2",
+"label": "CODE 2 Text",
+"default": "<p>Extra 15<b>%</b> off Buy 2</p>"
+},
+{
+"type": "text",
+"id": "title3",
+"label": "CODE 3 Title",
+"default": "{CODE: ABER20OFF}"
+},
+{
+"type": "richtext",
+"id": "ctext3",
+"label": "CODE 3 Text",
+"default": "<p>Extra 20<b>%</b> off Buy 3</p>"
+}
+
+
+  ],
+
+
+"blocks": [
+    {
+      "type": "text",
+      "name": "Content block",
+      "settings": [ 
+ 		 {
+          "type": "text",
+          "id": "class",
+          "label": "Font Awesoem class",
+          "default": "far fa-heart",
+"info": "Works only on product type 3"
+        },
+		{
+          "type": "color",
+          "id": "class_color",
+          "label": "Icon color",
+		  "default":"#000"
+        },
+{
+          "type": "color",
+          "id": "icon_bg_color",
+          "label": "Bg color",
+		  "default":"#000"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"          
+        },
+		{
+          "type": "color",
+          "id": "title_color",
+          "label": "Color",
+		  "default":"#000"
+        },
+{
+          "type": "text",
+          "id": "sub_title",
+          "label": "Sub Title"          
+        },
+		{
+          "type": "color",
+          "id": "sub_title_color",
+          "label": "Color",
+		  "default":"#000"
+        },
+ 		{
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description"
+
+        },
+{
+          "type": "color",
+          "id": "desc_color",
+          "label": "Color",
+		  "default":"#000"
+        },
+		{
+          "type": "text",
+          "id": "link",
+          "label": "Link"          
+        }      
+		
+      ]
+    },
+ {
+      "type": "video",
+      "name": "Product Specific Video",
+      "settings": [  		    
+		{
+          "type": "product",
+          "id": "select_product_name",
+		  "label": "Select Product"
+		},        
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Vidoe URL"
+        }
+      ]
+    },
+{
+      "type": "html",
+      "name": "Html text",
+      "settings": [  		    
+		{
+          "type": "product",
+          "id": "select_product_name",
+		  "label": "Select Product"
+		},        
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Html text"
+        }
+      ]
+    }
+  ]
+
+
+
+}
+{% endschema %}

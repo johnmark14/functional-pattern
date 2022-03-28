@@ -1,0 +1,86 @@
+<div data-section-id="{{ section.id }}"  data-section-type="custom-text-block" class="custom-text-block">  
+  <div class="widget widget_custom_block">
+    <ul class="support_block">         
+      {% if section.blocks.size > 0 %}      
+      {% for block in section.blocks %}        
+      <li class="grid__item">
+        <div class="custom-text_section">                      
+          {% if block.settings.class != blank  %} 
+          <div class="support_section">
+            <div class="support_icon">                      
+              <a href="{{ block.settings.link }}"><i class="{{ block.settings.class }}"></i></a>
+            </div>
+            {% endif %}   
+            <div class="support_text"> 
+              {% if block.settings.title != blank  %}  
+              <h5>{{ block.settings.title }}</h5>
+              {% endif %} 
+              {% if block.settings.sub_title != blank  %}  
+              <h6 >{{ block.settings.sub_title }}</h6>
+              {% endif %}
+
+              {% if block.settings.desc != blank  %}  
+              <p  class="desc">{{ block.settings.desc }}</p>
+              {% endif %} 
+            </div>     
+          </div>
+        </div>    
+      </li>  
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% schema %}
+{
+"name": "Custom Text",
+"class": "index-section",
+"max_blocks":5,
+"settings": [
+
+
+],
+"blocks": [
+{
+"type": "text",
+"name": "Content block",
+"settings": [ 
+{
+"type": "text",
+"id": "class",
+"label": "Font Awesoem class",
+"default": "far fa-heart"   
+},
+
+
+{
+"type": "text",
+"id": "title",
+"label": "Heading"          
+},
+
+{
+"type": "text",
+"id": "sub_title",
+"label": "Sub Title"          
+},
+
+{
+"type": "textarea",
+"id": "desc",
+"label": "Description"
+
+},
+
+{
+"type": "text",
+"id": "link",
+"label": "Link"          
+}      
+
+]
+}
+]
+}
+{% endschema %}

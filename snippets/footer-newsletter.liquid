@@ -1,0 +1,15 @@
+
+
+<div class="newsletter-block">
+  {% if block.settings.show_footer_title %}
+  <h4 class="footer__title ">{{ block.settings.title }}</h4>
+  {% endif %}
+  {% if block.settings.richtext != blank %}
+  <p>{{ block.settings.richtext }}</p>
+  {% endif %}
+  <div class="collapsible-content__inner">
+    <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">      
+      <div class="klaviyo-form-TV3WQb"></div>
+    </div>
+  </div>
+</div>

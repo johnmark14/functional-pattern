@@ -1,0 +1,186 @@
+<div class=" menu-wrapper" id="menu-wrapper"> 
+<div class="menu-tool">
+<ul class="site-nav">
+ {%- assign sitemenu = section.settings.pick_menu %}   
+    {% for link in linklists[sitemenu].links %}
+    {% assign i = forloop.index | downcase %}
+    {% assign cat = link.title | handleize %}
+
+    {% if section.settings.display_megamenu %}
+
+    {% assign is_megamenu = false %}
+    {% for block in section.blocks %}
+    {% for i in (1..8) %}  
+    {% capture cap_megamenu_item %}megamenu_items_{{ i }}{% endcapture %}  
+    {% capture cap_banner_first_style %}banner_first_style_{{ i }}{% endcapture %}
+    {% capture cap_banner_second_style %}banner_second_style_{{ i }}{% endcapture %}
+    {% capture cap_banner_third_style %}banner_third_style_{{ i }}{% endcapture %}
+
+
+    {% capture cap_link_banner_first_style %}link_banner_first_style_{{ i }}{% endcapture %}
+    {% capture cap_link_banner_second_style %}link_banner_second_style_{{ i }}{% endcapture %}
+    {% capture cap_link_banner_third_style %}link_banner_third_style_{{ i }}{% endcapture %}
+
+
+    {% capture cap_featured_product %}featured_product_{{ i }}{% endcapture %}
+    {% capture cap_title_featured_product %}title_featured_product_{{ i }}{% endcapture %}
+    {% capture cap_main_linklist %}main_linklist_{{ i }}{% endcapture %}
+
+    {% comment %}
+    For style 4
+    {% endcomment %}
+    {% capture cap_banner_four_style %}banner_four_style_{{ i }}{% endcapture %}
+
+
+
+    {% if block.settings[cap_megamenu_item] != blank %}
+    {% assign megamenu_item = block.settings[cap_megamenu_item] | handleize %}
+    {% if megamenu_item == cat %}
+    {% assign is_megamenu = true %}
+    {% assign block_style = block.type %}
+
+    {% assign banner_first_style = block.settings[cap_banner_first_style] %}
+    {% assign banner_second_style = block.settings[cap_banner_second_style] %}
+    {% assign banner_third_style = block.settings[cap_banner_third_style] %}
+
+
+    {% assign link_banner_first_style = block.settings[cap_link_banner_first_style] %}
+    {% assign link_banner_second_style = block.settings[cap_link_banner_second_style] %}
+    {% assign link_banner_third_style = block.settings[cap_link_banner_third_style] %}
+
+
+    {% assign featured_product = block.settings[cap_featured_product] %}
+    {% assign title_featured_product = block.settings[cap_title_featured_product] %}  			  
+    {%- assign product = all_products[featured_product] -%}
+
+    {% comment %}
+    For style 4
+    {% endcomment %}
+    {% assign banner_four_style = block.settings[cap_banner_four_style] %}	     			    
+    {% assign main_linklist = block.settings[cap_main_linklist] %}
+
+
+    {% endif %}
+    {% endif %}
+
+    {% case block.settings.width %}
+    {% when 'small' %}
+    {%- assign width_product = '120x160' -%}
+    {% when 'medium' %}
+    {%- assign width_product = '180x220' -%}
+    {% when 'large' %}
+    {%- assign width_product = '500x260' -%}
+    {% endcase %}
+
+
+    {% endfor %}
+    {% endfor %}
+
+    {% endif %}  
+   	{% assign link_child = link.handle %} 
+    
+    <li class=" {% if is_megamenu %}dropdown  mega-menu {% else %}{% if linklists[link.handle] != empty %} dropdown{% endif %}{% endif %} menu-item-depth-0">
+      <a class="{%if linklists[link.handle] != empty %}menu__moblie {% endif %} {% if link.active %}current{% endif %} {% cycle 'color1', 'color2', 'color3','color4', 'color5', 'color6','color7', 'color8', 'color9','color10', %}" href="{{ link.url }}">
+        <span>         
+          {{ link.title }}  {% if linklists[link.handle] != empty %}{% endif %}   
+        </span>       
+      </a> 	
+
+      {% comment %}
+      Check if menu item is Mega menu 
+      {% endcomment %}
+ 	    
+      {% if section.settings.display_megamenu %}  
+
+      {% if is_megamenu %}          
+      {% include 'mega-menu' with link_child %}                     
+      {% else %}
+      {% if linklists[link.handle] != empty %}
+      {% include 'dropdown-menu' with link_child %}
+      {% endif %}
+      {% endif %}
+
+      {% else %}
+      {% if linklists[link.handle] != empty %}
+      {% include 'dropdown-menu' with link_child %}
+      {% endif %}
+      {% endif %}
+
+    </li>
+    {% endfor %}
+  
+  <li class="menu-item-depth-0">
+  <ul class="menu-icon">
+ 
+     {% if section.settings.display_minicart %}  
+      <li class="header-bar__module cart header_cart">                    
+        {% include 'mini-cart' %}                     
+      </li>
+      {% endif %} 
+      {% if section.settings.display_search %}  
+      
+      <li class="header-search">
+        <a href="/search" class="site-header__link site-header__search js-drawer-open-top">
+          <span class="fas fa-search" aria-hidden="true"></span>
+        </a>
+      </li>      
+      {% endif %}  
+      {% if settings.display_currency %}    
+      <li class="header_currency">
+        <ul class="tbl-list">
+          <li class="currency dropdown-parent uppercase currency-block">
+            {% include 'currencies-switcher' %}                                
+          </li>
+        </ul>
+      </li>
+      {% endif %}
+      
+        <li class="slidedown_section">
+          <a  id="Togglemodal" class="icon-cart-arrow"><i class="fas fa-cog"></i></a>
+          <div id="slidedown-modal">
+            <div class="header-panel-top">
+              <ul>
+                <li>
+                  <div class="customer_account">                          
+                    <ul>
+                      {% if shop.customer_accounts_enabled %}
+                      {% if customer %}
+                      <li>
+                        <a href="/account" title="{{ 'layout.customer.account' | t }}">{{ 'layout.customer.account' | t }}</a>
+                      </li>
+                      <li class="logout-link">
+                        {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                      </li>
+                      {% else %}
+                      <li>
+                        <a href="/account/login" title="{{ 'layout.customer.log_in' | t }}">{{ 'layout.customer.log_in' | t }}</a>
+                      </li>
+                      <li>
+                        <a href="/account/register" title="{{ 'layout.customer.create_account' | t }}">{{ 'layout.customer.create_account' | t }}</a>
+                      </li>          
+                      {% endif %}  
+                      {% endif %} 
+                      {% if section.settings.display_wishlist %}   
+                      <li>
+                        {% include 'wish-list' %} 
+                      </li>
+                      {% endif %} 
+                    </ul>
+                  </div>    
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+        </li>
+      
+     
+  </ul>
+      </li>
+
+</ul>
+</div>
+
+</div>
+

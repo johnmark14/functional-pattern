@@ -1,0 +1,411 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{% if section.settings.show_image %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-whole medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-whole medium-down--grid__item small--grid__item' %}
+{% else %}
+{% assign column1  = 'grid__item wide--one-whole' %}
+{% endif %}
+
+<div class="wide-banner-type" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;{% if section.settings.show_image_1 %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-attachment:fixed;background-repeat:no-repeat;background-position:center center; {% else %}background-color:{{section.settings.background_color}};{% endif%}">
+  <div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">
+    <div class="dt-sc-hr-invisible-large"></div>
+    {% if section.settings.title != blank or section.settings.small_title != blank  %}
+    <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+      <div class="border-title">
+        {% if section.settings.title != blank %}
+        <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+          {{ section.settings.title }}
+        </h2>
+        {% endif %}  
+        {% if section.settings.small_title != blank %}
+        <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+        {% endif %}                
+      </div>
+    </div>      
+    {% endif %}
+
+    <div class="wide-banner-inner" style="{% if section.settings.show_image_2 %}background-image:url('{{ section.settings.image_2 | img_url: '1920X' }}');background-size:cover;background-repeat:no-repeat; background-position:center; {% endif%}">
+      <div class="ovrly"></div>
+      <div class="grid-uniform CollectionItems">      
+        <div class="{{column1 }} banner-content text-{{section.settings.content_position}}">       
+          {% if section.settings.text_1 != blank %}
+          <h3 style="color:{{ section.settings.text_color }};">{{ section.settings.text_1 }}</h3>    
+          {% endif %}  
+          {% if section.settings.title_1 != blank %}
+          <h2 style="color:{{ section.settings.title_color }};">{{ section.settings.title_1 }} <span style="color:{{ section.settings.titleshadow_offer_color }};">{{ section.settings.offer_text }}</span></h2>
+          {% endif %}
+          <div class="deal-clock lof-clock-timer-detail"></div>
+          {% assign dealTime = section.settings.deal_end_date | replace: '_',' ' %}  
+          <div class="deal-content">
+            {% if section.settings.titleshadow_1 != blank %}
+            <h4 style="color:{{ section.settings.titleshadow_1_color }};">{{ section.settings.titleshadow_1 }}</h4>
+            {% endif %}
+            {% if section.settings.textshadow_1 != blank %}
+            <p  style="color:{{ section.settings.textshadow_1_color }};">{{ section.settings.textshadow_1 }}</p>    
+            {% endif %}  
+            <script>
+              //<![CDATA[
+              jQuery(document).ready(function($){
+                $(".lof-clock-timer-detail").lofCountDown({      
+                  TargetDate:"{{ dealTime }}",
+                  DisplayFormat:"<ul class='list-inline'><li class='day'>%%D%%<span>Days</span></li><li class='hours'>%%H%%<span>Hours</span></li><li class='mins'>%%M%%<span>Minutes</span></li><li class='seconds'>%%S%%<span>Seconds</span></li></ul>",
+                  //FinishMessage: "Expired"
+                });
+              });
+              //]]>
+            </script>
+            {% if section.settings.button_1 != blank or  section.settings.button_2 != blank %}
+            <div class="deal-btn">{% endif %}  {% if section.settings.button_1 != blank %}<a class="btn" href="{{ section.settings.link_1 }}" style="border:none;color:{{ section.settings.button_txt_color }};background-color:{{ section.settings.button_bg_color }};">{{ section.settings.button_1 }}</a>{% endif %} 
+
+
+              {% if section.settings.button_2 != blank %}
+              <a class="btn" href="{{ section.settings.link_2 }}">{{ section.settings.button_2 }}</a>   
+              {% endif %}   
+              {% if section.settings.button_1 != blank or  section.settings.button_2 != blank %}
+            </div> 
+            {% endif %}
+
+            {% if section.settings.show_blocks %}  
+            {% for block in section.blocks %}         
+            <div class=" grid__item wide--one-half post-large--one-half large--one-half medium-one-half small--grid__item wow fadeInUp animated">
+              <a href="{{ block.settings.client_link }}">
+                {% if block.settings.client_img != blank or block.settings.client_heading != blank %}
+                <div class="icon">
+                  <img src="{{ block.settings.client_img | img_url: "70x70"  }}" alt="{{ block.settings.client_heading }}"  style ="border:3px solid {{block.settings.img_border_color}};"/>
+                </div>
+                {% else %}          
+                <div class="item"><img src="//via.placeholder.com/70x70"></div>
+                {% endif %}   
+                {% if block.settings.client_heading != blank %}
+                <span style="color:{{ block.settings.client_heading_color}}">{{ block.settings.client_heading }} </span>
+                {% endif %}
+              </a>
+            </div>
+            {% endfor %}
+            {% endif %} 
+
+          </div>
+        </div>
+        {% if section.settings.show_image %}
+        <div class="{{column2 }} icon-section">
+          {% if block.settings.image != blank %}
+          <img src="{{ section.settings.image | img_url: "500x700"  }}" alt="{{ section.settings.title_1 }}" />
+          {% else %}          
+          <div class="item"><img src="//via.placeholder.com/500x700"></div>
+          {% endif %}  
+        </div>
+        {% endif %} 
+      </div>   
+    </div>
+  </div>
+</div>
+
+<style>
+
+  .lof-clock-timer-detail ul li,.lof-clock-timer-detail ul li span { color:{{ section.settings.time_color }}; }
+  .banner-content .lof-clock-timer-detail li:after { background:{{ section.settings.time_color }}; }
+  .banner-content .deal-btn .btn { color:{{ section.settings.button_txt_color }};background-color:{{ section.settings.button_bg_color }}; }
+  .banner-content .deal-btn .btn:hover{background:{{ section.settings.button_bghover_color }};color:{{ section.settings.button_txthover_color }};}
+
+  {% if section.settings.show_overlay %} .home-wide-banner .wide-banner-type:before { background:{{ section.settings.overlay_bg | color_modify: 'alpha', 0.6 }}; } {% endif %} 
+
+</style>
+
+{% schema %}
+{
+"name": "Wide Banner",
+"class": "index-section home-wide-banner",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "checkbox",
+"id": "show_image_1",
+"label": "Show Bg Image"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Bg Image",
+"info": "Size: 1920x1280"
+},
+{
+"type": "checkbox",
+"id": "show_overlay",
+"label": "Show Overlay"
+},
+{
+"type": "color",
+"id": "overlay_bg",
+"label":"Overlay Bg color",
+"default": "#f5f5f5"
+},
+{
+"type": "color",
+"id": "background_color",
+"label":"Background color",
+"default": "#f5f5f5"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Wide Banner"
+},  
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Sub Heading"
+},  
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "show_image_2",
+"label": "Show Image "
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image",
+"info": "Size: 1920x900"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Content Position",
+"options": [
+{
+"value": "center",
+"label": "Center"
+},
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}
+],
+"default": "center"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_color",
+"label":"Heading color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "offer_text",
+"label": "Offer Text",
+"default": "Offer Text"
+},
+{
+"type": "color",
+"id": "titleshadow_offer_color",
+"label":"Offer Text color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "text_1",
+"label": "Sub Heading",
+"default": "sub Heading"
+},
+{
+"type": "color",
+"id": "text_color",
+"label":"Sub Heading color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "time_color",
+"label":"Deal time color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "titleshadow_1",
+"label": "Shadow Text",
+"default": "Shadow Text"
+},
+{
+"type": "color",
+"id": "titleshadow_1_color",
+"label":"Shadow Text color",
+"default": "#000"
+},
+
+{
+"type": "textarea",
+"id": "textshadow_1",
+"label": "Description",
+"default": "Few lines of short description"
+},
+{
+"type": "color",
+"id": "textshadow_1_color",
+"label":"Description",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_1",
+"label": "Button text",
+"default": "Shop Now"
+},
+{
+"type": "color",
+"id": "button_bg_color",
+"label":"Background color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_txt_color",
+"label":"Text color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "button_bghover_color",
+"label":"Background Hover color",
+"default": "#666"
+},
+{
+"type": "color",
+"id": "button_txthover_color",
+"label":"Text Hover color",
+"default": "#fff"
+},
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+},
+{
+"type": "text",
+"id": "button_2",
+"label": "Button text",
+"default": "View More"
+},
+{
+"type": "url",
+"id": "link_2",
+"label": "Link URL"
+},
+{
+"type": "text",
+"id": "deal_end_date",
+"label": "Deal end date",
+"info": "format should be MM/DD/YYYY_HH:MM:SS "
+},
+{
+"type": "checkbox",
+"id": "show_image",
+"label": "Show Image"
+},
+
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 500x700"
+}
+],
+"blocks": [
+{
+"type": "Image",
+"name":"Icon Block",
+"settings": [
+{
+"type": "image_picker",
+"id": "client_img",
+"label": "Image",
+"info": "Size: 75x75"
+},
+{
+"type": "text",
+"id": "client_heading",
+"label": "Title"
+},
+{
+"type": "color",
+"id": "img_border_color",
+"label": "img border color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "client_heading_color",
+"label": "Title Color",
+"default": "#000"
+},
+{
+"type": "url",
+"id": "client_link",
+"label": "Link"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Wide Banner",
+"category": "Image",
+"blocks": []
+}
+]
+}
+{% endschema %}

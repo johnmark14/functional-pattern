@@ -1,0 +1,396 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="gallery-block style2" style="background:{{ section.settings.bg_color }};">
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+    {%- assign product_limit = section.settings.limit -%}
+    {% if section.settings.portfolio_title != blank or section.settings.portfolio_text != blank %}
+    <div class="section-header section-header--small full-position-{{section.settings.heading_position}}"> 
+      <div class="border-title"> 
+        {% if section.settings.portfolio_title != blank %}
+        <h2 style="color:{{ section.settings.portfolio_title_clr }}">{{ section.settings.portfolio_title }}</h2>   
+        {% endif %}
+
+        {% if section.settings.portfolio_text != blank %}
+        <div class="short-desc" style="color:{{ section.settings.portfolio_text_clr }};">
+          {{ section.settings.portfolio_text }}
+        </div> 
+        {% endif %}  
+      </div>
+    </div>
+    {% endif %}    
+
+    <div class="grid-uniform">
+    <div class="grid__item text-center">   
+      <div class="sorting-container">
+        {% if section.settings.portfolio_tag_1 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".all-sort" class="active-all" href="#">{{ section.settings.portfolio_tag_1 }}</a>{% endif %}  
+        {% if section.settings.portfolio_tag_2 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_2 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_2 }}</a> {% endif %}  
+        {% if section.settings.portfolio_tag_3 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_3 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_3 }}</a> {% endif %}  
+        {% if section.settings.portfolio_tag_4 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_4 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_4 }}</a> {% endif %}  
+        {% if section.settings.portfolio_tag_5 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_5 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_5 }}</a> {% endif %}  
+        {% if section.settings.portfolio_tag_6 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_6 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_6 }}</a> {% endif %}  
+        {% if section.settings.portfolio_tag_7 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_7 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_7 }}</a> {% endif %}  
+      </div>    
+    </div>
+    {% case section.settings.grid %}
+    {% when '2' %}
+    {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+    {% when '3' %}
+    {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-third small-grid__item' -%}
+    {% when '4' %}
+    {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-half medium--one-half small-grid__item' -%}
+    {% when '5' %}
+    {%- assign grid_item_width = 'wide--one-fifth post-large--one-fifth large--one-half medium--one-half small-grid__item' -%}            
+    {% endcase %}
+    <div class="list-gallery-items portfolio-container">        
+      {% if section.blocks.size > 0 %}      
+      {% for block in section.blocks  %}
+      <div class="column grid__item {{ grid_item_width }}  small--grid__item text-center gallery  no-space {{ block.settings.tag_list | downcase  }} all-sort">
+
+        <ul>
+          {% if block.settings.image_1 != blank %}                  
+          <li>                 
+            <img src="{{  block.settings.image_1 | img_url: '960x' }}"  alt="{{ product.title }}" />   
+            <div class="image-overlay">          
+
+              <div class="links">                
+
+                <a href="{{ block.settings.gallery_link }}" class="link"><i class="fas fa-link icons"></i></a>
+                <a href="{{ block.settings.image_1 | img_url: '1024x1024' }}" class="portfolio_zoom" rel="prettyPhoto[gallery{{block.id}}]"><i class="fas fa-search icons"></i></a>
+              </div>
+              {% if block.settings.gallery_title != blank or block.settings.category != blank %}
+              <div class="image-overlay-details">
+                {% if block.settings.gallery_title != blank %} <h4><a href="{{ block.settings.gallery_link }}">{{ block.settings.gallery_title }}</a></h4>{% endif %}
+                {% if block.settings.category != blank %} <p>{{ block.settings.category }}</p>{% endif %}
+              </div>
+              {% endif %}
+            </div>
+          </li>
+          {% endif %}
+
+          {% if block.settings.image_2 != blank %}                  
+          <li style="display:none"> <a href="{{ block.settings.image_2 | img_url: '1024x1024' }}" class="portfolio_zoom" rel="prettyPhoto[gallery{{block.id}}]">                 
+            <img src="{{ block.settings.image_2 | img_url: '960x' }}"  alt="{{ product.title }}" />   
+            </a></li>           
+          {% endif %}   
+          {% if block.settings.image_3 != blank %}
+          <li style="display:none"> <a href="{{ block.settings.image_3 | img_url: '1024x1024' }}" class="portfolio_zoom" rel="prettyPhoto[gallery{{block.id}}]">                 
+            <img src="{{ block.settings.image_3 | img_url: '960x' }}"  alt="{{ product.title }}" />   
+            </a></li>           
+          {% endif %}   
+          {% if block.settings.image_4 != blank %}
+          <li style="display:none"> <a href="{{  block.settings.image_4 | img_url: '1024x1024' }}" class="portfolio_zoom" rel="prettyPhoto[gallery{{block.id}}]">                 
+            <img src="{{ block.settings.image_4 | img_url: '960x' }}"  alt="{{ product.title }}" />   
+            </a></li>           
+          {% endif %}   
+        </ul>
+
+
+      </div>  
+      {% else %}
+
+      {% for i in (1..product_limit) %}
+      <div class="column grid__item {{ grid_item_width }}  small--grid__item text-center  no-space {% include 'port-check' %} all-sort">
+        <div class="grid-view-item">
+          <a href="#" class="grid-view-item__link">
+            <div class="grid-view-item__image">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>             
+          </a>
+        </div>
+      </div>
+      {% endfor %}      
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  </div>
+</div>
+
+<style>
+
+  .home-gallery-block .style2 .sorting-container a { border:1px solid {{ section.settings.tags_border }}; }
+  .home-gallery-block .style2 .sorting-container a:hover,.home-gallery-block .style2 .sorting-container a.active-all { color:{{ section.settings.tags_hover_text_clr }} !important; background:{{ section.settings.tags_hover_bg }};border:1px solid {{ section.settings.tags_hover_bg }}; }
+
+  .home-gallery-block .style2 .grid__item .image-overlay { background: {{ section.settings.img_overlay  | color_modify: 'alpha', 0.7 }}; }
+  .home-gallery-block .style2 .grid__item:hover .image-overlay { opacity: 1;}
+  .home-gallery-block .style2 .grid__item .image-overlay .links a { border:2px solid {{ section.settings.img_overlay_icon }};color:{{ section.settings.img_overlay_icon_txt }}; }
+  .home-gallery-block .style2 .grid__item .image-overlay .links a:hover { background:{{ section.settings.img_overlay_icon_bg }};color:{{ section.settings.img_overlay_icon_hover_txt }}; }
+  .home-gallery-block .style2 .grid__item .image-overlay .image-overlay-details h4 a { color:{{ section.settings.img_overlay_title }}; }
+  .home-gallery-block .style2 .grid__item .image-overlay .image-overlay-details p { color:{{ section.settings.img_overlay_catgry }}; }
+
+</style>
+
+{% schema %}
+{
+"name": "Gallery Block 2",
+"class": "index-section home-gallery-block",  
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "portfolio_title",
+"label": "Heading",
+"default": "Best Sellers"
+},
+{
+"type": "color",
+"id": "portfolio_title_clr",
+"label": "Heading",
+"default": "#000"
+},  
+{
+"type": "richtext",
+"id": "portfolio_text",
+"label": "Description"          
+},
+{
+"type": "color",
+"id": "portfolio_text_clr",
+"label": "Description",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "color",
+"id": "tags_border",
+"label": "Tag Border",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "tags_text_clr",
+"label": "Tag Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "tags_hover_bg",
+"label": "Tags Hover Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "tags_hover_text_clr",
+"label": "Tags Hover",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay",
+"label": "Image Overlay",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_title",
+"label": "Overlay Title",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_catgry",
+"label": "Overlay Category",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon",
+"label": "Overlay Icon Border",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_txt",
+"label": "Overlay Icon Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_bg",
+"label": "Overlay Icon Hover Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_hover_txt",
+"label": "Overlay Icon Hover Text",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "portfolio_tag_1",
+"label": "Tag 1"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_2",
+"label": "Tag 2"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_3",
+"label": "Tag 3"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_4",
+"label": "Tag 4"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_5",
+"label": "Tag 5"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_6",
+"label": "Tag 6"          
+},
+{
+"type": "text",
+"id": "portfolio_tag_7",
+"label": "Tag 7"          
+},
+{
+"type": "select",
+"id": "grid",
+"label": "Products per row",
+"default": "3",
+"options": [
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+]
+},
+{
+"type": "text",
+"id": "limit",
+"label": "Product Limit",
+"default": "4"
+}
+],
+"blocks": [
+{
+"type": "text",
+"name": "Gallery Images",
+"settings": [ 
+
+{
+"type": "textarea",
+"id": "tag_list",
+"label": "Tag",
+"default": "All"   
+},    
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Gallery image 1",
+"info": "Size: 650x761"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Gallery image 2",
+"info": "Size: 650x761"
+},
+{
+"type": "image_picker",
+"id": "image_3",
+"label": "Gallery image 3",
+"info": "Size: 650x761"
+},
+{
+"type": "image_picker",
+"id": "image_4",
+"label": "Gallery image 4",
+"info": "Size: 650x761"
+},
+{
+"type": "text",
+"id": "gallery_title",
+"label": "Title"      
+},  
+{
+"type": "text",
+"id": "category",
+"label": "Category"       
+},   
+{
+"type": "text",
+"id": "gallery_link",
+"label": "Link"       
+}    
+
+]
+}
+],
+"presets": [
+{
+"name": "Gallery Block 2",
+"category": "Image",
+"blocks": [ ]
+}
+]
+}
+{% endschema %}
+
+{% javascript %}
+
+$("area[rel^='prettyPhoto']").prettyPhoto();
+$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'pp_default',slideshow:3000, autoplay_slideshow: false,social_tools: false,counter_separator_label: false});
+$(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'fast',slideshow:10000, hideflash: true});
+
+{% endjavascript %}

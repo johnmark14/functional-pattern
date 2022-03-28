@@ -1,0 +1,119 @@
+{% if settings.use_breadcrumb %}
+{% if template == 'product.equipment' or template == 'product.innovations' %} 
+<nav class="breadcrumb" aria-label="breadcrumbs">
+ <div class="container-bg"> 
+  {% if template contains 'product' %}
+
+  {% if collection %}
+<!--   <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>  -->
+<!--   <span aria-hidden="true" class="breadcrumb__sep">&#47;</span> -->
+  {% if collection.handle %}
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  <span aria-hidden="true" class="breadcrumb__sep">&lt;</span> {{ collection.title | link_to: url }}  
+  {% endif %}
+   {% else %}
+<!--   {% capture url %}/collections/all{% endcapture %}
+  <a href="{{url}}">{{'collections.toolbar.all' | t  }}</a> -->
+  {% endif %}
+
+<!--   <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ product.title }}</span> -->
+
+
+  {% elsif template contains 'collection' and collection.handle %}
+   {% if template == 'list-collections' %}
+  <h1>{{ 'general.breadcrumbs.all_collections' | t }}</h1>
+  {% else %}
+  <h1>{{ collection.title }}</h1>
+  <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  {% if current_tags %}
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  {{ collection.title | link_to: url }}
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ current_tags | join: " + " }}</span>
+  {% else %}
+  <span>{{ collection.title }}</span>
+
+  {% endif %}  
+  {% endif %}
+  {% elsif template == 'blog' %}
+  <h1>{{ blog.title }}</h1>
+  <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  {% if current_tags %}
+  {{ blog.title | link_to: blog.url }}
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ current_tags | join: " + " }}</span>
+  {% else %}
+
+  <span>{{ blog.title }}</span>
+
+  {% endif %}
+
+  {% elsif template == 'article' %}
+  <h1>{{ article.title }}</h1>
+  <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  {{ blog.title | link_to: blog.url }}
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ article.title }}</span>
+
+  {% elsif template contains 'page' %}
+  <h1>{{ page.title }}</h1>
+  <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ page.title }}</span>
+
+  {% else %}
+  {% if template == 'list-collections' %}
+  <h1>{{ 'general.breadcrumbs.all_collections' | t }}</h1>
+  {% else %}
+  <h1>{{ page_title }}</h1>
+  <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+  <span aria-hidden="true" class="breadcrumb__sep">&#47;</span>
+  <span>{{ page_title }}</span>
+  {% endif %}
+
+  {% endif %}
+ </div>  
+</nav>
+{% endif %}{% else %}
+
+<nav class="breadcrumb" aria-label="breadcrumbs">
+ <div class="container-bg">
+ {% if template == 'list-collections' %}
+  <h1>{{ 'general.breadcrumbs.all_collections' | t }}</h1>
+  {% endif %}
+  {% if template contains 'product' %}
+  <h1>{{ product.title }}</h1>
+
+  {% elsif template contains 'collection' and collection.handle %}
+  {% unless template == 'list-collections' %}
+  <h1>{{ collection.title }}</h1>
+
+  {% endunless %}
+  {% elsif template == 'blog' %}
+  <h1>{{ blog.title }}</h1>
+
+
+  {% elsif template == 'article' %}
+  <h1>{{ article.title }}</h1>
+
+  {% elsif template contains 'page' %}
+  <h1>{{ page.title }}</h1>
+
+  {% else %}
+  <h1>{{ page_title }}</h1>
+
+  {% endif %}
+ </div>  
+</nav>
+
+
+{% endif %}

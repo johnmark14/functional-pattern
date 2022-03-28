@@ -1,0 +1,456 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{%- assign collection = collections[section.settings.collection] -%}  
+
+<script type="text/javascript">  
+
+  window.grid_hpc_autoplay = {{ section.settings.grid_autoplay }};
+  window.grid_carousel_navigation = {{ section.settings.grid_navigation }};
+  window.grid_carousel_pagination = {{section.settings.grid_pagination }};      
+
+</script>
+
+
+{% if section.settings.layout_setup == '75%' %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '50%' %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '67%' %}
+{% assign column1  = 'grid__item wide--two-thirds post-large--two-thirds large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item gom wide--one-third post-large--two-third large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '100%' %}
+{% assign column1  = 'grid__item' %}
+{% assign column2  = 'grid__item' %}
+{% else %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% endif %}
+{% capture nav_block %}
+<div class="product_loop_nav carousel-arrow {{ section.settings.navigation_position }}" id="navCtrls-{{ block.id}}-nav"></div>
+{% endcapture %}
+{% capture image_block %} 
+<div class="overlay-text">  
+  <div class="collection_title imageText_position {{ section.settings.image_text_position }}">
+    {% if section.settings.sub_caption != blank %}
+    <h6 class="section-header__title" style="color:{{ section.settings.sub_caption_clr }};">    
+      {{ section.settings.sub_caption }}
+    </h6>
+    {% endif %}  
+    {% if section.settings.caption != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.caption_clr }};">    
+      {{ section.settings.caption }}
+    </h2>
+    {% endif %} 
+  </div>
+
+  {% unless section.settings.layout_setup == '100%' or section.settings.image-position == 'none' %}
+  {% if section.settings.image != blank %}
+  <img src="{{ section.settings.image | img_url: '1920X' }}" alt="{{ section.settings.image }}" />
+  {% if section.settings.use_overlay %}
+  <div class="ovrly"></div>
+  {% endif%}
+  {% else %}
+  <img src="//via.placeholder.com/650x980">
+  {% endif%}  
+  {% if section.settings.navigation_position == 'over-image' %}
+  {{ nav_block }}
+  {% endif %}
+  {% endunless %} 
+</div>
+{% endcapture %}
+
+{% capture content_block %}     
+{% if section.settings.title != blank or section.settings.small_title != blank  %}
+<div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+  <div class="border-title">
+
+    {% if section.settings.small_title != blank %}
+    <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+    {% endif %}  
+    {% if section.settings.title != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+      {{ section.settings.title }}
+    </h2>
+    {% endif %} 
+  </div>
+</div>
+{% endif %}
+{% endcapture %}
+
+
+<div {% if section.settings.multigrid  == 'single' %}data-product-single-row-carousel{% endif %}{% if section.settings.multigrid  == 'multi' %}data-product-multi-row-carousel{% endif %}>
+  <div data-section-id="{{ block.id }}" data-section-type="products" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;" class="product-carousel">
+
+    <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">
+      <div class="dt-sc-hr-invisible-large"></div>
+      <div class="product-block-inner">               
+        {{content_block }}
+
+        <div class="grid-uniform">          
+          {% if section.settings.image-position == 'left' and section.settings.layout_setup != '100%' and section.settings.image-position == 'none' %}
+          <div class="{% if section.settings.image-position != 'none' %} {{column2}} image-on-left {% else %}grid__item without-image{% endif %}">         
+            {{image_block}}        
+          </div>      
+          {% endif %}          
+
+          <div class="{% if section.settings.image-position != 'none' %} {{column1}} {% else %}grid__item{% endif %}">
+            <div class="product-block load-wrapper layout-style-{{section.settings.multigrid}}">  
+              <ul class="productLoop" id="product_loop_{{ block.id}}-init"  data-autoplay="{{section.settings.autoplay}}" data-row="{{ section.settings.rows_desktop }}" data-cols="{{ section.settings.column_desktop }}">         
+                {% for product in collection.products  %}
+                {% include 'product-grid-item', grid_item_width: ' ' %} 
+                {% else %}
+                {% for i in (1..7) %}
+                {% include 'empty-row', grid_item_width: ' ' %} 
+                {% endfor %}
+                {% endfor %}
+              </ul>                    
+              {% unless section.settings.navigation_position == 'over-image' %}
+              {{ nav_block }}
+              {% endunless %} 
+            </div>  
+          </div>   
+
+          {% if section.settings.image-position == 'right' and section.settings.layout_setup != '100%' and section.settings.image-position == 'none' %}
+          <div class="{% if section.settings.image-position != 'none' %} {{column2}} {% else %}grid__item{% endif %} image-on-right">
+            {{image_block}}
+          </div>
+          {% endif %}
+        </div> 
+      </div>  
+    </div>
+
+  </div>
+</div>
+
+<style>
+  
+  #shopify-section-{{section.id}}.home-product-carousel .overlay-text:hover .ovrly { background:{{ section.settings.overlay_1 | color_modify: 'alpha', 0.5 }}; }
+  
+</style>
+
+{% schema %}
+{
+"name": "Product Carousel",
+"class": "index-section home-product-carousel",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "select",
+"id": "layout_setup",
+"label": "Layout Grid Style",
+"options": [
+{
+"value": "75%",
+"label": "75/25"
+},
+{
+"value": "50%",
+"label": "50/50"
+},
+{
+"value": "67%",
+"label": "67/33"
+},
+{
+"value": "100%",
+"label": "100/100"
+}
+],
+"default": "75%"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Product Carousel"
+},  
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading",
+"default": "Small Heading"
+},  
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+
+{
+"type": "select",
+"id": "rows_desktop",
+"label": "Rows[For multi rows only]",
+"info": "For desktop screen",
+"options": [ 
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}        
+],
+"default": "2"
+},
+{
+"type": "select",
+"id": "column_desktop",
+"label": "Products per row",
+"info": "For desktop screen",
+"options": [       
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+
+"value": "5",
+"label": "5"
+},
+{
+"value": "6",
+"label": "6"
+}        
+],
+"default": "4"
+},
+{
+"type": "select",
+"id": "multigrid",
+"label": "Grid Options",
+"info": "Carousel Styles",
+"options": [       
+{
+"value": "single",
+"label": "Single Row"
+},
+{
+"value": "multi",
+"label": "Multi Row"
+}    
+],
+"default": "single"
+},    
+{
+"type": "checkbox",
+"id": "grid_navigation",
+"label": "Enable Navigaiton",
+"default": true
+},
+{
+"type": "select",
+"id": "navigation_position",
+"label": "Navigation position",
+"options": [
+{
+"value": "nav-top-left",
+"label": "Top Left"
+},
+{
+"value": "nav-top-right",
+"label": "Top Right"
+},
+{
+"value": "nav-middle",
+"label": "Middle"
+},
+{
+"value": "nav-bottom",
+"label": "Bottom"
+},
+{
+"value": "nav-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "nav-bottom-right",
+"label": "Bottom Right"
+},
+{
+"value": "over-image",
+"label": "Over Image"
+}
+
+],
+"default": "nav-middle"
+},
+{
+"type": "checkbox",
+"id": "grid_autoplay",
+"label": "Carousel Auto Play",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "grid_pagination",
+"label": "Enable Pagination",
+"default": false
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 1000x710"
+},    
+{
+"type": "select",
+"id": "image-position",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+} ,
+{
+"value": "none",
+"label": "None"
+}   
+]
+},
+{
+"type": "text",
+"id": "caption",
+"label": "Heading",
+"default": "Image Heading"
+},  
+{
+"type": "color",
+"id": "caption_clr",
+"label": "Heading Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "sub_caption",
+"label": "Image Text",
+"default": "Image Text"
+},  
+{
+"type": "color",
+"id": "sub_caption_clr",
+"label": "Sub Heading Color",
+"default":"#000"
+},            
+{
+"type": "select",
+"id": "image_text_position",
+"label": "Image Text Position",
+"options": [
+{
+"value": "imgtxt-top-left",
+"label": "Top Left"
+},
+{
+"value": "imgtxt-top-right",
+"label": "Top Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Middle"
+},
+{
+"value": "imgtxt-bottom",
+"label": "Bottom"
+},
+{
+"value": "imgtxt-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "imgtxt-bottom-right",
+"label": "Bottom Right"
+}          
+
+],
+"default": "imgtxt-middle"
+},
+{
+"type": "checkbox",
+"id": "use_overlay",
+"label": "Overlay"
+},
+{
+"type": "color",
+"id": "overlay_1",
+"label": "Overlay",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "collecton_title",
+"label": "Collection Name",
+"default": "Collection Name"
+},  
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+}
+],
+"presets": [
+{
+"name": "Product Carousel",
+"category": "Collection"
+}
+]
+}
+{% endschema %}

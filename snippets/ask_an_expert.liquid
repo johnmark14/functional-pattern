@@ -1,0 +1,156 @@
+{% if settings.enable_ask_an_expert %}
+<div class="modal fade dt_modal-custom" id="ask_an_expert" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        {% if settings.ask_an_expert_header != blank %}
+        <h5 class="modal-title">
+          {{ settings.ask_an_expert_header }}
+        </h5>
+        {% endif %}
+        
+        <a data-dismiss="modal" class="close close-modal" title="{{ 'cart.ajax_cart.close' | t }}" href="javascript:void(0)">
+          {% include 'icon-close' %}
+        </a>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-wrapper">
+          {% if settings.ask_an_expert_title != blank or settings.ask_an_expert_des != blank %}
+          <div class="title-wrapper">
+            {% if settings.ask_an_expert_title != blank %}
+            <h5 class="title">
+              {{ settings.ask_an_expert_title }}
+            </h5>
+            {% endif %}
+            
+            {% if settings.ask_an_expert_des != blank %}
+            <div class="des">              
+              <div>
+                {{ settings.ask_an_expert_des }}
+              </div>              
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+          
+          {% if settings.ask_an_expert_questions != blank %}
+          <div class="questions">            
+            <div>
+              {{ settings.ask_an_expert_questions }}
+            </div>            
+          </div>
+          {% endif %}
+          
+          <div class="form-inner">
+            {% form 'contact' %}
+
+            {% if form.errors %}
+            {{ form.errors | default_errors }}
+            {% endif %}
+            
+            {% if form.posted_successfully? %}
+            <div class="note form-success">
+              {{ 'contact.form.post_success' | t }}
+            </div>
+            
+            <script>
+              $(document).ready(function(){
+                $('#ask_an_expert').modal();
+                $('#ask_an_expert .form-content').hide();
+                $('#ask_an_expert .questions').hide();
+              });
+            </script>
+            {% endif %}
+ 
+            <div class="form-content">
+              <div class="form-group input-boxes">
+                <input type="text" required id="contactFormName" name="contact[Name]" autocapitalize="words" placeholder="{{ 'contact.form.name' | t }}">
+                <input type="email" name="contact[email]" required id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="{{ 'contact.form.email' | t }}">
+                <input type="tel" required name="contact[Phone Number]" pattern="[0-9]*" placeholder="{{ 'contact.form.phone' | t }}">
+              </div>
+
+              	<div class="grid__item wide--one-half post-large--one-half large--one-half">
+                {% if settings.enable_ask_do_you_need %}
+                <div class="form-group custom-radio">
+                  {% if settings.ask_do_you_need != blank %}
+                  <label>
+                    {{ settings.ask_do_you_need }}
+                  </label>
+                  {% endif %}
+
+                  {% if settings.ask_do_you_need_1 != blank %}
+                  <input checked id="do-you-need-1" type="radio" name="contact[{{ settings.ask_do_you_need  }}]" value="{{ settings.ask_do_you_need_1 }}"/>
+                  <label for="do-you-need-1">
+                    {{settings.ask_do_you_need_1 }}
+                  </label>
+                  {% endif %}
+
+                  {% if settings.ask_do_you_need_2 != blank %}
+                  <input id="do-you-need-2" type="radio" name="contact[{{ settings.ask_do_you_need }}]" value="{{ settings.ask_do_you_need_2  }}"/>
+                  <label for="do-you-need-2">
+                    {{ settings.ask_do_you_need_2 }}
+                  </label>
+                  {% endif %}
+
+                  {% if settings.ask_do_you_need_3 != blank %}
+                  <input id="do-you-need-3" type="radio" name="contact[{{ settings.ask_do_you_need }}]" value="{{ settings.ask_do_you_need_3 }}"/>
+                  <label for="do-you-need-3">
+                    {{settings.ask_do_you_need_3 }}
+                  </label> 
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              <div class="grid__item wide--one-half post-large--one-half large--one-half">
+                {% if settings.enable_how_would_you_like_me_to_contact_you %}
+                <div class="form-group custom-radio">
+                  {% if settings.how_would_you_like_me_to_contact_you != blank %}
+                  <label>
+                    {{ settings.how_would_you_like_me_to_contact_you }}
+                  </label>
+                  {% endif %}
+
+                  {% if settings.contact_with_you_1 != blank %}
+                  <input checked id="contact-with-you-1" type="radio" name="contact[{{ settings.how_would_you_like_me_to_contact_you  }}]" value="{{ settings.contact_with_you_1 }}"/>
+                  <label for="contact-with-you-1">
+                    {{settings.contact_with_you_1 }}
+                  </label>
+                  {% endif %}
+
+                  {% if settings.contact_with_you_2 != blank %}
+                  <input id="contact-with-you-2" type="radio" name="contact[{{ settings.how_would_you_like_me_to_contact_you }}]" value="{{ settings.contact_with_you_2 }}"/>
+                  <label for="contact-with-you-2">
+                    {{ settings.contact_with_you_2 }}
+                  </label>  
+                  {% endif %}
+
+                  {% if settings.contact_with_you_3 != blank %}
+                  <input id="contact-with-you-3" type="radio" name="contact[{{ settings.how_would_you_like_me_to_contact_you }}]" value="{{ settings.contact_with_you_3 }}"/>
+                  <label for="contact-with-you-3">
+                    {{settings.contact_with_you_3 }}
+                  </label> 
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+                <div class="form-group">
+                  {% if settings.ask_form_mess != blank %}
+                  <label for="contactFormMessage">
+                    {{settings.ask_form_mess }}
+                  </label>
+                  {% endif %}
+                  <textarea rows="6" name="contact[Message]" id="contactFormMessage"></textarea>
+                </div>
+              </div>
+              <div class="actions">
+                <input type="submit" class="btn"  value="{{ 'contact.form.send_question' | t }}">
+              </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

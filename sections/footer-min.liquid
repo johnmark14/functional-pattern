@@ -1,0 +1,42 @@
+
+
+<footer class="footer-min footer-bottom" data-section-id="{{ section.id }}" data-section-type="footer-section">
+  <div class="site-footer__bottom">
+    <div class="container">
+      <div class="grid-uniform">
+        {% if linklists[section.settings.footer_bottom_min_menu].links.size > 0 %}          
+          <div class="footer_bottom_min_menu">            
+            <ul class="site-footer__linklist">
+              {% for link in linklists[section.settings.footer_bottom_min_menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [   
+    {
+      "type": "header",
+      "content": "Footer bottom"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_bottom_min_menu",
+      "label": "Choose a menu",
+      "default": "footer",
+      "info": "This menu won't show dropdown items"
+    }
+  ],
+  "default": {
+  "settings": {}
+  }
+}
+{% endschema %}

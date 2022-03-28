@@ -1,0 +1,500 @@
+
+<div class="site-footer footer-top">
+  <div class="container">
+    <div class="footer__logo text-center">
+      <a href="{{ routes.root_url }}">
+        {%- assign footer_logo_size = section.settings.desktop_top_logo_height | prepend: 'x' -%}
+        <img src="{{ section.settings.image_top_logo | img_url: footer_logo_size, scale: 2 }}" height="{{ section.settings.desktop_top_logo_height }}px" alt="{{ section.settings.image_top_logo.alt | default: shop.name }}">
+      </a>
+    </div>    
+  </div>
+</div>
+
+<footer class="site-footer footer-default footer-bottom" data-section-id="{{ section.id }}" data-section-type="footer-section" style="{% if section.settings.footer_bg_img %} background-image:url('{{ section.settings.image_1 | img_url: 'master' }}');background-size:cover;background-repeat:no-repeat;{% else %} background-color:{{ section.settings.footer_bg_clr }};{% endif %}">
+  <div class="site-footer__top">
+    <div class="container">
+      {% if section.settings.footer_default %}
+      <div class="grid-uniform">
+         <div  class="grid__item text-center">
+           {% for block in section.blocks %}
+           {% case block.type %}
+           {% when 'logo_social' %}
+           {% include 'footer-logo-social' %}
+           {% when 'menu' %}
+           <ul class="no-bullets site-footer__linklist list--inline">
+             {% for link in linklists[block.settings.menu].links %}
+             <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+             {% endfor %}
+           </ul>           
+           {% endcase %}           
+           {% endfor %}      
+        </div>
+      </div>
+      {% else %}
+      <div class="grid-uniform">
+        
+        {% assign row_width = 0 %}
+        {% for block in section.blocks %}
+        {% assign row_width = row_width | plus: block.settings.container_width %}
+        {% style %}
+        @media only screen and (min-width: 769px) {
+        .footer__item--{{ block.id }} {
+        width: {{ block.settings.container_width }}%;
+        }
+        }
+        {% endstyle %}
+
+        {% if row_width > 100 %}
+        <div class="footer__clear"></div>
+        {% assign row_width = row_width | minus: 100 %}
+        {% endif %}
+
+        {% case block.type %}
+        {% when 'logo_social' %}
+        <div {{ block.shopify_attributes }} class="grid__item large--one-half medium--one-half footer__item--{{ block.id }} footer-logo">
+          {% include 'footer-logo-social', block: block, first_instance: true %}
+        </div>
+        {% when 'custom' %}
+        <div {{ block.shopify_attributes }} class="grid__item large--one-half medium--one-half footer__item--{{ block.id }} footer-custom-text text-center">
+          {% include 'footer-custom-text', block: block %}
+        </div>
+        {% when 'newsletter' %}
+        <div {{ block.shopify_attributes }} class="grid__item large--one-half medium--one-whole footer__item--{{ block.id }} footer-newsletter">
+          {% include 'footer-newsletter', block: block %}
+        </div>
+        {% when 'menu' %}
+        <div {{ block.shopify_attributes }} class="grid__item large--one-half medium--one-half footer__item--{{ block.id }} footer-links">
+          {% include 'footer-menu', block: block %}
+        </div>
+        {% when 'address' %}
+        <div {{ block.shopify_attributes }} class="grid__item large--one-half medium--one-whole footer__item--{{ block.id }} footer-contact-info">
+          {% include 'footer-address', block: block %}
+        </div>
+        {% endcase %}
+        {% endfor %}      
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="container">
+      <div class="grid-uniform">
+        
+        {% if linklists[section.settings.footer_bottom_menu].links.size > 0 %}          
+          <div class="footer_bottom_menu">            
+            <ul class="no-bullets site-footer__linklist">
+              {% for link in linklists[section.settings.footer_bottom_menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        
+        {% if section.settings.show_copyright %}
+        <div class="footer__copyright grid__item wide--one-third post-large--one-third large--one-third medium--one-whole">
+          <p class="footer__copyright-text">{% if section.settings.copyright_text != blank %}{{ section.settings.copyright_text }}{% endif %}</p>
+        </div>
+        {% endif %}
+ 		{% unless section.settings.footer_default %}
+        {% if section.settings.show_social %}       
+        {% include 'footer-logo-social' %}
+        {% endif %}
+        {% endunless %}
+
+        {% if section.settings.show_payment_icons %}
+        {% unless shop.enabled_payment_types == empty %}
+        <div class="footer__payment-icons grid__item wide--one-third post-large--one-third large--one-third medium--one-whole">
+          <ul class="inline-list payment-icons">
+            {% for type in shop.enabled_payment_types %}
+            <li class="icon--payment">
+              {{ type | payment_type_svg_tag }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endunless %}
+        {% endif %} 
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+
+  .footer-default h4 { color:{{ section.settings.footer_heading_clr }}; }  
+  .footer-default, .footer-default p { color:{{ section.settings.footer_txt_clr }}; }
+  .footer-default li a { color:{{ section.settings.footer_link_clr }}; }
+  .footer-default li a:hover { color:{{ section.settings.footer_link_hover_clr }}; }
+  .footer-default i, .footer-default .address-block h3 { color:{{ section.settings.footer_icon_clr }}; }
+
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 5,
+  "settings": [   
+    {
+      "type": "header",
+      "content": "Footer top"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_top_logo",
+      "label": "Add a Logo"
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_logo_height",
+      "label": "Logo height",
+      "default": 50,
+      "min": 20,
+      "max": 120,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Footer skins"
+    },
+    {
+      "type": "color",        
+      "id": "footer_bg_clr",
+      "label":"Background",
+      "default": "#fff"
+    }, 
+    {
+      "type": "checkbox",
+      "id": "footer_bg_img",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "color",        
+      "id": "footer_heading_clr",
+      "label":"Heading",
+      "default": "#000"
+    }, 
+    {
+      "type": "color",        
+      "id": "footer_txt_clr",
+      "label":"Text",
+      "default": "#000"
+    }, 
+    {
+      "type": "color",        
+      "id": "footer_icon_clr",
+      "label":"Icon",
+      "default": "#666"
+    }, 
+    {
+      "type": "color",        
+      "id": "footer_link_clr",
+      "label":"Link",
+      "default": "#000"
+    }, 
+    {
+      "type": "color",        
+      "id": "footer_link_hover_clr",
+      "label":"Link Hover Color",
+      "default": "#000"
+    }, 
+    {
+      "type": "header",
+      "content": "Footer bottom"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_bottom_menu",
+      "label": "Choose a menu",
+      "default": "footer",
+      "info": "This menu won't show dropdown items"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "Show copyright"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Additional copyright text"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_default",
+      "label": "Footer Default",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_social",
+      "name": "Logo and social",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Contact us"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "range",
+          "id": "desktop_logo_height",
+          "label": "Logo height",
+          "default": 50,
+          "min": 20,
+          "max": 120,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "Column width",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+    "type": "menu",
+    "name": "Menu",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_footer_title",
+        "label": "Show title",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Choose a menu",
+        "default": "footer",
+        "info": "This menu won't show dropdown items"
+      },
+      {
+        "type": "range",
+        "id": "container_width",
+        "label": "Column width",
+        "default": 20,
+        "min": 15,
+        "max": 95,
+        "unit": "%"
+      }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_footer_title",
+          "label": "Show title",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Sign up and save"
+        },
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": "Text",
+          "info": "Optional",
+          "default": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "Column width",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "type": "address",
+      "name": "Address",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Contact us"
+        },
+        {
+          "type": "textarea",
+          "id": "footer_address",
+          "label": "Address"      
+        },
+        {
+          "type": "text",
+          "id": "footer_contact_no",
+          "label": "Phone"      
+        },
+        {
+          "type": "text",
+          "id": "office_hours",
+          "label": "Office hours"      
+        },
+        {
+          "type": "text",
+          "id": "footer_contact_id",
+          "label": "E-Mail"      
+        },
+        {
+          "type": "text",
+          "id": "footer_contact_link",
+          "label": "Link"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "Column width",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "Custom text",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_footer_title",
+          "label": "Show title",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Custom text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add your own custom text here.</p>"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "Column width",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "App settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_app_icons",
+          "label": "Show title",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "apple_text",
+          "label": "Apple",
+          "default": "Apple"
+        },
+        {
+          "type": "url",
+          "id": "apple_link",
+          "label": "Apple link"          
+        },
+        {
+          "type": "text",
+          "id": "spotify_text",
+          "label": "Spotify",
+          "default": "Spotify"
+        },
+        {
+          "type": "url",
+          "id": "spotify_link",
+          "label": "Spotify link"          
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_icons",
+          "label": "Show Social Icons",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title1",
+          "label": "Heading",
+          "default": "Custom text"
+        }
+      ]
+    }
+  ],
+  "default": {
+  "settings": {},
+  "blocks": [
+      {
+        "type": "custom",
+        "settings": {}
+      },
+      {
+        "type": "menu",
+        "settings": {}
+      },
+      {
+        "type": "menu",
+        "settings": {}
+      },
+      {
+        "type": "newsletter",
+        "settings": {}
+      },
+      {
+        "type": "logo_social",
+        "settings": {}
+      }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,78 @@
+{% layout none %}
+
+{% assign on_sale = false %}
+{% if product.compare_at_price_min > product.price_min %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<div class="inner product-item" data-product-id="product-{{ product.id }}">
+  <div class="inner-top">
+    <div class="product-top">
+      <div class="product-image">
+        <a href="{{ product.url | within: collection }}" class="product-grid-image" data-collections-related="/collections/{{collection.handle}}?view=related">
+          
+          {%- assign img_pr = product.featured_image.src | product_img_url: '300x' -%}
+          
+          <img src="{{ img_pr }}" alt="{{ product.featured_image.alt | escape }}">
+        </a>
+        
+        <div class="action">
+          {% assign variantCount = product.variants | size %}
+          <form action="/cart/add" method="post" class="variants" data-id="product-actions-{{ product.id }}" enctype="multipart/form-data">
+            {% if sold_out %}
+            <button class="btn add-to-cart-btn" type="submit" disabled="disabled">
+              {{ 'products.product.unavailable' | t }}
+            </button>
+            {% else %}
+            {% if variantCount > 1 %}
+            <a class="btn" href="{{ product.url }}" title="{{ product.title }}">
+              {{ 'products.product.select_options' | t }}
+            </a>
+            {% else %}
+            <input type="hidden" name="id" value="{{ product.variants[0].id }}" /> 
+
+            <button data-btn-addToCart class="btn add-to-cart-btn" type="submit" >
+              {{ 'products.product.buy_now' | t }}
+            </button>
+            {% endif %}
+            {% endif %}
+          </form>
+        </div>       
+      </div>
+    </div>
+    
+    <div class="product-bottom">  
+      {% if settings.show_vendor %}
+      <div class="product-vendor">
+        {{ product.vendor | link_to_vendor }}
+      </div>
+      {% endif %}
+      
+      <a class="product-title" href="{{ product.url | within: collection }}">
+        {{ product.title }}
+      </a>
+
+      <div class="price-box product_price">
+        {% if on_sale %}
+        <div class="price-sale grid-link__sale_price">
+          <span class="old-price">{{ product.compare_at_price_min | money }}</span>
+          <span class="special-price">{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% else %}
+        <div class="price-regular link__org_price">
+          <span>{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% endif %}
+      </div>
+      
+      <a class="pr-details" href="{{ product.url | within: collection }}" >
+        {{ 'products.product.details' | t }}
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,391 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+{% capture formBlock %}
+<div class="grid_column-inner {% if section.settings.enable_gmap %}map-block{% endif %}" style="background-color:{{ section.settings.left_bg }};{% if section.settings.form_bg_img != blank %} {% unless section.settings.enable_gmap %}  background-image:url({{ section.settings.form_bg_img | img_url:'master' }});background-repeat:no-repeat; {% endunless%}{% endif %}" >
+  {% if section.settings.enable_form %}
+  <div class="contact-form-section">
+    {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <p class="note form-success">
+      {{ 'contact.form.post_success' | t }}
+    </p>
+    {% endif %}
+    {{ form.errors | default_errors }}
+    {% assign name_attr = 'contact.form.name' | t | handle %}
+    <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
+    <input type="text" id="ContactFormName" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+    <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+    <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+    {% assign name_attr = 'contact.form.sub' | t | handle %}
+    <label for="ContactFormSub" class="label--hidden">{{ 'contact.form.phone' | t }}</label>
+    <input type="text" id="ContactFormSub" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.sub' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.subject }}{% endif %}">
+
+    <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+    <textarea rows="4" id="ContactFormMessage" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+    <button type="submit" class="btn">{{ 'contact.form.send' | t }}</button>
+
+    {% endform %}
+  </div>
+  {% else %}
+  {% if section.settings.enable_gmap %}
+  <div id="map">{{section.settings.contact_iframe_code }} </div>
+  {% endif %}
+  {% endif %}
+</div>
+{% endcapture %}
+
+<div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">
+  <div class="grid-uniform grid_row-flex">
+    <div class="dt-sc-hr-invisible-large"></div>
+    {% if section.settings.form_alignment == 'left' %}
+    <div class="grid__item wide--one-half post-large--one-half large--one-wholef medium-grid__item small--grid__item grid_column_container">        
+      {{ formBlock }}
+    </div>
+    {% endif %}
+    <div class="grid__item wide--one-half post-large--one-half large--one-whole medium--grid__item small--grid__item grid_column_container">
+      <div class="grid_column-inner" style="background:{{ section.settings.right_bg }}">
+        <div class="contact-wrapper">
+          {% if section.settings.title != blank %}
+          <div class="border-title wow fadeInRight animated"><h3 class="newslet_title" style="color:{{ section.settings.title_color }};">
+            {{ section.settings.title }}
+            </h3>
+            {% endif %}
+            {% if section.settings.desc != blank %}
+
+            <h4 style="color:{{section.settings.text_color}}"> {{ section.settings.desc }}</h4>
+
+            {% endif %}
+          </div>
+          <div class="grid__item contact-details">
+            {% if section.settings.contact_1_heading != blank %}
+            <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small--grid__item wow fadeInRight animated">
+              <div class="contact-icon-wrapper">
+                {% if section.settings.contact_1_icon != blank %}
+                <div class="contact-icon">
+                  <span class="{{ section.settings.contact_1_icon }}"></span>
+                </div>
+                {% endif %}
+                <div class="contact-detail">
+                  <h6>{{ section.settings.contact_1_heading }}</h6>
+                  {% if section.settings.contact_1_desc != blank %}
+                  <p> {{ section.settings.contact_1_desc }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if section.settings.contact_2_heading != blank %}
+            <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small--grid__item wow fadeInRight animated">
+              <div class="contact-icon-wrapper">
+                {% if section.settings.contact_2_icon != blank %}
+                <div class="contact-icon">
+                  <span class="{{ section.settings.contact_2_icon }}"></span>
+                </div>
+                {% endif %}
+                <div class="contact-detail">
+                  <h6>{{ section.settings.contact_2_heading }}</h6>
+                  {% if section.settings.contact_2_desc != blank %}
+                  <p> {{ section.settings.contact_2_desc }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if section.settings.contact_3_heading != blank %}
+            <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small--grid__item wow fadeInRight animated">
+              <div class="contact-icon-wrapper">
+                {% if section.settings.contact_3_icon != blank %}
+                <div class="contact-icon">
+                  <span class="{{ section.settings.contact_3_icon }}"></span>
+                </div>
+                {% endif %}
+                <div class="contact-detail">
+                  <h6>{{ section.settings.contact_3_heading }}</h6>
+                  {% if section.settings.contact_3_desc != blank %}
+                  <p> {{ section.settings.contact_3_desc }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if section.settings.contact_4_heading != blank %}
+            <div class="grid__item wide--one-half post-large--one-half large--one-half medium--one-half small--grid__item wow fadeInRight animated">
+              <div class="contact-icon-wrapper">
+                {% if section.settings.contact_4_icon != blank %}
+                <div class="contact-icon">
+                  <span class="{{ section.settings.contact_4_icon }}"></span>
+                </div>
+                {% endif %}
+                <div class="contact-detail">
+                  <h6>{{ section.settings.contact_4_heading }}</h6>
+                  {% if section.settings.contact_4_desc != blank %}
+                  <p> {{ section.settings.contact_4_desc }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if section.settings.form_alignment == 'right' %}
+    <div class="grid__item wide--one-half post-large--one-half large--one-whole medium-grid__item small--grid__item grid_column_container">        
+      {{ formBlock }}
+    </div>
+    {% endif %}
+    
+  
+  </div>  
+</div>  
+
+
+<style>
+  
+  .contact-block .btn { background: {{ section.settings.button_bg }} ;color: {{ section.settings.button_text }};}
+  .contact-block .btn:hover { background:{{ section.settings.button_hover_bg }};color: {{ section.settings.button_hover_text }};border-color: {{ section.settings.button_hover_bg }};}
+  .contact-block .btn:hover:after, .contact-block .btn:hover:before,.contact-block .btn:active:after, .contact-block .btn:active:before { border-color: {{ section.settings.button_bg }}; }
+  .contact-block .contact-icon{color:{{section.settings.icon_color}};}
+  .contact-block .contact-icon-wrapper h6{color:{{section.settings.icon_title_color}};}
+  .contact-block .contact-icon-wrapper p{color:{{section.settings.icon_desc_color}};}
+  .contact-block .contact-form input[type="text"], .contact-form input[type="email"], .contact-form input[type="tel"], .contact-form textarea { color:{{section.settings.icon_desc_color}}; background:rgba(255,255,255,0.2);}
+  .contact-block  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */ color: {{ section.settings.textfield }}; opacity: 1; /* Firefox */  }
+  .contact-block :-ms-input-placeholder { /* Internet Explorer 10-11 */   color: {{ section.settings.textfield }};  }
+  .contact-block ::-ms-input-placeholder { /* Microsoft Edge */    color: {{ section.settings.textfield }};  }
+  .contact-block .contact-form input[type="text"], .contact-form input[type="email"], .contact-form input[type="tel"], .contact-form textarea {  border-bottom:1px solid rgba(255,255,255,0.2);background:transparent;border-top:none;border-left:none;border-right:none;}
+  .contact-block .contact-form input[type="text"]:active, .contact-form input[type="email"]:active, .contact-form input[type="tel"]:active, .contact-form textarea:active { border-color: {{ section.settings.textfield }};}
+  .contact-block .contact-form input[type="text"]:focus, .contact-form input[type="email"]:focus, .contact-form input[type="tel"]:focus, .contact-form textarea:focus { border-color: {{ section.settings.textfield }};}
+  
+</style>
+
+
+{% schema %}
+{
+"name": "Contact Block 1",
+"class": "index-section contact-block",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "left_bg",
+"label": "Left Section Bg",
+"default":"#000"	
+},
+{
+"type": "image_picker",
+"id": "form_bg_img",
+"label": "BG Image"
+
+},
+{
+"type": "color",
+"id": "textfield",
+"label": "Textfield Color",
+"default":"#fff"	
+},
+{
+"type": "color",
+"id": "button_bg",
+"label": "Button Bg",
+"default": "#d3ad69"	
+},
+{
+"type": "color",
+"id": "button_text",
+"label": "Button Text",
+"default": "#fff"	
+},
+{
+"type": "color",
+"id": "button_hover_bg",
+"label": "Button Hover Bg",
+"default": "#000"	
+},
+{
+"type": "color",
+"id": "button_hover_text",
+"label": "Button Hover Text",
+"default": "#fff"	
+},
+{
+"type": "color",
+"id": "right_bg",
+"label": "Right Section Bg",
+"default":"#f7f7f7"	
+}, 
+{
+"type": "color",
+"id": "icon_color",
+"label": "icon Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "icon_title_color",
+"label": "icon Title Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "icon_desc_color",
+"label": "icon Desc Color",
+"default": "#000"
+},
+
+{
+"type": "checkbox",
+"id": "enable_form",
+"label": "Enable form",
+"default": true
+},
+{
+"type": "select",
+"id": "form_alignment",
+"label": "Form alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}	
+]
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "desc",
+"label": "Desc",
+"default": "Short heading"
+}, 
+{
+"type": "color",
+"id": "text_color",
+"label": "Description",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "contact_1_heading",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "contact_1_desc",
+"label": "Contact Desc",
+"default": "Contact Desc"
+},
+{
+"type": "text",
+"id": "contact_1_icon",
+"label": "Icon",
+"default": "fab fa-instagram"
+},
+
+{
+"type": "text",
+"id": "contact_2_heading",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "contact_2_desc",
+"label": "Contact Desc",
+"default": "Contact Desc"
+},
+{
+"type": "text",
+"id": "contact_2_icon",
+"label": "Icon",
+"default": "fas fa-map-marker"
+},
+
+{
+"type": "text",
+"id": "contact_3_heading",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "contact_3_desc",
+"label": "Contact Desc",
+"default": "Contact Desc"
+},
+{
+"type": "text",
+"id": "contact_3_icon",
+"label": "Icon",
+"default": "fas fa-phone"
+},
+
+{
+"type": "text",
+"id": "contact_4_heading",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "contact_4_desc",
+"label": "Contact Desc",
+"default": "Contact Desc"
+},
+{
+"type": "text",
+"id": "contact_4_icon",
+"label": "Icon",
+"default": "fas fa-envelope"
+},
+{
+"type": "checkbox",
+"id": "enable_gmap",
+"label": "Enable Contact Map?"
+},
+{
+"type": "textarea",
+"id": "contact_iframe_code",
+"label": "Map Code[iframe]",
+"info": "[Where do I find googlemap action URL?](https:\/\/support.google.com\/maps\/answer\/3544418?hl=en)"
+}
+],  
+"presets": [
+{
+"name": "Contact Block 1",
+"category": "Form",
+"blocks": [ ]
+}
+]
+}
+{% endschema %}

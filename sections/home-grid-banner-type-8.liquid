@@ -1,0 +1,339 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}    
+
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">  
+  <div class="grid-banner-type-8" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+    <div class="grid__item">        
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium-down--one-whole small--grid__item small--text-center ">
+
+        <div class="ovrly31 overlay_2 wow fadeIn animated">
+          {% if section.settings.link_1 != blank %}<a class="banner_half_img" href="{{ section.settings.link_1 }}">{% endif%}
+          {% if section.settings.image_1 != blank %}
+          <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.title_1 }}" />
+          <div class="ovrly"></div>
+          {% else %}
+          <img src="//via.placeholder.com/700x725">
+          {% endif%}           
+          {% if section.settings.link_1 != blank %}  </a>
+
+          {% endif%}
+          <div class="featured-content">        
+
+            {% if section.settings.text_1 != blank %}
+            <h3 style="color:{{ section.settings.text_1_clr }};">{{ section.settings.text_1}}</h3>    
+            {% endif %} 
+            {% if section.settings.title_1 != blank %}
+            <h6 style="color:{{ section.settings.title_1_clr }};">{{ section.settings.title_1 }} <span>{{section.settings.offer_1_txt}}</span></h6>
+            {% endif %}
+            {% if section.settings.button_1 != blank %}
+            <a class="link_text one" href="{{ section.settings.link_1 }}" style="color:{{ section.settings.button_1_txt}};background-color:{{ section.settings.button_1_bg}};">{{ section.settings.button_1}}</a>    
+            {% endif %}         
+          </div>  
+
+        </div>
+      </div>      
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium-down--one-whole small--grid__item small--text-center ">
+        <div class="ovrly31 overlay_2 wow fadeIn animated">
+          {% if section.settings.link_2 != blank %}<a class="banner_half_img" href="{{ section.settings.link_2 }}">{% endif%}
+          {% if section.settings.image_2 != blank %}
+          <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.title_2 }}" />
+          <div class="ovrly"></div>
+          {% else %}
+          <img src="//via.placeholder.com/700x350">
+          {% endif%}           
+          {% if section.settings.link_2 != blank %}  </a>
+
+          {% endif%}
+          <div class="featured-content">       
+
+            {% if section.settings.text_2 != blank %}
+            <h3 style="color:{{ section.settings.text_2_clr }};">{{ section.settings.text_2}}</h3>    
+            {% endif %}  
+            {% if section.settings.title_2 != blank %}
+            <h6 style="color:{{ section.settings.title_2_clr }};">{{ section.settings.title_2 }} <span>{{section.settings.offer_2_txt}}</span></h6>
+            {% endif %}
+            {% if section.settings.button_2 != blank %}
+            <a class="link_text two" href="{{ section.settings.link_2 }}" style="color:{{ section.settings.button_2_txt}};background-color:{{ section.settings.button_2_bg}};">{{ section.settings.button_2}}</a>    
+            {% endif %}         
+          </div>   
+        </div>
+
+        <div class="ovrly31 overlay_1 wow fadeIn animated">
+          {% if section.settings.link_3 != blank %}<a class="banner_half_img" href="{{ section.settings.link_3 }}">{% endif%}
+          {% if section.settings.image_3 != blank %}
+          <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="{{ section.settings.title_3 }}" />
+          <div class="ovrly"></div>
+          {% else %}
+          <img src="//via.placeholder.com/700x350">
+          {% endif%}           
+          {% if section.settings.link_3 != blank %}  </a>
+
+          {% endif%}
+          <div class="featured-content">       
+
+            {% if section.settings.text_3 != blank %}
+            <h3 style="color:{{ section.settings.text_3_clr }};">{{ section.settings.text_3}}</h3>    
+            {% endif %}  
+            {% if section.settings.title_3 != blank %}
+            <h6 style="color:{{ section.settings.title_3_clr }};">{{ section.settings.title_3 }} <span>{{section.settings.offer_3_txt}}</span></h6>
+            {% endif %}
+            {% if section.settings.button_3 != blank %}
+            <a class="link_text three" href="{{ section.settings.link_3 }}" style="color:{{ section.settings.button_3_txt}};background-color:{{ section.settings.button_3_bg}};">{{ section.settings.button_3}}</a>    
+            {% endif %}         
+          </div> 
+        </div>
+      </div>   
+    </div> 
+    {% if section.settings.additional_text != blank %}
+    <p class="gradient_text text-center">{{ section.settings.additional_text}}</p>    
+    {% endif %}
+    
+  </div>  
+</div>
+
+<style>
+  
+  .grid-banner-type-8 .ovrly31 .featured-content h6 ,  .grid-banner-type-3 .ovrly31:hover .featured-content h3{color:#FFF !important;}
+  .grid-banner-type-8 .featured-content .btn:hover{border:1px solid {{section.settings.btn_hover_border}}!important;background:{{section.settings.btn_hover_bg}}!important;color:{{section.settings.btn_hovertxt_clr}}!important;}
+</style>
+
+
+{% schema %}
+{
+"name": "Grid Banner Type 8",
+"class": "index-section home-grid-banner",
+"settings": [  
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "overlay_bg_clr",
+"label": "Overlay Bg Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "overlay_hoverbg_clr",
+"label": "Overlay Hover Bg Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "txt_hover_clr",
+"label": "Text Hover COlor",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_hover_bg",
+"label": "Button Hover Bg Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_hover_border",
+"label": "Button Hover Border Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_hovertxt_clr",
+"label": "Button Hove Text Color",
+"default": "#000"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 1000x493"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading"
+},
+{
+"type": "text",
+"id": "offer_1_txt",
+"label": "Offer Text"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_1",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_1_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_1",
+"label": "Button text"
+},
+{
+"type": "color",
+"id": "button_1_txt",
+"label": "Btn Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_1_bg",
+"label": "Button Bg Color",
+"default": "#000"
+},
+
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image",
+"info": "Size: 1000x493"
+},
+
+{
+"type": "text",
+"id": "title_2",
+"label": "Heading"
+},
+{
+"type": "text",
+"id": "offer_2_txt",
+"label": "Offer Text"
+},
+{
+"type": "color",
+"id": "title_2_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_2",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_2_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_2",
+"label": "Button text"
+},
+{
+"type": "color",
+"id": "button_2_txt",
+"label": "Btn Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_2_bg",
+"label": "Button Bg Color",
+"default": "#000"
+},
+
+{
+"type": "url",
+"id": "link_2",
+"label": "Link URL"
+},
+{
+"type": "image_picker",
+"id": "image_3",
+"label": "Image",
+"info": "Size: 1000x1971"
+},
+
+{
+"type": "text",
+"id": "title_3",
+"label": "Heading"
+},
+{
+"type": "text",
+"id": "offer_3_txt",
+"label": "Offer Text"
+},
+{
+"type": "color",
+"id": "title_3_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_3",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_3_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_3",
+"label": "Button text"
+},
+{
+"type": "color",
+"id": "button_3_txt",
+"label": "Btn Text Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "button_3_bg",
+"label": "Button Bg Color",
+"default": "#000"
+},
+{
+"type": "url",
+"id": "link_3",
+"label": "Link URL"
+},
+{
+"type": "text",
+"id": "additional_text",
+"label": "Additional Text"
+}
+],
+"presets": [
+{
+"name": "Grid Banner Type 8",
+"category": "Block Images"
+}
+]
+}
+{% endschema %}

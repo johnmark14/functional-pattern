@@ -1,0 +1,31 @@
+{% section 'page-hero' %}
+
+
+{% if page.metafields.accentuate.page_title != blank %}
+	{% assign page_title_override = page.metafields.accentuate.page_title %}  
+{% else %}
+	{% assign page_title_override = page.title %}  
+{% endif %}
+
+
+<div class="page-content text-center p-relative"> 
+  <div class="container">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="section-header">
+      <h1 class="section-header--title">{{ page_title_override }}</h1>
+      {% if page.metafields.accentuate.page_subtitle != blank %}
+      	<h2 class="section-header--subtitle">{{ page.metafields.accentuate.page_subtitle }}</h2>
+      {% endif %}
+    </div>
+    <div class="rte">
+      {{ page.content }}
+    </div> 
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>
+</div>
+
+
+{% section 'page-content-block' %}
+{% section 'onward-journey' %}
+
+ 

@@ -1,0 +1,26 @@
+{% if collection.image %}
+<div class="equipment-collection-hero">
+  <div class="image-wrapper">
+    <img alt="{{ collection.image.alt }}" src="{{ collection.image | img_url: 'master' }}">
+  </div>      
+</div>
+{% endif %}
+
+<div class="collection-content text-center p-relative">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="section-header">
+    <h1 class="section-header--title">{{ collection.title }}</h1>
+  </div>
+  <div class="rte">
+    {{ collection.description }}
+  </div>  
+</div>
+
+<div class="collection-equipment">
+  <div class="container">
+    <div class="collection_grid_template wide--three-quarters " style="margin: 0 auto;">
+      {% section 'collection-equipment-template' %}
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>   

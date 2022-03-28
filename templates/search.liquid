@@ -1,0 +1,121 @@
+{% assign grid_results = false %}
+{% assign respond_js_secret_key = shop.domain | md5 %}
+
+{% assign search_per_page = 200 %}
+
+<style>
+.search-grid-view {
+  margin: 0px auto;
+  max-width: 600px;
+}
+  
+.search-item{
+  display: flex;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+  
+  .search-item-container{
+   max-width: 150px; 
+    margin-right: 20px;
+  }
+  
+  .search-item-detail{
+   	padding: 20px; 
+    text-align: left;
+  }
+  
+  .search-item-detail span{
+   	display: block;
+    color: {{ settings.color_primary }};
+    font-size: 11px;
+	text-transform: uppercase;
+  }
+    
+</style>
+
+<div class="page-content text-center p-relative"> 
+
+  <div class="container">
+    <div class="dt-sc-hr-invisible-large"></div>  
+
+    {% unless search.terms == respond_js_secret_key %}
+    {% paginate search.results by search_per_page %}
+    {% if search.performed %}
+
+
+    <div class="section-header">
+      {% if search.results_count == 0 %}
+      <h1 class="text--left h2 section-header--subtitle" style="width:100%;">{{ 'general.search.no_results_html' | t: terms: search.terms }}</h1>
+      {% include 'search-bar' %}
+      {% else %}
+      <h1 class="h2 text--left section-header--subtitle" style="width:100%;">{{ 'general.search.results_for_html' | t: terms: search.terms }}</h1>
+      {% include 'search-bar' %}
+      {% endif %}            
+    </div>
+    <div class="rte">
+
+      <div class="search-grid-view">
+        {% for item in search.results %}
+        
+        
+        {% if item.url contains "/private/" or item.tags contains 'nosearch' %}
+        {% else %}
+
+          <div class="search-item">
+            {% assign has_image = true %}
+            {% assign image_alt = item.title | escape %}
+            <div class="search-item-container">
+              {% assign featured_image = item.image | default: item.featured_image %}
+              {% if featured_image != blank %}
+              <a href="{{ item.url }}" title="{{ item.title | escape }}">
+                {{ featured_image | img_url: 'large' | img_tag: featured_image.alt }}
+              </a>
+              {% endif %}
+            </div>
+            <div class="search-item-detail">     
+              <span>{{ item.object_type }}</span>
+              <a href="{{ item.url}}" class="h5 grid-link__title">{{ item.title }}</a>
+            </div>
+          </div>        
+        
+        
+        {% endif %}
+        
+
+   
+        {% endfor %}  
+      </div>
+      
+      
+    </div> 
+
+
+    {% else %}
+    <div class="section-header">
+      <h1 class="h2" style="width:100%;">{{ 'general.search.title' | t }}</h1>
+      {% include 'search-bar' %}
+    </div>
+    {% endif %}  
+    
+    
+
+    {% if paginate.pages > 1 %}
+<!--     <div class="text-center">
+      {% include 'pagination-custom' %}
+    </div> -->
+    {% endif %}  
+    
+    
+    {% endpaginate %}
+    {% endunless %}
+
+    <div class="dt-sc-hr-invisible-large"></div>
+  </div>      
+
+</div>
+
+
+

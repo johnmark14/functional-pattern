@@ -1,0 +1,7 @@
+<div class="add-to-wishlist">     
+<div class="show">
+  <div class="default-wishbutton-{{ product.handle }} loading"><a title="{{ 'products.wishlist.add_to_wishlist' | t }}" class="add-in-wishlist-js" href="{{ product.handle | handleize }}"><i class="far fa-heart"></i><span class="tooltip-label">{{ 'products.wishlist.add_to_wishlist' | t }}</span></a></div>
+ <div class="loadding-wishbutton-{{ product.handle }} loading" style="display: none; pointer-events: none"><a class="add_to_wishlist" href="{{ product.handle | handleize }}"><i class="fas fa-spinner"></i></a></div>
+  <div class="added-wishbutton-{{ product.handle }} loading" style="display: none;"><a title="{{ 'products.wishlist.view_wishlist' | t }}" class="added-wishlist add_to_wishlist" href="/pages/wishlist"><i class="fas fa-heart"></i><span class="tooltip-label">{{ 'products.wishlist.view_wishlist' | t }}</span></a></div>
+</div>
+ </div>

@@ -1,0 +1,32 @@
+<div class="course-features-section">
+  <div class="dt-sc-hr-invisible-large"></div>     
+  <div class="container">  
+    <div class="grid-banner-type-1">     
+      <div class="grid-uniform featuredItems">
+        {% assign title = product.metafields.accentuate.course_features_title %}
+        {% assign count = product.metafields.accentuate.course_features_title.size %}        
+        {% case count %}
+        {% when 1 %}
+          {%- assign column = 'grid__item one-block' -%}
+        {% when 2 %}
+          {%- assign column = 'grid__item wide--one-half post-large--one-half large--one-half two-blocks' -%}
+        {% when 3 %}     
+          {%- assign column = 'grid__item wide--one-third post-large--one-third large--one-third three-blocks' -%}
+        {% endcase  %}
+
+        {% unless count > 4 %}
+          {% for content in product.metafields.accentuate.course_features_content %}
+          <div class="{{ column }} {{count}}">
+              <div class="featured-content text-center">       
+                <h3>{{ title[forloop.index0] }}</h3>
+                <div class="additional-text">{{ content.html }}</div>             
+              </div>        
+          </div>       
+          {% endfor %}
+		{% endunless %}
+        
+      </div>    
+    </div>  
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>

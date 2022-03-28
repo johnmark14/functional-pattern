@@ -1,0 +1,233 @@
+{% if settings.search_model == 'search_type1' %}                  
+                
+<div class="nav-search wide--hide">
+<div class="search-form {{settings.search_model}}" data-ajax-search>
+  <div class="header-search">
+    <div class="header-search__form">      
+
+      <form action="/search" method="get" class="search-bar" role="search">
+        <input type="hidden" name="type" value="product">
+
+        <input type="search" name="q"                     
+               placeholder="{{ 'general.search.placeholder' | t }}" 
+               class="input-group-field header-search__input" aria-label="Search Site" autocomplete="off">
+
+        <button type="submit" class="btn icon-search" data-search-mobile-toggle>
+          {% include 'icon-search' %}
+        </button>
+      </form>       
+    </div>
+
+    <div class="quickSearchResultsWrap" style="display: none;">
+      <div class="custom-scrollbar">
+        <div class="container">
+          {% if settings.enable_search_trending %}
+          <div class="header-block header-search__trending">
+            <div class="box-title">
+              {{settings.trending_search_title }}
+            </div>
+
+            <ul class="list-item">
+              {% if settings.trending_search_item_1 != blank %}
+
+              {% assign handle_1 = settings.trending_search_item_1 | handleize %}
+
+              <li class="item">
+                <a href="/search?q={{handle_1}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_1 }}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if settings.trending_search_item_2 != blank %}
+
+              {% assign handle_2 = settings.trending_search_item_2 | handleize %}
+
+              <li class="item">
+                <a href="/search?q={{handle_2}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_2 }}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if settings.trending_search_item_3 != blank %}
+
+              {% assign handle_3 = settings.trending_search_item_3 | handleize %}
+              <li class="item">
+                <a href="/search?q={{handle_3}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_3 }}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if settings.trending_search_item_4 != blank %}
+
+              {% assign handle_4 = settings.trending_search_item_4 | handleize %}
+              <li class="item">
+                <a href="/search?q={{handle_4}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_4 }}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if settings.trending_search_item_5 != blank %}
+
+              {% assign handle_5 = settings.trending_search_item_5 | handleize %}
+              <li class="item">
+                <a href="/search?q={{handle_5}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_5 }}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if settings.trending_search_item_6 != blank %}
+
+              {% assign handle_6 = settings.trending_search_item_6 | handleize %}
+              <li class="item">
+                <a href="/search?q={{handle_6}}*&amp;type=product" title="" class="highlight">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  {{ settings.trending_search_item_6 }}
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+          {% endif %}
+
+          {% if settings.enable_search_popular_products %}
+          <div class="header-block header-search__product">
+            <div class="box-title">
+              {{ settings.popular_products_search_title }}
+            </div>
+
+            <div class="search__products">
+              <div class="products-grid row">
+                {% for product in collections[settings.popular_products_collection].products limit:settings.popular_products_limit %}
+                <div class="grid-item wide--one-third post-large--one-third large--one-third medium--one-half small--one-half">
+                  {% include 'product-grid-item' %}
+                </div>
+                {% endfor %}
+              </div>                    
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="header-search__results-wrapper"></div>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% capture search %}
+  {% raw %}{{#if is_loading}}{% endraw %}
+  <div class="header-search__results">
+    <div class="header-search__spinner-container">
+      <div class="loading-modal modal"><div></div><div></div><div></div><div></div></div>
+    </div>
+  </div>
+
+  {% raw %}{{else}}{% endraw %}
+
+  {% raw %}{{#if is_show}}{% endraw %}
+  <div class="header-search__results header-block">
+    {% raw %}
+    {{#if has_results}}
+    <div class="box-title">
+      Product Results
+    </div>
+
+    <div class="search__products">
+      <div class="products-grid row">
+        {{#each results}}
+
+        <div class="grid-item wide--one-third post-large--one-third large--one-third medium--one-half small--one-half">
+          <div class="products product-hover-11">
+
+            <div class="product-container">
+              <div class="product-image">
+                <a href="{{url}}" class="product-grid-image">
+                  <img src="{{image}}" alt="{{image_alt}}">                                               
+                </a>
+              </div>
+            </div>
+
+            <div class="product-detail">
+
+              <a class="grid-link__title" href="{{url}}">{{title}}</a>
+
+              <div class="grid-link__meta">
+                {{#if on_sale}}
+                <div class="product_price">                    
+                  <span class="grid-link__org_price">{{ price }}</span>
+                  <del class="grid-link__sale_price">{{ compare_at_price }}</del>
+                </div>
+                {{else}}
+                <div class="grid-link__org_price">
+                  <span>{{ price }}</span>
+                </div>
+                {{/if}}
+              </div>
+            </div>            
+          </div>
+        </div>
+
+        {{/each}}
+      </div>              
+    </div>
+
+    <div class="text-center">            
+      <a href="{{results_url}}" class="text-results header-search__see-more" data-results-count="{{results_count}}">
+        {{results_label}} ({{results_count}})
+      </a>
+    </div>
+    {{else}}
+
+    <p class="header-search__no-results text-results">{{ results_label }}</p>
+    {{/if}}
+    {% endraw %}
+  </div>
+  {% raw %}{{/if}}{% endraw %}
+  {% raw %}{{/if}}{% endraw %}
+  {% endcapture %} 
+
+  <script id="search-results-template" type="text/template7">
+        {{search}}
+  </script>
+</div>
+</div>
+{% endif %}
+
+
+
+{% if settings.search_model == 'search_type2' or settings.search_model == 'search_type3'  %}
+<div class="nav-search wide--hide">
+  <div class="header-search">
+    <div class="header-search__form">      
+
+      <form action="/search" method="get" class="search-bar" role="search">
+        <input type="hidden" name="type" value="product">
+
+        <input type="search" name="q"                     
+               placeholder="{{ 'general.search.placeholder' | t }}" 
+               class="input-group-field header-search__input" aria-label="Search Site" autocomplete="off">
+
+        <button type="submit" class="btn icon-search">
+          {% include 'icon-search' %}
+        </button>
+      </form>       
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+

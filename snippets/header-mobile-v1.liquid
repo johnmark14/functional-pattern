@@ -1,0 +1,35 @@
+<div class="header-mb">          
+  <div class="header-mb-left header-mb-items">
+    <div class="header-logo">
+      <div class="site-header__logo">
+        <a href="/">
+          <svg viewBox="0 0 47 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="FP-logo-alt" fill="#000000" fill-rule="nonzero">
+                <path d="M0,10.2857 C0,14.8417 2.96216,18.7059 7.06564,20.0573 L7.06564,16.8217 C4.65757,15.6331 3.00115,13.1529 3.00115,10.2858 C3.00115,6.26273 6.26249,3.00139 10.2856,3.00139 C14.3086,3.00139 17.57,6.26273 17.57,10.2858 C17.57,13.1278 15.9424,15.5897 13.5685,16.7903 L13.5685,20.0365 C17.6394,18.6664 20.5714,14.8185 20.5714,10.2857 C20.5714,4.60507 15.9664,0 10.2857,0 C4.60507,0 0,4.60507 0,10.2857 Z" id="Path"></path>
+                <path d="M10.2853,23.8523 C11.4332,23.8523 12.5371,23.6642 13.5681,23.3173 L13.5681,20.0711 C12.5816,20.57 11.4663,20.851 10.2853,20.851 C9.1293,20.851 8.03616,20.5817 7.06525,20.1025 L7.06525,23.3381 C8.07819,23.6718 9.1607,23.8523 10.2853,23.8523 Z" id="Path"></path>
+                <polygon id="Path" points="34.5422 6.42857 33.9962 8.10518 27.6255 8.10518 27.6255 11.5515 32.9041 11.5515 32.449 13.3213 27.6255 13.3213 27.6255 17.0471 25.7143 17.0471 25.7143 6.42857"></polygon>
+                <path d="M37.2273,6.43119 L37.2273,17.0497 L39.2295,17.1429 L39.2295,8.20094 L44.1441,8.20094 C44.5991,8.20094 44.9632,8.57352 44.9632,9.0392 L44.9632,10.9953 C44.9632,11.461 44.5991,11.8336 44.1441,11.8336 L39.5026,11.8336 L40.8677,13.6965 L44.3261,13.6965 C45.6912,13.6033 46.8744,12.4856 46.8744,10.9953 L46.8744,9.0392 C46.8744,7.64207 45.7822,6.43119 44.3261,6.43119 L37.2273,6.43119 Z" id="Path"></path>
+              </g>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="header-mb-right header-mb-items">
+    <div class="cart-icon svg-mb">
+      <a href="#" title="Cart Icon" data-cart-toggle>       
+        {% include 'mini-cart' %} 
+        <span class="cartCount" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+    <div class="hamburger-icon svg-mb">
+      <a href="#" class="icon-nav" title="Menu Mobile Icon" data-menu-mb-toogle>
+        <span class="icon-line"></span>
+      </a>
+    </div>    
+  </div>          
+</div>

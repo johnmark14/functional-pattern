@@ -1,0 +1,277 @@
+<div data-section-id="{{ section.id }}"  data-section-type="triangle-icon-block-4" class="triangle-icon-block-4" style="{% if section.settings.bg_image != blank %}background-image:url('{{ section.settings.bg_image | img_url: '1920X' }}');background-repeat:no-repeat;background-position:top center; {% else %}background-color:{{section.settings.bg_color}}{% endif%}">
+  <div class="grid-uniform">      
+    <div class="triangle-icon-wrapper">   
+      <div class="container-bg">
+        <div class="grid__item wow fadeInUp animated">          
+          <div id="triangle-{{ section.id }}-slider">
+            {% for block in section.blocks %}
+            <div class="grid__item">
+              <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item">
+                <div class="icon_wrapper icon-right">
+                  <div class="icon-content icon-content--{{ block.id }}">
+                    {% if block.settings.title != blank  %}  
+                    <h2>{{ block.settings.title }}</h2>
+                    {% endif %} 
+                    {% if block.settings.sub_title != blank  %}  
+                    <h3>{{ block.settings.sub_title }}</h3>
+                    {% endif %} 
+                    {% if block.settings.text != blank  %}  
+                    <p class="desc" style="">{{ block.settings.text }}</p>
+                    {% endif %} 
+                    {% if block.settings.url != blank  %}  
+                    <a href="{{ block.settings.url}}" class="btn">{{ block.settings.button }}</a>
+                    {% endif %} 
+                  </div>                
+                </div>
+              </div>
+              <div class="grid__item grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item">
+                <div class="icon">
+                  {% if block.settings.large != blank  %}
+                  <img src="{{ block.settings.large | img_url: '1000x' }}" alt="{{ block.settings.title }}" />
+                  {% else %}
+                  <img src="//via.placeholder.com/580x980">
+                  {% endif %} 
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <ul id="triangle-{{ section.id }}-nav" class="slider-nav">
+            {% for block in section.blocks %}
+            <li class="center-block">
+              0{{ forloop.index }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>  
+        <ul class="home-social-media">
+          {% if section.settings.social_media1 != blank  %}
+          <li><a href="{{ section.settings.social_media1_url }}">{{ section.settings.social_media1 }}</a></li>
+          {% endif %}
+          {% if section.settings.social_media2 != blank  %}
+          <li><a href="{{ section.settings.social_media2_url }}">{{ section.settings.social_media2 }}</a></li>
+          {% endif %}
+          {% if section.settings.social_media3 != blank  %}
+          <li><a href="{{ section.settings.social_media3_url }}">{{ section.settings.social_media3 }}</a></li>
+          {% endif %}
+        </ul>
+      </div>    
+    </div>
+  </div>  
+</div> 
+
+<style>
+  {% for block in section.blocks %}
+  
+  .triangle-icon-block-4 .icon-content--{{ block.id }} h2 { color:{{ section.settings.title_clr }};}
+  .triangle-icon-block-4 .icon-content--{{ block.id }} h3 { color:{{ section.settings.sub_title_clr }};}
+  .triangle-icon-block-4 .icon-content--{{ block.id }} p { color:{{ section.settings.desc_clr }};}
+  .triangle-icon-block-4 .slick-current .icon-content--{{ block.id }} p { color:{{ section.settings.active_desc }};}
+  .triangle-icon-block-4 .icon-content--{{ block.id }} .btn {  background:{{ section.settings.btn_bg_color }};color:{{ section.settings.btn_txt_color }}; }
+  .triangle-icon-block-4 .icon-content--{{ block.id }}.btn:hover { background:{{ section.settings.btn_hoverbg_color }};color:{{ section.settings.btn_hovertxt_color }}; }
+
+  {% endfor %}
+
+  .triangle-icon-block-4 .icon i{color:{{section.settings.icon_clr}};}
+
+  @media (min-width: 767px) {
+
+    #triangle-{{ section.id }}-nav .grid__item { width:100% !important;}
+  }
+</style>
+
+
+<script>  
+  $(document).on('ready', function() {
+    $('#triangle-{{ section.id }}-slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: true,
+      fade: true,
+      asNavFor: '#triangle-{{ section.id }}-nav',
+      autoplay:false,
+      autoplaySpeed:1500      
+      });
+    $('#triangle-{{ section.id }}-nav').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      asNavFor: '#triangle-{{ section.id }}-slider',
+      dots: false,
+      focusOnSelect: true,
+      autoplay:false,
+      arrows: false,
+      autoplaySpeed:1500
+      });
+  })
+</script>
+
+
+
+
+
+{% schema %}
+{
+"name": "Slider",
+"class": "index-section",  
+"max_blocks": 3,
+"settings": [  
+{
+"type": "color",
+"id": "bg_color",
+"label":"Background Color",
+"default": "#000"
+},
+{
+  "type": "image_picker",
+  "id": "bg_image",
+  "label": "Image",
+  "info": "Size: 1920x1021"
+  },
+
+
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title",
+"default": "#3C3664"   
+},
+{
+"type": "color",
+"id": "sub_title_clr",
+"label": "Sub Title",
+"default": "#421692"   
+},
+{
+"type": "color",
+"id": "desc_clr",
+"label": "Description",
+"default": "#3e3564"   
+},
+{
+"type": "color",
+"id": "btn_bg_color",
+"label": "Button Bg Color",
+"default": "#ae30eb",
+"info": "Default Value: #ae30eb"
+},
+{
+"type": "color",
+"id": "btn_txt_color",
+"label": "Button Text Color",
+"default": "#fff",
+"info": "Default Value: #fff"
+},
+{
+"type": "color",
+"id": "btn_hoverbg_color",
+"label": "Button Hover Bg Color",
+"default": "#3e3564",
+"info": "Default Value: #3e3564"
+},
+{
+"type": "color",
+"id": "btn_hovertxt_color",
+"label": "Button Hover Text Color",
+"default": "#fff",
+"info": "Default Value: #fff"
+},
+
+{
+"type": "text",
+"id": "social_media1",
+"label": "Social Media Name" ,
+"default": "Twitter" 
+},
+{
+"type": "url",
+"id": "social_media1_url",
+"label": "Link"
+},
+{
+"type": "text",
+"id": "social_media2",
+"label": "Social Media Name" ,
+"default": "Facebook" 
+},
+{
+"type": "url",
+"id": "social_media2_url",
+"label": "Link"
+},
+{
+"type": "text",
+"id": "social_media3",
+"label": "Social Media Name" ,
+"default": "Instagram" 
+},
+{
+"type": "url",
+"id": "social_media3_url",
+"label": "Link"
+}
+],
+"blocks": [
+{
+"type": "Image",
+"name":"Icon Block",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading" ,
+"default": "Heading" 
+}, 
+{
+"type": "text",
+"id": "sub_title",
+"label": "Sub title",
+"default": "Sub title"          
+}, 
+{
+"type": "text",
+"id": "text",
+"label": "Description",
+"default": "Description"   
+},
+{
+"type": "text",
+"id": "button",
+"label": "Button",
+"default": "Shop Now"   
+},
+{
+"type": "url",
+"id": "url",
+"label": "Link"
+},
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon Img"          
+},
+{
+"type": "image_picker",
+"id": "large",
+"label": "Large Image"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Slider",
+"category": "Text",
+"blocks": []
+}
+]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,388 @@
+{% if section.blocks.size > 0 %}
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}    
+
+<div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">  
+  <div class="grid-banner-type-7" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;"> 
+    <div class="dt-sc-hr-invisible-large"></div>
+
+    {% if section.settings.title != blank or section.settings.small_title != blank  %}
+    <div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+      <div class="border-title">
+        {% if section.settings.title != blank %}
+        <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+          {{ section.settings.title }}
+        </h2>
+        {% endif %}  
+        {% if section.settings.small_title != blank %}
+        <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+        {% endif %}                
+      </div>
+    </div>      
+    {% endif %}
+
+    <div class="grid-uniform featuredItems">    
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <div class="grid-uniform">
+          {% for block in section.blocks limit: 2 %}          
+          <div class="grid__item">
+            <div class="overlay {{ section.settings.overlay_type1 }}">
+              <div class="featured-image">
+                {% if block.settings.link_1 != blank %}<a class="banner_half_img" href="{{ block.settings.link_1 }}">{% endif%}
+                {% if block.settings.image_1 != blank %}
+                <img src="{{ block.settings.image_1 | img_url: '1000X' }}" alt="{{ block.settings.title_1 }}" />
+                {% if section.settings.use_overlay %}
+                <div class="ovrly"></div>
+                {% endif%}
+                {% else %}
+                <img src="//via.placeholder.com/600x500">
+                {% endif%}           
+                {% if block.settings.link_1 != blank %}  </a>
+                {% endif%}
+              </div>
+
+              <div class="featured-content {{block.type}}-{{block.id}} imageText_position {{ block.settings.image_text_position_1 }}">       
+                <div class="content-info">
+                  {% if block.settings.title_1 != blank %}
+                  <h2 style="color:{{ block.settings.title_1_clr }};">{{ block.settings.title_1 }}</h2>
+                  {% endif %}
+                  {% if block.settings.text_1 != blank %}
+                  <h5 style="color:{{ block.settings.text_1_clr }};">{{ block.settings.text_1}}</h5>    
+                  {% endif %}               
+                  {% if block.settings.additional_text_1 != blank %}
+                  <p class="additional-text" style="color:{{ block.settings.additional_text_1_clr }};">{{ block.settings.additional_text_1 }}</p>
+                  {% endif %}
+                </div>
+                {% if block.settings.button_1 != blank %}
+                <a class="link" href="{{ block.settings.link_1 }}" style="color:{{ block.settings.button_1_txt}};">{{ block.settings.button_1}}</a>    
+                {% endif %}         
+              </div>            
+            </div>
+          </div>          
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">  
+        <div class="grid-uniform">
+          {% for block in section.blocks limit: 2 offset:2 %}   
+          <div class="grid__item">
+            <div class="overlay {{ section.settings.overlay_type1 }}">
+              <div class="featured-image">
+                {% if block.settings.link_1 != blank %}<a class="banner_half_img" href="{{ block.settings.link_1 }}">{% endif%}
+                {% if block.settings.image_1 != blank %}
+                <img src="{{ block.settings.image_1 | img_url: '1000X' }}" alt="{{ block.settings.title_1 }}" />
+                {% if section.settings.use_overlay %}
+                <div class="ovrly"></div>
+                {% endif%}
+                {% else %}
+                <img src="//via.placeholder.com/600x500">
+                {% endif%}           
+                {% if block.settings.link_1 != blank %}  </a>
+                {% endif%}
+              </div>
+
+              <div class="featured-content {{block.type}}-{{block.id}} imageText_position {{ block.settings.image_text_position_1 }}">       
+                <div class="content-info">
+                  {% if block.settings.title_1 != blank %}
+                  <h2 style="color:{{ block.settings.title_1_clr }};">{{ block.settings.title_1 }}</h2>
+                  {% endif %}
+                  {% if block.settings.text_1 != blank %}
+                  <h5 style="color:{{ block.settings.text_1_clr }};">{{ block.settings.text_1}}</h5>    
+                  {% endif %}               
+                  {% if block.settings.additional_text_1 != blank %}
+                  <p class="additional-text" style="color:{{ block.settings.additional_text_1_clr }};">{{ block.settings.additional_text_1 }}</p>
+                  {% endif %}
+                </div>
+                {% if block.settings.button_1 != blank %}
+                <a class="link" href="{{ block.settings.link_1 }}" style="color:{{ block.settings.button_1_txt}};">{{ block.settings.button_1}}</a>    
+                {% endif %}         
+              </div>            
+            </div>
+          </div>    
+          {% endfor %}
+        </div>
+      </div>
+    </div>   
+    <div class="dt-sc-hr-invisible-medium"></div>
+  </div>  
+</div>
+
+<style>
+
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_1 .ovrly, 
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_2 .ovrly:before, 
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_2 .ovrly:after,
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_3 .ovrly,
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_4 .ovrly,
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_6 .ovrly,
+  #shopify-section-{{section.id}}.home-grid-banner .overlay.style_7 .ovrly { background:{{ section.settings.overlay_1 }}; }
+
+  {% for block in section.blocks %}         
+  #shopify-section-{{section.id}}.home-grid-banner .featured-content.{{block.type}}-{{block.id}} .link:hover { color:{{ block.settings.hover_button_1_txt }} !important; }
+  {% endfor %}    
+
+</style>
+
+{% endif %}
+
+{% schema %}
+{
+"name": "Grid Banner Type 7",
+"class": "index-section home-grid-banner",
+"max_blocks": 4,
+"settings": [  
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Grid Banner Type 7"
+},  
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},  
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "header",
+"content": "Overlay Settings"
+},
+{
+"type": "select",
+"id": "overlay_type1",
+"label": "Overlay Style",
+"options": [
+{
+"value": "style_1",
+"label": "Style 1"
+},
+{
+"value": "style_2",
+"label": "Style 2"
+},
+{
+"value": "style_3",
+"label": "Style 3"
+},
+{
+"value": "style_4",
+"label": "Style 4"
+},
+{
+"value": "style_5",
+"label": "Style 5"
+},
+{
+"value": "style_6",
+"label": "Style 6"
+},
+{
+"value": "style_7",
+"label": "Style 7"
+},
+{
+"value": "default",
+"label": "None"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "use_overlay",
+"label": "Overlay"
+
+},
+{
+"type": "color",
+"id": "overlay_1",
+"label": "Overlay",
+"default": "#fff"
+}
+],
+"blocks": [
+
+{
+"type": "oneimage",
+"name": "One Image",    
+"settings": [  
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 600x500"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "text_1",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},
+{
+"type": "color",
+"id": "text_1_clr",
+"label": "Sub Heading color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "additional_text_1",
+"label": "Description",
+"default": "Description"
+},
+{
+"type": "color",
+"id": "additional_text_1_clr",
+"label": "Description color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_1",
+"label": "Button text",
+"default": "Shop Now"
+},
+{
+"type": "color",
+"id": "button_1_txt",
+"label": "Button text color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "hover_button_1_txt",
+"label": "Button hover text",
+"default": "#333"
+},
+{
+"type": "select",
+"id": "image_text_position_1",
+"label": "Image Text Position",
+"options": [
+{
+"value": "imgtxt-top-center",
+"label": "Top Center"
+},
+{
+"value": "imgtxt-top-left",
+"label": "Top Left"
+},
+{
+"value": "imgtxt-top-right",
+"label": "Top Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Middle"
+},
+{
+"value": "imgtxt-middle-left",
+"label": "Middle Left"
+},
+{
+"value": "imgtxt-middle-right",
+"label": "Middle Right"
+},
+{
+"value": "imgtxt-bottom",
+"label": "Bottom"
+},
+{
+"value": "imgtxt-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "imgtxt-bottom-right",
+"label": "Bottom Right"
+}     
+],
+"default": "imgtxt-middle"
+},
+
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Grid Banner Type 7",
+"category": "Block Images",
+"blocks": [        
+{
+"type": "oneimage"
+},
+{
+"type": "oneimage"
+},
+{
+"type": "oneimage"
+},
+{
+"type": "oneimage"
+}
+]
+}
+]
+}
+{% endschema %}

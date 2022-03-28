@@ -1,0 +1,70 @@
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if collection and collection.products_count > 1 %}
+<div class="related-products-container">
+  {% if section.settings.related_prds_title != blank or section.settings.related_prds_heading  %}
+  <div class="dt-sc-hr-invisible-medium"></div>
+      <div class="section-header section-header--small">
+        <div class="border-title">
+          {% endif %}  
+          
+          {% if section.settings.related_prds_heading != blank %} <h3 class="section-header__title">{{ section.settings.related_prds_heading }}</h3>{% endif %}  
+           {% if section.settings.related_prds_title != blank %}
+          <p>{{ section.settings.related_prds_title }}</p>
+          {% endif %} 
+        </div>
+        <div class="dt-sc-hr-invisible-very-small"></div>
+      </div>
+  <div class="related_products_container">
+  <ul class="grid-uniform grid-link__container related-products owl-carousel owl-theme">
+    {% assign current_product = product %}
+    {% assign current_product_found = false %}
+    {% for product in collection.products %}
+      {% if product.handle == current_product.handle %}
+        {% assign current_product_found = true %}
+      {% else %}
+        {% unless current_product_found == false and forloop.last %}
+          {% assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-quarter small--one-half' %}
+          {% include 'home-product-grid-item' %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+<div class="nav_featured"></div>
+  </div>
+</div>
+{% endif %}
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      var related = $(".related-products");
+      related.owlCarousel({
+        loop:false,       
+        nav:true,
+        navContainer: ".nav_featured",
+          navText: ['<a class="prev btn"><i class="fas fa-angle-left"></i></a>','<a class="next btn"><i class="fas fa-angle-right"></i></a>'],
+            dots: false,
+              responsive:{
+                0:{
+                  items:2
+                },
+                  600:{
+                    items:3
+                  },
+                    1000:{
+                      items: 4
+                    }
+              }
+  });
+      });
+      
+</script>

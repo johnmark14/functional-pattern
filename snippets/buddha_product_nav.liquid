@@ -1,0 +1,62 @@
+ <div class="buddha-products-nav-section">
+      {%- if collection -%}
+      {%- assign c  =  collection -%}
+      {%- else -%}
+      {%- assign c  =  product.collections.first -%}
+      {%- endif -%}
+      {%- assign product_image_size = '219x280' -%}
+      {%- assign on_sale = false -%}
+      {%- if product.compare_at_price > product.price %}
+      {%- assign on_sale = true -%}
+      {%- endif -%}
+      <div class="buddha-products-nav">
+        {% if c.previous_product%}
+        {% assign p  =  c.previous_product   | split: '/products/' | last %}
+        {% assign p = all_products[p]  %}
+        <div class="product-btn product-prev">
+          <a class="btn" href="{{ p.url | within: c }}">Previous product<span></span></a>
+          <div class="wrapper-short">
+            <div class="product-short">
+              <a href="{{  p.url | within: c  }}" class="product-thumb">
+                <img src="{{  p.featured_image | product_img_url: product_image_size, format: 'pjpg' | split:'?' | first }}" class="attachment-shop_thumbnail" alt="{{ product.alt | escape  }}" 
+                     srcset="{{  p.featured_image | product_img_url: product_image_size, format: 'pjpg' | split:'?' | first }} 219w, 
+                             {{  p.featured_image | product_img_url: '768x980', format: 'pjpg' | split:'?' | first }} 768w, 
+                             {{  p.featured_image | product_img_url: '803x1024', format: 'pjpg' | split:'?' | first }} 803w,
+                             {{  p.featured_image | product_img_url: '266x340', format: 'pjpg' | split:'?' | first }} 266w,
+                             {{  p.featured_image | product_img_url: '219x280', format: 'pjpg' | split:'?' | first }} 219w,
+                             {{ p.featured_image | product_img_url: '263x336', format: 'pjpg' | split:'?' | first }} 263w,
+                             {{  p.featured_image | product_img_url: '526x671', format: 'pjpg' | split:'?' | first }} 526w,
+                             {{  p.featured_image | product_img_url: '870x', format: 'pjpg' | split:'?' | first }} 870w" sizes="(max-width: 219px) 100vw, 219px"> </a>
+              <a href="{{  p.url | within: c  }}" class="product-title">{{ p.title }}</a>
+              <span class="price">{%- if p.compare_at_price > p.price -%}<del>{{ p.compare_at_price_max | money }}</del>{%-endif-%}<ins><span>{{p.price | money }}</span></ins></span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="buddha-products-nav">
+        {% if c.next_product %}
+        {% assign n  =  c.next_product | split: '/products/' | last %}
+        {% assign n = all_products[n]  %}
+        <div class="product-btn product-next">
+          <a class="btn" href="{{n.url | within: c }}">Next product<span></span></a>
+          <div class="wrapper-short">
+            <div class="product-short">
+              <a href="{{ n.url | within: c }}" class="product-thumb">
+                <img src="{{  n.featured_image | product_img_url: product_image_size, format: 'pjpg' | split:'?' | first }}" class="attachment-shop_thumbnail" alt="{{ product.alt | escape  }}" 
+                     srcset="{{  n.featured_image | product_img_url: product_image_size, format: 'pjpg' | split:'?' | first }} 219w, 
+                             {{  n.featured_image | product_img_url: '768x980', format: 'pjpg' | split:'?' | first }} 768w, 
+                             {{  n.featured_image | product_img_url: '803x1024', format: 'pjpg' | split:'?' | first }} 803w,
+                             {{  n.featured_image | product_img_url: '266x340', format: 'pjpg' | split:'?' | first }} 266w,
+                             {{  n.featured_image | product_img_url: '219x280', format: 'pjpg' | split:'?' | first }} 219w,
+                             {{ n.featured_image | product_img_url: '263x336', format: 'pjpg' | split:'?' | first }} 263w,
+                             {{  n.featured_image | product_img_url: '526x671', format: 'pjpg' | split:'?' | first }} 526w,
+                             {{  n.featured_image | product_img_url: '870x', format: 'pjpg' | split:'?' | first }} 870w" sizes="(max-width: 219px) 100vw, 219px"> </a>
+              <a href="{{ n.url | within: c }}" class="product-title">{{ n.title }}</a>
+              <span class="price">{%- if n.compare_at_price > n.price -%}<del>{{ n.compare_at_price_max | money }}</del>{%-endif-%}<ins><span>{{n.price | money }}</span></ins></span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>

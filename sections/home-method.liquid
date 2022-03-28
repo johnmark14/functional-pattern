@@ -1,0 +1,183 @@
+<div class="section-{{ section.id }}">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="grid-uniform">
+    {% style %}
+	  @media screen and (max-width: 767px){
+    	.section-{{ section.id }} .grid-uniform{
+    		background-image:url({{ section.settings.bg_img | img_url: "2000x"}});
+    		background-repeat:no-repeat;
+    		background-size: cover;
+    		background-position: center;
+    	}
+      }
+      @media screen and (min-width: 768px){
+    	.section-{{ section.id }} .image-block{
+    		background-image:url({{ section.settings.bg_img | img_url: "2000x"}});
+    		background-repeat:no-repeat;
+    		background-size: cover;
+    	}    
+      }
+    {% endstyle %}
+    <div class="image-block grid__item three-quarters post-large--two-thirds text-left">
+      <div class="content-inner p-relative container-bg">
+        {% if section.settings.subtitle != blank %}
+        <p class="subtitle">{{ section.settings.subtitle | escape }}</p>
+        {% endif %}
+        {% if section.settings.title != blank %}
+        <h2 class="section-heading" style="color: {{ section.settings.title_color }};">{{ section.settings.title | escape }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+        <div class="desc-text" style="color: {{ section.settings.desc_color }};">{{ section.settings.description }}</div>
+        {% endif %}        
+      </div>
+    </div>
+    <div class="text-block grid__item one-quarter post-large--one-third left-5 p-relative" style="background-color: {{ section.settings.background_color }};">
+      <div class="content-inner p-relative">
+        
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div class="content-text-inner content-text-inner-{{block.id }}">
+              {% if block.settings.title_1 != blank or block.settings.title_2 != blank %}
+                <div class="h4 p-relative">{{ block.settings.title_1 }}</div>              
+                {% style %}
+                  #shopify-section-{{ section.id }} .content-inner .h4{color: {{ block.settings.title_1_color }};}
+              	  .content-text-inner-{{block.id }}:hover .h4:before{
+                    content: "";
+                    display: table;
+                    position: absolute;
+                    left: -45px;
+                    top: 15px;
+                    width: 35px;
+                    height: 2px;
+                    background-color: #e61446;
+                  }
+                {% endstyle %}
+              {% endif %}
+              {% if block.settings.description_1 != blank %}
+              <div class="desc-text-1 p-absolute" style="color: {{ block.settings.desc_1_color }};">{{ block.settings.description_1 }}</div>
+              {% endif %}
+        	</div>
+          {% endfor %}
+        {% endif %}
+        
+        {% if section.settings.btn_text != blank and section.settings.btn_link != blank %}
+        <div class="btn-wrapper"><a class="btn btn-primary" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a></div>
+        {% endif %}
+        
+      </div>      
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Text Block ",
+  "class": "index-section home-method-section",  
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "Left Block"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_img",
+      "label": "Background Image"
+    }, 
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video Banner"
+    }, 
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading color",
+      "default": "#000"
+    }, 
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+	  "default": "<p>Write text here</p>"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#000"
+    },
+    {
+      "type": "header",
+      "content": "Right Block"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label":"Bckground color",
+      "default": "#f5f5f5"
+    }, 
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button link"      
+    }
+  ],
+  "blocks" :[
+	{
+      "type": "content",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title_1",
+          "label": "Heading",
+          "default": "<p>Add Heading here</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "description_1",
+          "label": "Description Text",
+          "default": "<p>Add text here</p>"
+        },
+        {
+          "type": "color",
+          "id": "title_1_color",
+          "label":"Title color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "desc_1_color",
+          "label":"Text color",
+          "default": "#000"
+        }
+	  ]	  
+	}
+  ],
+  "presets": [
+    {
+      "name": "Custom Text Block",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "content"
+        }
+	  ]
+    }
+  ]
+}
+{% endschema %}

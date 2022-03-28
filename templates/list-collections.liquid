@@ -1,0 +1,23 @@
+<div class="grid-uniform list-collection-products">  
+  
+  
+   {% if settings.use_custom_list_collection %}
+  {% for link in linklists[settings.list-collections].links %}
+  {% assign collection = link.object %}
+    {% unless collection.handle == 'frontpage' %}
+      {% assign collection_item_width = 'grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small--one-half' %}
+      {% assign featured = collection.handle %}
+      {% include 'collection-grid-item' %}
+    {% endunless %}
+  {% endfor %}  
+  {% else %}
+  {% for collection in collections %}
+    {% unless collection.handle == 'frontpage' %}
+      {% assign collection_item_width = 'grid__item wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small--one-half' %}
+      {% assign featured = collection.handle %}
+      {% include 'collection-grid-item' %}
+    {% endunless %}
+   {% endfor %}  
+  {% endif %}  
+   
+</div>

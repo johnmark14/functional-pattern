@@ -1,0 +1,220 @@
+
+<div class="video-block-section video-addbox">
+<!--   <div class="dt-sc-hr-invisible-large"></div>   -->
+<!--   <div class="dt-sc-hr-invisible-small"></div> -->
+  <div class="section-heading text-center" style="margin: 100px 0px 50px 0px;" ><h2>Upcoming Courses</h2></div>
+<!--   <div class="dt-sc-hr-invisible-large"></div> -->
+  <div class="container p-relative">
+    
+
+ 
+    
+<div class="container">
+  <div class="results-tags-wrapper text-center">
+    <div class="form-wrapper country-wrapper">
+      <select id="countries" class="form-control">
+        <option value="" disabled selected>Country</option>
+        {% for tag in collections[handle].tags %}
+          {% unless tag == 'nosearch' %}
+            <option value="{{tag}}">{{tag}}</option>            
+          {% endunless %}
+          {% comment %} <li class="course-filter f-bk visible{% if current_tags contains tag %} active-filter {% endif %}  " data-group="{{ cat_item }}" data-handle="{{tag}}">{{tag}}</li>              {% endcomment %}
+        {% endfor %}
+      </select>
+      <button id="search" class="btn btn-primary"><span class="btn-text">Search</span><span class="btn-loading ring-loader"><div></div><div></div><div></div></span></button>
+      <a href="javascript: location.reload();" id="btnClear">clear</a>
+    </div>
+    {% comment %} <ul class="advanced-filters mt-40">
+      <li class="f-bk advanced-filter"><a href=""> All</a></li>
+      {% assign tags_count = 0 %}
+      {% for tag in collections[handle].tags %}
+		{% assign tags_count = tags_count | plus: 1 %}                                      
+      		<li class="course-filter f-bk visible{% if current_tags contains tag %} active-filter {% endif %}  " data-group="{{ cat_item }}" data-handle="{{tag}}">{{tag}}</li>             
+      {% endfor %}      
+    </ul> {% endcomment %}
+  </div>
+</div>
+ 
+<script>
+  $(function() {
+//     $(document).on('click', '.more-filters', function(e){
+//       e.preventDefault();                                
+// //       $('.d-none').attr('class', 'advanced-filter f-bk visible');
+// //       $(this).hide();      
+//     });                                          
+  });
+</script> 
+    
+    
+    <div id="childCoursesWrapper">
+      
+    </div>
+    
+    
+    
+    
+    {% for child_course in collections[handle].products %}
+    
+      <script>
+        // Initialize our global object only if it doesn't exist yet
+        window.AccentuateLookup = window.AccentuateLookup || {}
+        AccentuateLookup[{{ child_course.handle | json }}] = {{ child_course.metafields.accentuate | json }} 
+      </script>
+        
+<!--       <div class="p-relative video-text-block-inner">
+        <div class="grid-uniform video-banner-block v2 d-flex">
+          <div class="course-content grid__item text-center">
+            <div class="course-content-inner">
+              <h4>{{ child_course.title }}</h4>
+              <p>{{ child_course.description }}</p>
+              {% if child_course.metafields.accentuate.application_url != blank %} 
+              	<div class="dt-sc-hr-invisible-small"></div>
+      			<a href="{{ child_course.metafields.accentuate.application_url }}" target="_blank" class="btn btn-primary">Apply Now</a>
+              {% endif %}              
+            </div>    
+          </div>
+        
+          <div class="video-image grid__item">
+            <div class="video-wrapper with-popup p-relative">
+              <div class="p-video">
+                <video class="course-video" preload="auto" poster="{{ child_course.featured_image.src | img_url: 'master' }}">
+                  <source src="{{ child_course.metafields.accentuate.course_video }}" type="video/mp4">                                    
+                </video>
+                {% if child_course.metafields.accentuate.course_video != blank %}     
+                	<a href="{{ child_course.metafields.accentuate.course_video }}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>              
+                {% endif %}
+              </div>          
+            </div>    
+          </div>
+
+        </div>
+      </div>     -->
+    {% endfor %}    
+
+  </div>
+</div>
+
+<script>
+  
+  
+  let products = [];
+  //https://stackoverflow.com/questions/66931582/ajax-filter-by-price-in-shopify-liquid
+
+  $(document).on('click', '.country-wrapper #search', (e) => {
+    e.preventDefault();
+    renderVideoCourse(filterProductsByTag($('#countries').val()));
+    //     const practitioner_email = $(e.target).data('email');
+    //     $(e.target.nextElementSibling.classList.add("active"));
+  });
+
+
+  $(document).ready(function(){
+    var url = '/collections/{{product['handle']}}/products.json?limit=250';
+    const res = getProducts(url);
+  });
+
+  function filterProductsByTag(tag) {
+    return products.filter(p => tag == undefined || p.tags.includes(tag));
+  }
+
+  function renderVideoCourse(filteredProducts) {
+    
+    $('#childCoursesWrapper').empty();
+    
+    console.log('filteredProducts', filteredProducts);
+    
+    
+    filteredProducts.forEach(courseItem => {
+                        console.log(courseItem);
+      const child_course = (courseItem)              
+      const accentuate_data = AccentuateLookup[child_course['handle']];
+      
+    
+          var heroImage = "";
+        if(typeof child_course['images'][0]!=="undefined"){
+          heroImage = `<video class="course-video" preload="auto" poster="${child_course['images'][0].src}">
+                     <source src="${child_course['images'][0].src}" type="video/mp4">                                    
+                  </video>`;
+        }
+
+    
+    
+      var videoLink = "";
+        if(typeof accentuate_data['course_video']!=="undefined"){
+          videoLink = `<a href="${accentuate_data['course_video']} ${accentuate_data['course_video']}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>`;
+        }
+
+      const $item =  $(`<div class="p-relative video-text-block-inner">
+          <div class="grid-uniform video-banner-block v2 d-flex">
+            <div class="course-content grid__item text-center">
+              <div class="course-content-inner">
+                <h4>${child_course['title']}</h4>
+                <p>${child_course['body_html']}</p>
+                  <div class="dt-sc-hr-invisible-small"></div>
+                  <a href="${accentuate_data['application_url']}" target="_blank" class="btn btn-primary">Apply Now</a>
+              </div>    
+            </div>
+
+            <div class="video-image grid__item">
+              <div class="video-wrapper with-popup p-relative">
+                <div class="p-video">
+
+        ${heroImage}
+    ${videoLink}
+                                  
+                </div>          
+              </div>    
+            </div>
+
+          </div>
+        </div> `);   
+      $('#childCoursesWrapper').append($item);
+    });
+  }
+
+  
+  function getProducts(url){
+    $.ajax({
+    type: 'GET',
+        url: url,
+          success: function(res){ 
+            console.log('{{product['handle']}}');
+            products = res.products;
+            allProducts = filterProductsByTag();
+            console.log('allProducts', allProducts);
+//             filterProducts(allProducts);
+                        
+                        
+            
+          renderVideoCourse(allProducts);
+    	
+    
+    		
+            
+          },
+            error: function(status){
+              alert(status);
+            }
+  	});
+  }
+
+  
+</script>
+
+
+<style>
+  #countries {
+    padding: 18px !important;
+    border-radius: 3px;
+    color: #000;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 8px;
+    width: 285px;
+  }
+
+  .country-wrapper {
+    margin-bottom: 32px;
+  }
+</style>

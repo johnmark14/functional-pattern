@@ -1,0 +1,81 @@
+<!-- CSS ================================================== -->
+{{ 'frame.scss.css' | asset_url | stylesheet_tag }} 
+{{ 'home-sections.scss.css' | asset_url | stylesheet_tag }} 
+{{ 'style.css' | asset_url | stylesheet_tag }}  
+{{ 'slick.scss' | asset_url | stylesheet_tag }}
+{{ 'prettyPhoto.css' | asset_url | stylesheet_tag }}  
+{{ 'animate.css' | asset_url | stylesheet_tag }}
+{{ 'font-all.min.css' | asset_url | stylesheet_tag }}
+
+{{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+{{ shop.metafields.okendo.StyleCustomizations }}
+
+<link rel="preload" as="style" href="{{ 'custom.scss.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'custom.scss.css' | asset_url }}"> 
+
+{%- if template contains 'index' -%}
+  <link rel="preload" as="style" href="{{ 'home.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'home.scss.css' | asset_url }}">
+{%- endif -%}
+{% if template contains 'results' %}
+  <link rel="preload" as="style" href="{{ 'results.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'results.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'product.course' %}
+  <link rel="preload" as="style" href="{{ 'product-course.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'product-course.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'product.equipment' %}
+  <link rel="preload" as="style" href="{{ 'product-equipment.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'product-equipment.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'product.seminar' %}
+  <link rel="preload" as="style" href="{{ 'product-seminar.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'product-seminar.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.practioners' %}
+  <link rel="preload" as="style" href="{{ 'page-practioners.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'page-practioners.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.our-practioners' %}
+  <link rel="preload" as="style" href="{{ 'page-our-practioners.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'page-our-practioners.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.contact' %}
+  <link rel="preload" as="style" href="{{ 'contact.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'contact.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'articles' %}
+  <link rel="preload" as="style" href="{{ 'blog-articles.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'blog-articles.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'article' %}
+  <link rel="preload" as="style" href="{{ 'article.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'article.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'collection.courses' %}
+  <link rel="preload" as="style" href="{{ 'collection-courses.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'collection-courses.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'collection.equipment' %}
+  <link rel="preload" as="style" href="{{ 'collection-equipment.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'collection-equipment.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.helphq' %}
+  <link rel="preload" as="style" href="{{ 'faq.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'faq.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.content' %}
+  <link rel="preload" as="style" href="{{ 'page-content.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'page-content.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.about' or template contains 'page.facilities' or template contains 'page.our-method' or template contains 'video-with-text' %}
+  <link rel="preload" as="style" href="{{ 'text-with-video.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'text-with-video.scss.css' | asset_url }}">
+{% endif %}
+{% if template contains 'page.landing' %}
+  <link rel="preload" as="style" href="{{ 'page-content.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'page-content.scss.css' | asset_url }}">
+  <link rel="preload" as="style" href="{{ 'page-landing.scss.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'page-landing.scss.css' | asset_url }}">
+{% endif %}

@@ -1,0 +1,375 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+{% if section.settings.enable_hours %}
+{% capture Hours %}
+<div class="hours-detail" style="background-color:{{section.settings.hours_bg_color}}; {% if section.settings.image_2 != blank %} background-image:url({{section.settings.image_2 | img_url: '1920X' }});background-repeat: no-repeat;background-position: right bottom; {% endif %}">
+  {% if section.settings.contact_title != blank %}
+  <h2 style="color:{{section.settings.contact_title_clr}}">{{ section.settings.contact_title }}</h2>
+  {% endif %} 
+  {% if section.settings.small_txt != blank %}
+  <span class="small_txt" style="color:{{section.settings.small_txt_clr}}">{{ section.settings.small_txt }}</span>
+  {% endif %}  
+  <ul>
+    {% if section.settings.hours_1 != blank %}
+    <li>{{ section.settings.hours_1 }}<span>{{section.settings.time_1}}</span></li>
+    {% endif %}  
+    {% if section.settings.hours_2 != blank %}
+    <li>{{ section.settings.hours_2 }}<span>{{section.settings.time_2}}</span></li>
+    {% endif %} 
+    {% if section.settings.hours_3 != blank %}
+    <li>{{ section.settings.hours_3 }}<span>{{section.settings.time_3}}</span></li>
+    {% endif %} 
+  </ul>
+</div>
+{% endcapture %}
+{% endif %}
+
+
+{% if section.settings.enable_address %}
+{% capture addressBlock %}
+<div class="overlay-contact-detail">
+  {% if section.settings.address_module_title != blank %}
+  <h2>{{ section.settings.address_module_title }}</h2>
+  {% endif %} 
+  {% if section.settings.address_module_subtitle != blank %}
+  <h4>{{ section.settings.address_module_subtitle }}</h4>
+  {% endif %} 
+  <ul>
+    {% if section.settings.address_module_address != blank %}
+    <li><i class="fa fa-home" aria-hidden="true"></i>{{ section.settings.address_module_address}}</li>
+    {% endif %} 
+    {% if section.settings.address_module_phone != blank %}
+    <li><i class="fa fa-phone" aria-hidden="true"></i>{{ section.settings.address_module_phone}}</li>
+    {% endif %} 
+    {% if section.settings.address_module_faxnumber != blank %}
+    <li><i class="fa fa-fax" aria-hidden="true"></i>{{ section.settings.address_module_faxnumber}}</li>
+    {% endif %} 
+    {% if section.settings.address_module_1_link != blank %}
+    <li><a href="{{ section.settings.address_module_1_link}}"><i class="fa fa-globe" aria-hidden="true"></i>{{ section.settings.address_module_1_linktext}}</a></li>
+    {% endif %} 
+    {% if section.settings.address_module_2_link != blank %}
+    <li><a href="{{ section.settings.address_module_2_link}}"><i class="fa fa-envelope" aria-hidden="true"></i>{{ section.settings.address_module_2_linktext}}</a></li>
+    {% endif %} 
+  </ul>
+</div>
+{% endcapture %}
+{% endif %}
+
+<div class="contact-block-inner" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+<div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">  
+  <div class="grid-uniform">  
+    <div class="container">   
+    {% if section.settings.title != blank or section.settings.desc != blank %}
+    <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">      
+      <div class="border-title wow fadeInRight animated">
+        {% if section.settings.title != blank %}
+        <h2 class="newslet_title" style="color:{{ section.settings.title_color }};">{{ section.settings.title }}</h2>
+        {% endif %}
+
+        {% if section.settings.desc != blank %}
+        <div class="short-desc">
+          <p style="color:{{section.settings.text_color}}">{{ section.settings.desc }}</p>
+        </div>  
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    </div>
+
+    <div class="grid__item wide--one-whole">
+      <div class="contact-wrapper">
+        <div class="map-section">
+          {% if section.settings.enable_gmap %}
+          <div id="map">
+            {% if section.settings.contact_iframe_code != blank %}
+            {{section.settings.contact_iframe_code }} 
+            {% else %}
+            <img src="//via.placeholder.com/1920x650">
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {% if section.settings.enable_address %}      
+          {{addressBlock}}
+          {% endif %}
+
+          {% if section.settings.enable_hours %}
+          {{ Hours }}
+          {% endif %}
+        </div> 
+      </div>  
+    </div>
+
+  </div>  
+</div>  
+</div>
+
+<style>
+  
+  {% if section.settings.contact_overlay_bg %}.contact-block .overlay-contact-detail { background-color:{{ section.settings.contact_bg | color_modify: 'alpha', 0.85 }}; } {% endif %}
+  .contact-block .overlay-contact-detail, .contact-block .overlay-contact-detail h2, .contact-block .overlay-contact-detail h4, .contact-block .overlay-contact-detail li a { color:{{ section.settings.address_text_color }}; }
+
+  .contact-block .hours-detail h2:before { background-color:{{ section.settings.contact_title_clr }}; }
+  
+</style>
+
+
+{% schema %}
+{
+"name": "Contact Block 2",
+"class": "index-section contact-block",
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "desc",
+"label": "Desc",
+"default": "Short heading"
+}, 
+{
+"type": "color",
+"id": "text_color",
+"label": "Description",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "enable_gmap",
+"label": "Enable Contact Map?",
+"default": true
+},
+{
+"type": "textarea",
+"id": "contact_iframe_code",
+"label": "Map Code[iframe]",
+"info": "[Where do I find googlemap action URL?](https:\/\/support.google.com\/maps\/answer\/3544418?hl=en)"
+},
+{
+"type": "header",
+"content": "Working Hours"
+},
+{
+"type": "checkbox",
+"id": "enable_hours",
+"label": "Enable Hours"
+},
+{
+"type": "color",
+"id": "hours_bg_color",
+"label": "Hours Bg Color",
+"default": "#fff"   
+},
+{
+"type": "color",
+"id": "hours_border_color",
+"label": "Hours Border Color",
+"default": "#000"   
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Bg Image",
+"info": "Size: 1100x500"
+},
+{
+"type": "text",
+"id": "contact_title",
+"label": "Title",
+"default":"Opening Hours"
+},
+{
+"type": "color",
+"id": "contact_title_clr",
+"label": "Contact Title Color",
+"default": "#000"   
+},
+{
+"type": "text",
+"id": "small_txt",
+"label": "Small Text",
+"default":"Opening Hours"
+},
+{
+"type": "color",
+"id": "small_txt_clr",
+"label": "Small Text Color",
+"default": "#000"   
+},
+{
+"type": "text",
+"id": "hours_1",
+"label": "Hours One",
+"default":"Monday to Friday :"
+},
+{
+"type": "text",
+"id": "time_1",
+"label": "Time One",
+"default":"09:00 – 20:00 hrs"
+},
+{
+"type": "text",
+"id": "hours_2",
+"label": "Hours Two",
+"default":"Saturday :"
+},
+{
+"type": "text",
+"id": "time_2",
+"label": "Time Two",
+"default":"09:00 – 18:00 hrs"
+},
+{
+"type": "text",
+"id": "hours_3",
+"label": "Hours Three",
+"default":"Sunday :"
+},
+{
+"type": "text",
+"id": "time_3",
+"label": "Time Three",
+"default":"09:00 – 18:00 hrs"
+},
+{
+"type": "color",
+"id": "hours_clr",
+"label": "Hours Color",
+"default": "#000"   
+},
+{
+"type": "header",
+"content": "Address Block"
+},
+{
+"type": "checkbox",
+"id": "enable_address",
+"label": "Enable address"
+},
+{
+"type": "text",
+"id": "address_module_title",
+"label": "Title",
+"default": "Address"
+},
+{
+"type": "text",
+"id": "address_module_subtitle",
+"label": "Sub Title",
+"default": "Reach Us"
+},
+
+{
+"type": "text",
+"id": "address_module_address",
+"label": "Address",
+"default": "Address line"
+},
+{
+"type": "text",
+"id": "address_module_phone",
+"label": "Contact Phone Number",
+"default": "+91 12345 67890"
+},
+{
+"type": "text",
+"id": "address_module_faxnumber",
+"label": "Contact Fax Number",
+"default": "+91 0045 67890"
+},
+{
+"type": "url",
+"id": "address_module_1_link",
+"label": "Contact Link"
+},
+{
+"type": "text",
+"id": "address_module_1_linktext",
+"label": "Link Text",
+"default": "Link 1"
+},
+{
+"type": "url",
+"id": "address_module_2_link",
+"label": "Contact Link"
+},
+{
+"type": "text",
+"id": "address_module_2_linktext",
+"label": "Link Text",
+"default": "Link 2"
+},
+{
+"type": "color",
+"id": "address_text_color",
+"label": "Text Color",
+"default": "#fff"   
+},
+{
+"type": "checkbox",
+"id": "contact_overlay_bg",
+"label": "Enable Overlay Bg ?",
+"default": true   
+},
+{
+"type": "color",
+"id": "contact_bg",
+"label": "Contact Overlay Bg",
+"default": "#fff"   
+}
+
+],  
+"presets": [
+{
+"name": "Contact Block 2",
+"category": "Form",
+"blocks": [ ]
+}
+]
+}
+{% endschema %}

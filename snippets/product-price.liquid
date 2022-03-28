@@ -1,0 +1,24 @@
+{% if variant.title %}
+{%- assign compare_at_price = variant.compare_at_price -%}
+{%- assign price = variant.price -%}
+{%- assign available = variant.available -%}
+{% else %}
+{%- assign compare_at_price = 1999 -%}
+{%- assign price = 1999 -%}
+{%- assign available = true -%}
+{% endif %}
+{%- assign money_price = price | money -%}
+
+{% if compare_at_price > price %}
+{% assign on_sale = true %}
+{% endif %}
+
+{% if on_sale %}
+<del class="grid-link__sale_price" id="ComparePrice">
+  {{ compare_at_price | money }}
+</del>
+{% endif %}
+
+<div class="product_price">  
+  <h4 class="grid-link__org_price" id="ProductPrice">{{ money_price }}</h4>
+</div>

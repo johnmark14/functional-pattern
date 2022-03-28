@@ -1,0 +1,30 @@
+{% if section.settings.show_blog_tags %}
+<div class="widget widget_categories">
+  {% if blog.all_tags.size > 0 %}
+  <h4>{{ 'blogs.sidebar.categories' | t }}<span class="right"></span></h4>
+  <ul class="categories">
+    {% for tag in blog.all_tags %}
+    {% if current_tags contains tag %}
+    <li class="active">{{ tag }}</li>
+    {% else %}
+    <li>{{ tag | link_to_tag: tag }}</li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endif %}
+
+ {% schema %}
+{
+"name": "Blog Tags",
+"settings": [
+{
+        "type": "checkbox",
+        "id": "show_blog_tags",
+        "label": "Show Blog Categories",
+        "default": true
+      }
+]
+}
+{% endschema %}

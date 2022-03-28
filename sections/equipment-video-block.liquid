@@ -1,0 +1,58 @@
+<div class="video-block-section video-addbox">
+  <div class="dt-sc-hr-invisible-large"></div>
+  <div class="container p-relative">
+    
+    {% assign video_url = product.metafields.accentuate.content_video %}    
+    {% for media_bg_data in product.metafields.accentuate.video_background_image %}
+
+      {% capture media_layout %}
+		
+        <div class="video-wrapper with-popup p-relative">
+          {% if video_url[forloop.index0] != blank %}
+            <div class="p-video">
+              <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+                <source src="{{  video_url[forloop.index0] }}" type="video/mp4">                                    
+              </video>
+              <a href="{{ video_url[forloop.index0] }}" class="jas-popup-url"><i class="fas fa-play icons" aria-hidden="true"></i></a>              
+            </div>          
+          {% else %}
+            <div class="p-video">
+              <video class="course-video" preload="auto" poster="{{ media_bg_data[0].src }}">
+                <source src="{{ video_url[forloop.index0].src }}" type="video/mp4">                                    
+              </video>              
+            </div>
+          {% endif %}
+        </div>    
+      {% endcapture %}
+
+      {% capture text_layout %}
+        <div class="course-content-inner">
+          {{ product.metafields.accentuate.text_block[forloop.index0].html }}
+        </div>    
+      {% endcapture %}    
+
+      <div class="p-relative video-text-block-inner">
+        {% if product.metafields.accentuate.position_of_text_block[forloop.index0] == 'right' %}
+          <div class="grid-uniform video-banner-block v1 d-flex">
+            <div class="video-image grid__item">
+              {{ media_layout }}
+            </div>      
+            <div class="course-content grid__item text-center">
+              {{ text_layout }}
+            </div>
+          </div>
+        {% else %}
+          <div class="grid-uniform video-banner-block v2 d-flex">
+            <div class="course-content grid__item text-center">
+              {{ text_layout }}
+            </div>
+            <div class="video-image grid__item">
+              {{ media_layout }}
+            </div>
+          </div>
+        {% endif %}    
+      </div>
+    {% endfor %}
+    
+  </div>
+</div>

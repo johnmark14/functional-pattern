@@ -1,0 +1,24 @@
+{% if settings.blog_page_sidebar == "left_sidebar" %}
+<aside class="sidebar mobileToggle left-sidebar grid__item wide--one-quarter post-large--one-quarter large--grid__item" data-sidebar>
+  <div class="close-sidebar">
+    {% include 'icon-close' %}
+  </div>
+  {% section 'blog-sidebar-article' %}
+  {% section 'blog-sidebar-tags' %}
+  {% section 'blog-sidebar-instagram' %}
+  {% section 'blog-sidebar-deals' %}
+</aside>    
+{% endif %} 
+
+
+{% if settings.blog_page_sidebar == "right_sidebar" %}
+<aside class="sidebar mobileToggle right-sidebar grid__item wide--one-quarter post-large--one-quarter large--grid__item" data-sidebar>
+  <div class="close-sidebar">
+    {% include 'icon-close' %}
+  </div>
+  {% section 'blog-sidebar-article' %}
+  {% section 'blog-sidebar-tags' %}
+  {% section 'blog-sidebar-instagram' %}
+  {% section 'blog-sidebar-deals' %}
+</aside>    
+{% endif %}

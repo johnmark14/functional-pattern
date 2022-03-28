@@ -1,0 +1,752 @@
+
+
+
+<div class="grid--full site-header__menubar"> 
+
+  <a href="#" class="icon-nav close-menu-mb" title="Menu Mobile Icon" data-menu-mb-toogle>
+    <span class="icon-line"></span>
+  </a>  
+
+  <div class="grid__item menubar_inner header-bottom" data-sticky-mb>
+    <div class="wrapper-header-bt">
+
+      {% include 'header-mobile' %}
+      <div class="header-pc">
+        <div class="header-panel-top">   
+
+          {% if section.settings.display_top_bar %} 
+          <div class="top-bar-type-4">  
+            <div class="top-text-container header-top {% if section.settings.display_top_adv_bar_mobile %} medium-down--hide {% endif %}">
+              <div class="container">
+                <a href="javascript:void(0)" class="close post-large--hide large--hide medium-down--hide">
+                  ✕
+                </a>
+
+                {% if section.settings.header_text_1 != blank or section.settings.header_text_2 != blank  or section.settings.header_text_3 != blank %}
+                <ul class="top_bar_left">
+                  {% if section.settings.header_text_1 != blank %}
+                  <li><span>{{ section.settings.header_text_1 }}</span></li>
+                  {% endif %}
+                  {% if section.settings.header_text_2 != blank %}
+                  <li><span>{{ section.settings.header_text_2 }}</span></li>
+                  {% endif %}
+                  {% if section.settings.header_text_3 != blank %}
+                  <li><span>{{ section.settings.header_text_3 }}</span></li>
+                  {% endif %}
+                </ul>
+                {% endif %}
+
+                {% if section.settings.header_phone_value != blank or  section.settings.header_mail_value != blank %}
+                <ul class="top_bar_right">
+                  {% if section.settings.header_phone_value != blank %}
+                  <li><span>{{ section.settings.header_phone_label }} : {{ section.settings.header_phone_value }}</span></li>
+                  {% endif %}
+                  {% if section.settings.header_mail_value != blank %}
+                  <li><span>{{ section.settings.header_mail_label }} :</span> <a href="mailto:{{ section.settings.header_mail_value }}">{{ section.settings.header_mail_value }}</a></li>
+                  {% endif %}
+                </ul>
+                {% endif %}         
+
+              </div>
+            </div>
+
+            {% if section.settings.display_top_bar_icon %} 
+
+            <div class=" {% if section.settings.display_top_bar_icon %} top_bar {% endif %}">      
+              <div class="container">       
+                <div class="top_bar_menu">
+                  {%- assign top_bar_menu = section.settings.top_bar_menu %}
+                  {% if linklists[top_bar_menu].links.size > 0 %}
+                  <ul>
+                    {% for link in linklists[top_bar_menu].links %}
+                    <li>
+                      <a href="{{ link.url }}" class="{% if link.active %}current{% endif %}">
+                        {{ link.title }}         
+                      </a> 	    
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %} 
+                  {% if shop.customer_accounts_enabled or section.settings.display_wishlist %}
+                  <div class="customer_account post-large--hide large--hide medium-down--hide">                          
+                    <ul>
+                      {% if shop.customer_accounts_enabled %}
+                      {% if customer %}
+                      <li>
+                        <a href="/account" title="{{ 'layout.customer.account' | t }}"><i class="fas fa-user"></i></a>
+                      </li>
+                      <li class="logout-link">
+                        <a title="{{ 'layout.customer.log_out' | t }}" href="/account/logout" ><i class="fa fa-sign-out-alt"></i></a>
+                      </li>
+                      {% else %}
+                      <li>
+                        <a title="{{ 'layout.customer.log_in' | t }}" href="/account/login"><i class="fas fa-sign-in-alt"></i></a>
+                      </li>
+                      <li>
+                        <a title="{{ 'layout.customer.create_account' | t }}" href="/account/register"><i class="fas fa-user"></i></a>
+                      </li>          
+                      {% endif %}  
+                      {% endif %} 
+                      {% if section.settings.display_wishlist %}   
+                      <li>
+                        <a  href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}"><span class="wide--hide">{{ 'products.wishlist.wishlist_name' | t }}</span><i class="fas fa-heart post-large--hide large--hide medium-down--hide"></i></a>            
+                      </li>
+                      {% endif %} 
+                    </ul>
+                  </div>  
+                  {% endif %} 
+                </div>
+              </div>
+            </div>  
+            {% endif %}         
+
+          </div>
+          {% endif %}
+
+
+          <div class="grid__item logo-bar">
+            <div class="container">
+              <div class="grid__item menubar_inner">
+
+                {% if section.settings.display_search %} 
+                <div class="grid__item wide--two-sixths  post-large--two-sixths large--two-sixths medium-down--hide">
+                  {% if settings.search_model == 'search_type2' %}
+                  <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+                    <div class="header-search">
+                      <a href="#" class="site-header__link site-header__search" id="search_trigger">
+                        <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+                      </a>
+                    </div>
+                  </li>
+                  {% endif %}
+                  {% if settings.search_model == 'search_type3' %}
+                  <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+                    <div class="header-search">
+                      <a href="/search" class="site-header__link site-header__search js-drawer-open-top">
+                        <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+                      </a>
+                    </div>
+                  </li>
+                  {% endif %}
+
+                  {% if settings.search_model == 'search_type1' %}
+                  <div class="search-categories-section">
+                    {% include 'adv-search-model' %}
+                  </div>
+                  {% endif %}
+
+
+                  {% unless settings.display_fixtop_menu %}
+                  {% include 'mobile-search' %}
+                  {% endunless %}
+
+                </div>
+                {% endif %}
+
+                {% if template == 'index' %}
+                <h1 class="grid__item wide--two-sixths post-large--hide large--hide medium-down--hide site-header__logo" itemscope itemtype="http://schema.org/Organization">
+                  {% else %}
+                  <div class="h1 site-header__logo grid__item wide--two-sixths  post-large--hide  large--hide medium-down--hide" itemscope itemtype="http://schema.org/Organization">
+                    {% endif %}
+                    {% if settings.logo_use_image %}
+                    <a  href="/" style="max-width: {{ settings.logo_max_width }}px;">
+                      <img class="normal-logo" src="{{ 'logo.png' | asset_url  }}" alt="{{ shop.name }}" itemprop="logo">
+                    </a>
+                    {% else %}
+                    <a class="logo_name" href="/">{{ shop.name }}</a>
+                    {% endif %}
+                    {% if template == 'index' %}
+                    </h1>
+                  {% else %}
+                  </div>
+                {% endif %}   
+
+                <ul class="menu_bar_right grid__item wide--two-sixths  post-large--two-sixths large--two-sixths">
+                  {% if section.settings.display_wishlist %} 
+                  <li class="wishlist wide--hide">            
+                    <a class="wishlist"  href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}"><span class="wide--hide">{{ 'products.wishlist.wishlist_name' | t }}</span><i class="fas fa-heart post-large--hide large--hide medium-down--hide"></i></a>            
+                  </li>
+                  {% endif %}  
+                  {% if shop.customer_accounts_enabled %} 
+                  <li class="customer_account wide--hide"> 
+                    <div class="header-account_links">
+                      <ul> 
+                        {% if customer %}
+                        <li>
+                          <a href="/account" title="{{ 'layout.customer.account' | t }}" data-value="value 1"><i class="fa fa-user post-large--hide large--hide medium-down--hide"></i><span class="wide--hide ">{{ 'layout.customer.account' | t }}</span></a>
+                        </li>
+                        <li class="logout-link">
+                          <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}" data-value="value 1"><i class="fa fa-sign-out-alt post-large--hide large--hide medium-down--hide"></i><span class="wide--hide ">{{ 'layout.customer.log_out' | t }}</span></a>
+                        </li>
+                        {% else %}
+                        <li>
+                          <a href="/account/login" title="{{ 'layout.customer.log_in' | t }}" data-value="value 1"><i class="fa fa-user post-large--hide large--hide medium-down--hide"></i><span class="wide--hide">{{ 'layout.customer.log_in' | t }}</span></a>
+                        </li>
+
+                        {% endif %}  
+
+                      </ul>   
+
+                    </div>
+
+                  </li>
+                  {% endif %} 
+                  {% if settings.enable_multiple_currencies or settings.enable_shopify_payments_currencies %}
+                  <li class="header_currency">
+                    <ul class="tbl-list">
+                      <li class="currency dropdown-parent uppercase currency-block">                       
+                        {% include 'currencies-switcher' %}                   
+                      </li>
+                    </ul>
+                  </li> 
+                  {% endif %}
+
+
+                  {% if section.settings.display_minicart %}
+                  <li class="header-bar__module cart header_cart">
+                    {% include 'mini-cart' %} 
+                  </li> 
+                  {% endif %} 
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<style> 
+
+
+  /* Top block */
+  @media only screen and (min-width:1200px) { 
+    .header-type-4 .header-top a.close { color: {{ section.settings.stripe_icon }}; }  
+    .header-type-4 .header-top a.close:hover { color: {{ section.settings.stripe_icon_hover }}; }  
+
+    .header-type-4 .header-top ul li:last-child { border-right:none; }  
+    .header-type-4 .header-top ul li a { color: {{ section.settings.stripe_link }}; }
+    .header-type-4 .header-top ul li a:hover { color: {{ section.settings.stripe_link_hover }}; }
+
+    .header-type-4 .header-top { background: {{ section.settings.stripe_bg }}; } 
+    .header-type-4 .header-top ul li { color: {{ section.settings.stripe_text }};border-right:1px solid {{ section.settings.stripe_border_between_bars }}; }  
+    .header-type-4 .header-bar__module.cart .baskettop a.icon-cart-arrow #cartCount { background: {{ section.settings.minicart_count_bg }};color:{{section.settings.minicart_count }};}
+    .header-type-4 .header-bar__module.cart .baskettop a.icon-cart-arrow:hover #cartCount { background: {{ section.settings.minicart_count_hover_bg }};color:{{section.settings.minicart_count_hover_text }};}
+    .header-type-4  .top_bar_menu ul li { line-height:normal;border-right:1px solid {{ section.settings.top_border_between_bars }}; } 
+    .header-type-4  .top_bar_menu ul li:last-child,.header-type-4 .customer_account ul li:last-child { border-right:none; }
+
+
+
+
+
+    .header-type-4 .top_bar { background: {{ section.settings.top_bar_bg }}; }
+    .header-type-4 .top_bar a,.header-type-4 .top_bar button { color:{{section.settings.top_bar_links }};}    
+    .header-type-4 .top_bar a:hover, .header-type-4 .top_bar a:hover span,.header-type-4 .top_bar button:hover { color:{{section.settings.top_bar_link_hover }};} 
+
+
+    .top-bar-type-4 .top-text-container { }
+
+    /* Logo block */
+    .header-type-4 .logo-bar { background: {{ section.settings.logo_bar_bg }};}    
+    .header-type-4 .site-header__logo a,.header-type-4 .header-mobile #showLeftPush{ color:{{section.settings.logo_text }};}
+    .header-type-4 .site-header__logo a:hover,.header-type-4 .header-mobile #showLeftPush:hover { color:{{section.settings.logo_hover_text }};}     
+
+    /* Menu  block */
+
+    .header-type-4 .desktop-megamenu,.mobile-nav-section {background: {{ section.settings.menubar_bg }};}
+   .header-type-4 .desktop-megamenu ul> li {color: {{ section.settings.menubar_text }};}
+    .header-type-4 .desktop-megamenu ul> li> a,.mobile-nav-section .mobile-nav-trigger  {color:{{section.settings.menubar_links}};}  
+    .header-type-4 .desktop-megamenu ul> li:hover > a,.header-type-4 .menu-tool .site-nav > li:hover > a.current {color:{{section.settings.menubar_links_hover}};} 
+    .header-type-4 .desktop-megamenu .site-nav >  li > a.current {color:{{section.settings.menu_active}};}
+    .header-type-4 .site-nav-dropdown,#MobileNav,.mobile-nav__sublist { background: {{ section.settings.menubar_dropdown_bg }};}
+    .header-type-4 .site-nav-dropdown .inner > a,.header-type-4 .site-nav .mega-banner .title,.header-type-4 .site-nav .mega-banner .regular-product {color: {{ section.settings.menubar_dropdown_caption }};}    
+    .header-type-4 .desktop-megamenu .site-nav-dropdown .inner > a:hover,.header-type-4 .site-nav .mega-menu .product-item .product-title:hover {color: {{ section.settings.menubar_dropdown_caption_hover }};}    
+    .header-type-4 .desktop-megamenu .site-nav-dropdown li > a,.header-type-4 .menu-tool .site-nav .site-nav-dropdown li a,.header-type-4 .site-nav .mega-menu .product-item .product-title,.header-type-4 .site-nav .widget-featured-product .widget-title h3,#MobileNav a,.mobile-nav__sublist a,.site-nav .widget-featured-nav .owl-prev a,.site-nav .widget-featured-nav .owl-next a  {color: {{ section.settings.menubar_dropdown_links }};}
+    .header-type-4 .desktop-megamenu .site-nav-dropdown li:hover > a,.header-type-4 .menu-tool .site-nav .site-nav-dropdown li a:hover,.header-type-4 .site-nav-dropdown .inner .dropdown a.current,.header-type-4 .menu-tool .site-nav .site-nav-dropdown li a.current,.header-type-4 .site-nav .mega-menu .product-item .product-title:hover,#MobileNav a.current,.mobile-nav__sublist a.current,.site-nav .widget-featured-nav .owl-prev a:hover,.site-nav .widget-featured-nav .owl-next a:hover {color: {{ section.settings.menubar_dropdown_links_hover }};}    
+     
+    
+    
+    .header-type-4 .header-search svg {fill:{{section.settings.search_icon}};} 
+    .header-type-4 .header-search svg:hover {fill:{{section.settings.search_icon_hover}};} 
+    .header-type-4 .site-header__menubar { background: {{ section.settings.logo_bar_bg }}; }
+    {% if section.settings.clr_border_image %} .header-type-4 .site-header__menubar { background-image:url({{ section.settings.menu_border_bg | img_url: 'master' }});background-repeat: no-repeat;   float: left; width: 100%;   } {% endif %}
+    .header-type-4 .is-sticky .site-header__menubar:after { background-image:none;height:0; }
+
+    /* Dropdown block */
+    .header-type-4 .menubar-section #Togglemodal i {color: {{ section.settings.dropdown_icon }};}
+    .header-type-4 .menubar-section #Togglemodal i:hover {color: {{ section.settings.dropdown_icon_hover }};}
+    .header-type-4 #slidedown-modal {background: {{ section.settings.dropdown_bg }};}
+    .header-type-4 #slidedown-modal ul li a {color:{{section.settings.dropdown_link}};} 
+    .header-type-4 #slidedown-modal ul li a:hover {color:{{section.settings.dropdown_hover_link}};} 
+
+
+    /* Search block */     
+    .header-type-4 .search-bar input[type="search"] {color:{{section.settings.search_text }};} 
+    .header-type-4 .header-search span  {color:{{section.settings.search_icon}};} 
+    .header-type-4 .header-search span:hover {color:{{section.settings.search_icon_hover }};} 
+
+
+
+
+
+    .header-type-4 .search-bar__form, .header-type-4 #SearchDrawer,.header-type-4 .search-bar  {  background:{{section.settings.search_bg }};} 
+
+    .header-type-4 .search-bar input[type="search"]::-webkit-input-placeholder  { /* Chrome/Opera/Safari */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-4 .search-bar input[type="search"]::-moz-placeholder { /* Firefox 19+ */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-4 .search-bar input[type="search"]:-ms-input-placeholder { /* IE 10+ */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-4 .search-bar input[type="search"]:-moz-placeholder { /* Firefox 18- */
+      color:{{section.settings.search_text }};
+    }
+
+    /* Cart Summary block */
+    .header-type-4 .header-bar__module.cart .baskettop a.icon-cart-arrow #cartCount { background: {{ section.settings.minicart_count_bg }};color:{{section.settings.minicart_count }};}
+    .header-type-4 .header-bar__module.cart .baskettop a.icon-cart-arrow:hover #cartCount { background: {{ section.settings.minicart_count_hover_bg }};color:{{section.settings.minicart_count_hover_text }};}
+
+    .header-type-4 .header-bar__module a {color:{{section.settings.minicart_link }};}  
+    .header-type-4 .header-bar__module a:hover {color:{{section.settings.minicart_link_hover}};} 
+
+    /* Currency block */
+
+
+    .header-type-4 .lang-currency-groups .dropdown-label,.header-type-4 .lang-currency-groups .dropdown-toggle:after {color:{{section.settings.currency_icon}};}   
+    .header-type-4 .lang-currency-groups .dropdown-label:hover , .header-type-4 .lang-currency-groups .dropdown-toggle:hover::after{color:{{section.settings.currency_icon_hover}};}  
+    .header-type-4 .header_currency ul li.currency:hover:after {border-top-color:{{section.settings.currency_icon_hover}};}
+    .header-type-4 .header_currency ul li.currency:after {border-top-color:{{section.settings.currency_icon}};}
+
+
+
+  }
+
+
+  /* Header borders */
+
+</style> 
+
+<script>
+  var appendPrependMenuMobile = function() {
+    var headerPanelTop = $('.wrapper-container .header-panel-top'),
+        headerPc = $('.wrapper-container .header-pc'),
+        wrapperNav = $('.wrapper-navigation'),
+        areaMb = wrapperNav.find('.mb-area');
+
+    if (window.innerWidth < 1200) {
+      headerPanelTop.appendTo(areaMb);
+    } else {
+      headerPc.prepend(headerPanelTop);
+    };
+  };
+
+  $(document).ready(function() {
+    appendPrependMenuMobile();
+  });
+
+  var winWidth = $(window).innerWidth();
+
+  $(window).on('resize', function () {
+    var resizeTimerId;
+
+    clearTimeout(resizeTimerId);
+
+    resizeTimerId = setTimeout(function() {
+      var curWinWidth = $(window).innerWidth();
+
+      if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+        appendPrependMenuMobile();
+      };
+      winWidth = curWinWidth;
+    }, 0);
+  })
+
+  {% if settings.enable_multilang %}
+  translator.doTranslate('.site-header');
+  {% endif %}
+</script>
+{% schema %}
+{
+"name": "Header",
+"settings": [
+
+{
+"type":"checkbox",
+"id": "display_top_bar",
+"label": "Display topbar 1"	
+},
+{
+"type":"checkbox",
+"id": "display_top_adv_bar_mobile",
+"label": "Hide Topbar on Mobile"	
+},
+{
+"type": "text",
+"id": "header_text_1",
+"label": "Top bar text 1",
+"default": "FREE SHIPPING & RETURN"
+},
+{
+"type": "text",
+"id": "header_text_2",
+"label": "Top bar text 2",
+"default": "MONEY BACK GUARANTEE"
+},  
+{
+"type": "text",
+"id": "header_text_3",
+"label": "Top bar text 3",
+"default": " ONLINE SUPPORT 24/7"
+},
+{
+"type": "text",
+"id": "header_phone_label",
+"label": "Phone lable text",
+"default": "Call Us"
+},
+{
+"type": "text",
+"id": "header_phone_value",
+"label": "Phone number",
+"default": "(00) 000 111 222"
+},  
+{
+"type": "text",
+"id": "header_mail_label",
+"label": "Mail lable text",
+"default": "Mail"
+},
+{
+"type": "text",
+"id": "header_mail_value",
+"label": "Mail address",
+"default": "info@somedomain.com"
+},  
+
+{
+"type": "header",
+"content": "Stripe Block"
+},
+{
+"type": "color",
+"id": "stripe_icon",
+"label": "Close icon",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "stripe_icon_hover",
+"label": "Close icon hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "stripe_bg",
+"label": "Background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "stripe_text",
+"label": "Text",
+"default": "#000"
+}, 
+{
+"type": "color",
+"id": "stripe_link",
+"label": "Link",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "stripe_link_hover",
+"label": "Link Hover",
+"default": "#000"
+},
+{
+"type": "header",
+"content": "Border Block"
+},
+{
+"type": "color",
+"id": "stripe_border_between_bars",
+"label": "Border lines",
+"default": "#e4e4e4"
+},
+{
+"type": "header",
+"content": "Top Bar"
+},
+{
+"type":"checkbox",
+"id": "display_top_bar_icon",
+"label": "Display topbar 2"	
+},
+{
+"type": "link_list",
+"id": "top_bar_menu",
+"label": "Pick linkedlist"
+},
+{
+"type": "checkbox",
+"id": "display_wishlist",
+"label": "Display wishlist"
+},
+{
+"type": "color",
+"id": "top_bar_bg",
+"label": "Top bar background",
+"default": "#fff"
+},
+
+{
+"type": "color",
+"id": "top_bar_links",
+"label": "Top bar links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "top_bar_link_hover",
+"label": "Top bar links hover",
+"default": "#35b8f4"
+},
+{
+"type": "header",
+"content": "Border Block"
+},
+{
+"type": "color",
+"id": "top_border_between_bars",
+"label": "Border lines",
+"default": "#e4e4e4"
+},
+
+
+
+{
+"type":"checkbox",
+"id": "display_search",
+"label": "Display search"	
+},
+
+{
+"type": "checkbox",
+"id": "display_minicart",
+"label": "Display minicart"
+},
+
+
+{
+"type": "header",
+"content": "Logo Block"
+},
+{
+"type": "color",
+"id": "logo_bar_bg",
+"label": "Background",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "logo_text",
+"label": "Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "logo_hover_text",
+"label": "Hover text",
+"default": "#000"
+},
+
+{
+"type": "header",
+"content": "Currency Block"
+},
+
+{
+"type": "color",
+"id": "currency_icon",
+"label": "Currency Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "currency_icon_hover",
+"label": "Text hover",
+"default": "#35b8f4"
+},
+
+{
+"type": "header",
+"content": "Search Block"
+},
+{
+"type": "color",
+"id": "search_icon",
+"label": "Icon",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "search_icon_hover",
+"label": "Icon hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "search_bg",
+"label": "Background",
+"default": "#fff"
+},
+
+{
+"type": "color",
+"id": "search_text",
+"label": "Text",
+"default": "#000"
+},
+
+
+{
+"type": "header",
+"content": "Cart Block"
+},
+
+{
+"type": "color",
+"id": "minicart_count",
+"label": "Count Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_bg",
+"label": "Count Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_hover_bg",
+"label": "Count Hover Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_hover_text",
+"label": "Count Hover Text",
+"default": "#000"
+},
+
+{
+"type": "color",
+"id": "minicart_link",
+"label": "Link",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_link_hover",
+"label": "Link hover",
+"default": "#35b8f4"
+},
+
+{
+"type": "header",
+"content": "Menu Block"
+},
+{
+"type": "color",
+"id": "menubar_bg",
+"label": "Background",
+"default": "#fff"
+},  
+{
+"type": "checkbox",
+"id": "clr_border_image",
+"label": "Bg Image ?"
+},
+{
+"type": "image_picker",
+"id": "menu_border_bg",
+"label": "Bg Image"
+
+},  
+
+{
+"type": "color",
+"id": "menubar_links",
+"label": "Links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_links_hover",
+"label": "Hover links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menu_active",
+"label": "Active menu",
+"default": "#35b8f4"
+},
+
+
+{
+"type": "color",
+"id": "menubar_dropdown_bg",
+"label": "Dropdown menu background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_caption",
+"label": "Dropdown menu title",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_caption_hover",
+"label": "Dropdown menu title hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_links",
+"label": "Dropdown menu links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_links_hover",
+"label": "Dropdown menu links hover",
+"default": "#35b8f4"
+}
+
+]
+}
+{% endschema %}
+
+
+{% javascript %}
+
+if (jQuery.cookie('headerTop') == 'closed') {
+jQuery('.header-top').fadeOut();
+}
+
+jQuery('.header-top a.close').bind('click',function(){
+jQuery('.header-top').fadeOut();
+jQuery.cookie('headerTop', 'closed', {expires:-1, path:'/'});
+});  
+
+
+{% endjavascript %}

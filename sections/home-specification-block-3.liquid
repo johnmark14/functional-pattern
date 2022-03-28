@@ -1,0 +1,450 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="cms-type-6-block" style= "margin-top:{{top}}px; margin-bottom:{{bottom}}px; {% if section.settings.image_1 != blank %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-repeat:no-repeat;background-size:cover;{% else %}background-color:{{section.settings.background_color}};{% endif%};">    
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="cms-type-6-content">
+      <div class="grid-uniform"> 
+
+        <div class="grid__item wide--one-third post-large--one-third large--grid__item medium--grid__item {{ section.settings.align_text }}">
+          <div class="content-inner">
+            <div class="owl-carousel owl-theme cms-6-carousel">
+              <div class="carousel_content">                
+                {% if section.settings.image_2 != blank %}
+                {% if section.settings.link_2 != blank %}<a class="banner_half_img" href="{{ section.settings.link_2 }}">
+                <img src="{{ section.settings.image_2 | img_url: '1920X' }}" alt="{{ section.settings.title_1 }}">
+                </a>
+                {% endif%}
+                {% else %}
+                <img src="//via.placeholder.com/500x600">
+                {% endif %}                
+
+                {% if section.settings.text_2 != blank %}
+                <h6 style="color:{{ section.settings.text_2_color }}">{{ section.settings.text_2 }}</h6>
+                {% endif %}
+              </div>
+              <div class="carousel_content">
+                {% if section.settings.link_3 != blank %}<a class="banner_half_img" href="{{ section.settings.link_3 }}">{% endif%}
+                {% if section.settings.image_3 != blank %}
+                <img src="{{ section.settings.image_3 | img_url: '1920X' }}" alt="{{ section.settings.title_1 }}">
+                {% else %}
+                <img src="//via.placeholder.com/500x600">
+                {% endif %}
+
+                {% if section.settings.link_3 != blank %} </a>{% endif%}
+
+                {% if section.settings.text_3 != blank %}
+                <h6 style="color:{{ section.settings.text_2_color }}">{{ section.settings.text_3 }}</h6>
+                {% endif %}
+              </div>
+              <div class="carousel_content">
+                {% if section.settings.link_4 != blank %}<a class="banner_half_img" href="{{ section.settings.link_4 }}">{% endif%}
+                {% if section.settings.image_4 != blank %}
+                <img src="{{ section.settings.image_4 | img_url: '1920X' }}" alt="{{ section.settings.title_1 }}">
+                {% else %}
+                <img src="//via.placeholder.com/500x600">
+                {% endif %}
+                {% if section.settings.link_4 != blank %} </a>{% endif%}
+                {% if section.settings.text_4 != blank %}
+                <h6 style="color:{{ section.settings.text_2_color }}">{{ section.settings.text_4 }}</h6>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__item wide--two-thirds post-large--two-thirds large--grid__item medium--grid__item">
+          {% if section.settings.title_1 != blank or section.settings.text_1 != blank   %}  
+          <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+            <div class="border-title">
+              {% if section.settings.titleshadow_1 != blank %}
+              <h5 style="color:{{ section.settings.shadowtext_color }}">{{ section.settings.titleshadow_1 }}</h5>
+              {% endif %}
+
+              {% if section.settings.title_1 != blank %}
+              <h2 style="color:{{ section.settings.icon_title_color }}">{{ section.settings.title_1 }}</h2>
+              {% endif %}
+              {% if section.settings.text_1 != blank %}
+              <p style="color:{{ section.settings.text_color }};max-width:970px;">{{ section.settings.text_1 }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+
+          <ul class="support_block" >         
+            {% if section.blocks.size > 0 %}      
+            {% for block in section.blocks %}
+            {% case section.blocks.size %}
+            {% when 1 %}
+            {%- assign block_width = 'one-whole text-center' -%}
+            {% when 2 %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item' -%}
+            {% when 3 %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item' -%}
+            {% when 4 %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item' -%}
+            {% endcase %}
+            <li class="grid__item {{ block_width }} wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load }}ms">
+              <div class="support_section support_section__{{ block.id }}" style="background:{{ block.settings.bg_color }};">
+                <div class="support_content"> 
+                  {% if block.settings.icon_type == 'icon' %}
+                  {% if  block.settings.icon_1 != blank %}
+                  <a class="support_icon" href="{{ block.settings.icon_link }}">   
+                    <i class="{{ block.settings.icon_1 }}"></i>
+                  </a>
+                  {% endif %} 
+                  {% endif %} 
+
+                  {% if block.settings.icon_type == 'image' %}
+                  <a class="support_icon" href="{{ block.settings.icon_link }}">   
+                    {% if  block.settings.icon_image_1 != blank %}
+                    <img src="{{  block.settings.icon_image_1 | img_url: "1920X" }}" alt="{{  block.settings.title }}" />
+                    {% else %}
+                    <img src="//via.placeholder.com/64x64">
+                    {% endif %} 
+                  </a>
+
+                  {% endif %} 
+                  <div class="support_text"> 
+                    {% if block.settings.title != blank  %}  
+                    <h5 style="color:{{ block.settings.title_color }};">{{ block.settings.title }}</h5>
+                    {% endif %} 
+                    {% if block.settings.sub_title != blank  %}  
+                    <span style="color:{{ block.settings.sub_title_color }};">{{ block.settings.sub_title }}</span>
+                    {% endif %} 
+                    {% if block.settings.desc != blank  %}  
+                    <p style="color:{{ block.settings.desc_color }};" class="desc">{{ block.settings.desc }}</p>
+                    {% endif %}
+                  </div> 
+                </div>
+              </div>    
+            </li>  
+            {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  {% for block in section.blocks %}
+  <style>
+
+    {% if block.settings.icon_type == 'icon' %}
+    .support_section__{{ block.id }} .support_icon {text-align:center; display:inline-block;width:64px;height:64px;line-height:64px;border-radius:100%;background:{{ block.settings.icon_bg }};color:{{ block.settings.icon_color }}; }
+    .support_section__{{ block.id }}:hover .support_icon { background:{{ block.settings.icon_bg_hover }};color:{{ block.settings.icon_hover_color }}; }
+    {% endif %}
+
+  </style>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+"name": "Specification Block 3",
+"class": "index-section specification-icon-block-type-3",
+"max_blocks":4,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 1920x1200"
+},
+{
+"type": "color",
+"id": "background_color",
+"label":"Bckground color",
+"default": "#f5f5f5"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "icon_title_color",
+"label":"Title color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "titleshadow_1",
+"label": "Sub Heading",
+"default": "Sub Heading"
+},
+{
+"type": "color",
+"id": "shadowtext_color",
+"label":"Text color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_1",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_color",
+"label":"Description color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "align_text",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "right"
+}
+]
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image"
+},
+{
+"type": "url",
+"id": "link_2",
+"label": "Link"
+},
+{
+"type": "textarea",
+"id": "text_2",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_2_color",
+"label":"Text color",
+"default": "#000"
+},
+{
+"type": "image_picker",
+"id": "image_3",
+"label": "Image"
+},
+{
+"type": "url",
+"id": "link_3",
+"label": "Link"
+},
+{
+"type": "textarea",
+"id": "text_3",
+"label": "Description"
+},
+{
+"type": "image_picker",
+"id": "image_4",
+"label": "Image"
+},
+{
+"type": "url",
+"id": "link_4",
+"label": "Link"
+},
+{
+"type": "textarea",
+"id": "text_4",
+"label": "Description"
+}
+],
+
+"blocks": [
+{
+"type": "text",
+"name": "support block",
+"settings": [ 
+{
+"type": "select",
+"id": "icon_type",
+"label": "Icon Type",
+"default": "icon",
+"options": [
+{
+"value": "image",
+"label": "Image"
+},
+{
+"value": "icon",
+"label": "Icon"
+}
+]
+},
+{
+"type": "image_picker",
+"id": "icon_image_1",
+"label": "Icon"
+},
+{
+"type": "text",
+"id": "icon_1",
+"label": "Icon Class",
+"default":"far fa-heart",
+"info":"https://fontawesome.com/icons/heart?style=regular"
+},
+{
+"type": "color",
+"id": "icon_bg",
+"label": "Icon Bg",
+"default":"#000"
+
+},
+{
+"type": "color",
+"id": "icon_color",
+"label": "Icon Color",
+"default":"#fff"
+
+},
+{
+"type": "color",
+"id": "icon_bg_hover",
+"label": "Icon Bg Hover",
+"default":"#666"
+},
+{
+"type": "color",
+"id": "icon_hover_color",
+"label": "Icon Hover Color",
+"default":"#fff"
+},
+{
+"type": "url",
+"id": "icon_link",
+"label": "Icon Link"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "sub_title",
+"label": "Subtitle",
+"default": "Subtitle"
+},
+{
+"type": "color",
+"id": "sub_title_color",
+"label": "Subtitle Color",
+"default":"#000"
+},
+{
+"type": "textarea",
+"id": "desc",
+"label": "Description",
+"default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus tortor eu orci fringilla, porttitor consequat elit viverra."
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Color",
+"default":"#000"
+}
+]
+}
+
+],
+
+"presets": [
+{
+"name": "Specification Block 3",
+"category": "Text",
+"blocks": [
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+}
+]
+}
+]
+}
+{% endschema %}
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.cms-6-carousel').owlCarousel({   
+      loop:true,      
+      dots: true, 
+      autoplay: true,
+      autoplayTimeout: 3000,
+      responsive:{
+        0:{
+          items: 1
+        },
+        600:{
+          items:1
+        },
+        1000:{
+          items: 1
+        }
+      }
+    });
+  });
+
+</script>

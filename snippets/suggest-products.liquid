@@ -1,0 +1,101 @@
+{%- assign template_id = template | split: '.' | first -%}
+{%- assign st = 'display_' | append: template_id -%}
+
+{%- if settings[st] -%}
+{%- if collections[settings.collection_suggest].handle != "" or collections[settings.collection_suggest].handle != empty -%}
+{%- assign products = collections[settings.collection_suggest].products -%}
+{%- assign ps = products | first -%}
+<div class="bottom-products-suggest">
+  <div class="product-btn product-suggest pr">
+    <a href="{{ ps.url | within: ps.collections.first }}"></a>
+    <div class="wrapper-short-suggest">
+      <div class="product-short-suggest">
+        <a href="{{ ps.url | within: ps.collections.first }}" class="product-thumb">
+          <img src="{{ps.featured_image | img_url: '219x280', format: 'pjpg' | split:'?' | first }}" class="attachment-shop_thumbnail" alt="{{ps.title}}"> </a>
+        <a href="{{ ps.url | within: ps.collections.first }}" class="product-title">{{ps.title}}</a>
+        <span class="price">{%- if ps.compare_at_price > ps.price -%}<del>{{ ps.compare_at_price_max | money }}</del>{%-endif-%}<ins><span>{{ ps.price | money }}</span></ins></span>
+      </div>
+    </div>
+    {%- if settings.show_close_suggest -%}<button type="button" class="suggest-close"></button>{%- endif -%}
+  </div>
+</div>
+<script>
+    jQuery(document).ready(function($) {
+    var list_suggests = {{ products  |   map:'handle' | json  }};
+    var sgp;
+    function doSuggest(){      
+      	jQuery('.bottom-products-suggest').slideToggle("slow");     
+      var rand = list_suggests[Math.floor(Math.random() * list_suggests.length)];
+      Shopify.getProduct(rand,function(data){      
+        $('.bottom-products-suggest .product-short-suggest').attr('href',data.url).attr('title',data.title).find('.product-title').html(data.title).attr('href',data.url);
+       	$('.bottom-products-suggest .product-thumb').attr( { href:data.url, title:data.title } ); 
+        $('.bottom-products-suggest .product-thumb img').attr( { src:Shopify.resizeImage(data.featured_image,'219x280'), alt:data.title } ); 
+        var html = '';
+        if(data.compare_at_price > data.price){
+          html +='<del><span class="money">'+Shopify.formatMoney(data.compare_at_price)+'</span></del>';
+        	html += '<ins><span class="money">'+Shopify.formatMoney(data.price)+'</span></ins>';
+        }
+        else {
+        html += '<ins><span class="money">'+Shopify.formatMoney(data.price)+'</span></ins>';
+          
+        }
+        $('.bottom-products-suggest .price').html(html);
+         
+      });
+    }
+      sgp=  setInterval(function(){
+        jQuery('.claue-products-suggest').slideToggle("slow");         
+      	doSuggest();
+        
+      }, {{ settings.interval_time | plus: 0}}); 
+     jQuery('.bottom-products-suggest').slideToggle("slow");           
+     doSuggest();
+      $('body').on('click',".suggest-close",function(){
+        clearInterval(sgp);
+        $(".product-suggest").hide('slow');
+      });
+  });
+</script>
+{%- endif -%}
+{%- endif -%}
+
+<style type="text/css">
+  .bottom-products-suggest {
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    display: block;
+    position: fixed;
+    text-align: left;
+    width: auto;
+  min-width: 250px;
+   left: 35px;
+    bottom: 25px;
+      z-index: 1000;
+}
+.bottom-products-suggest .product-short-suggest .product-thumb img {
+    max-width: 50px;
+}
+.bottom-products-suggest .product-short-suggest {
+    overflow: hidden;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #efefef;
+}
+.bottom-products-suggest .product-short-suggest .product-thumb {
+    float: right;
+    margin-left: 10px;
+}
+.bottom-products-suggest .product-short-suggest .product-title {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+.bottom-products-suggest .product-short-suggest .price del {
+    color: #D0D0D0;
+}
+</style>

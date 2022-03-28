@@ -1,0 +1,496 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+{%- assign collection = collections[section.settings.collection] -%}  
+{%- assign collection2 = collections[section.settings.collection2] -%}
+{%- assign collection3 = collections[section.settings.collection3] -%}
+
+<script type="text/javascript"> 
+
+  window.list_hpc_autoplay = {{ section.settings.list_autoplay }};
+  window.list_carousel_navigation = {{ section.settings.list_navigation }};
+  window.list_carousel_pagination = {{section.settings.list_pagination }};     
+
+</script>
+
+{% if section.settings.layout_setup == '75%' %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '50%' %}
+{% assign column1  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-half post-large--one-half large--one-half medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '67%' %}
+{% assign column1  = 'grid__item wide--two-thirds post-large--two-thirds large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-third post-large--two-third large--two-quarters medium-down--grid__item small--grid__item' %}
+{% elsif section.settings.layout_setup == '100%' %}
+{% assign column1  = 'grid__item' %}
+{% assign column2  = 'grid__item' %}
+{% else %}
+{% assign column1  = 'grid__item wide--three-quarters post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% assign column2  = 'grid__item wide--one-quarter post-large--two-quarters large--two-quarters medium-down--grid__item small--grid__item' %}
+{% endif %}
+
+{% capture nav_block %}
+<div class="product_loop_nav carousel-arrow {{ section.settings.navigation_position }}" id="navCtrls-{{ block.id}}-nav"></div>
+{% endcapture %}
+
+{% capture image_block %} 
+<div class="overlay-text">  
+  <div class="collection_title imageText_position {{ section.settings.image_text_position }}">
+    {% if section.settings.sub_caption != blank %}
+    <h6 class="section-header__title" style="color:{{ section.settings.sub_caption_clr }};">    
+      {{ section.settings.sub_caption }}
+    </h6>
+    {% endif %}  
+    {% if section.settings.caption != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.caption_clr }};">    
+      {{ section.settings.caption }}
+    </h2>
+    {% endif %} 
+  </div>
+
+  {% unless section.settings.layout_setup == '100%' or section.settings.image-position == 'none' %}
+  {% if section.settings.image != blank %}
+  <img src="{{ section.settings.image | img_url: '1920X' }}" alt="{{ section.settings.image }}" />
+  {% if section.settings.use_overlay %}
+  <div class="ovrly"></div>
+  {% endif%}
+  {% else %}
+  <img src="//via.placeholder.com/650x980">
+  {% endif%}  
+  {% if section.settings.navigation_position == 'over-image' %}
+  {{ nav_block }}
+  {% endif %}
+  {% endunless %} 
+</div>
+{% endcapture %}
+
+{% capture content_block %}     
+{% if section.settings.title != blank or section.settings.small_title != blank  %}
+<div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+  <div class="border-title">
+    {% if section.settings.small_title != blank %}
+    <div class="short-desc"><p style="color:{{ section.settings.text_clr }};">{{ section.settings.small_title }}</p></div>
+    {% endif %}  
+    {% if section.settings.title != blank %}
+    <h2 class="section-header__title" style="color:{{ section.settings.title_clr }};">    
+      {{ section.settings.title }}
+    </h2>
+    {% endif %}  
+                  
+  </div>
+</div>
+{% endif %}
+{% endcapture %}
+
+<div data-section-id="{{ section.id }}" data-section-type="products" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;" class="product-carousel">
+
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="product-block-inner"> 
+      {{content_block }}
+      <div class="grid-uniform">
+        {% if section.settings.image-position == 'left' and section.settings.layout_setup != '100%' %}
+        <div class="{{column2}}  image-on-left">         
+          {{image_block}}        
+        </div>      
+        {% endif %}  
+
+        <div class="{% if section.settings.image-position != 'none' %} {{column1}} {% else %}grid__item{% endif %} product-grid-{{ section.settings.image-position }}">
+          <div class="product-block layout-style-verticle">
+            <div class="grid-uniform">
+
+              {% if section.settings.image-position == 'none' or section.settings.layout_setup == '100%' %}            
+              {% assign innerCollumn = 'grid__item wide--one-third post-large--one-third large--one-third medium-down--grid__item small--grid__item' %}            
+              {% else %}
+              {% assign innerCollumn = 'grid__item wide--one-half post-large--one-whole large--one-whole medium-down--grid__item small--grid__item' %}
+              {% endif %}
+
+              {% if section.settings.collection != blank %}
+              <div class="{{innerCollumn}}">              
+                <div data-product-verticle-row-nv class="product_loop_list_nav carousel-arrow {{ section.settings.navigation_position }}" id="navCtrls-{{ collection.handle}}-nav"></div>
+                {% if section.settings.list_navigation %}
+                <div class="collection-title">
+                  <h6>{{ section.settings.collecton_title }}</h6>
+                </div>  
+                {% endif %}
+
+                <ul data-product-verticle-row-carousel class="product_loop_list" id="product_list_{{ collection.handle}}-init"  data-autoplay="{{section.settings.autoplay}}" data-show="{{ section.settings.slide_to_show }}" data-scroll="{{ section.settings.slide_to_scroll }}">         
+                  {% for product in collection.products  %}
+                  {% include 'product-grid-item', grid_item_width: ' ' %} 
+                  {% else %}
+                  {% for i in (1..4) %}
+                  {% include 'empty-row', grid_item_width: ' ' %} 
+                  {% endfor %}
+                  {% endfor %}
+                </ul> 
+              </div>
+              {% endif %}
+              {% if section.settings.collection2!= blank %}  
+              <div class="{{innerCollumn}}">              
+                <div data-product-verticle-row-nav  class="product_loop_list_nav carousel-arrow {{ section.settings.navigation_position }} " id="navCtrls-{{ collection2.handle}}-nav"></div>
+                {% if section.settings.list_navigation %}
+                <div class="collection-title">
+                  <h6>{{ section.settings.collecton_title2 }}</h6>
+                </div> 
+                {% endif %}
+
+                <ul data-product-verticle-row-carousel class="product_loop_list" id="product_list_{{ collection2.handle }}-init"  data-autoplay="{{section.settings.autoplay}}" data-show="{{ section.settings.slide_to_show }}" data-scroll="{{ section.settings.slide_to_scroll }}">         
+                  {% for product in collection2.products  %}
+                  {% include 'product-grid-item', grid_item_width: ' ' %} 
+                  {% else %}
+                  {% for i in (1..4) %}
+                  {% include 'empty-row', grid_item_width: ' ' %} 
+                  {% endfor %}
+                  {% endfor %}
+                </ul>                                  
+              </div>
+              {% endif %} 
+              {% if section.settings.image-position == 'none' or section.settings.layout_setup == '100%' %}
+              {% if section.settings.collection3!= blank %}  
+              <div class="{{innerCollumn}}">              
+                <div data-product-verticle-row-nav  class="product_loop_list_nav carousel-arrow {{ section.settings.navigation_position }} " id="navCtrls-{{ collection3.handle}}-nav"></div>
+                {% if section.settings.list_navigation %}
+                <div class="collection-title">                  
+                  <h6>{{ section.settings.collecton_title3 }}</h6>
+                </div> 
+                {% endif %}
+                
+                <ul data-product-verticle-row-carousel class="product_loop_list" id="product_list_{{ collection3.handle }}-init"  data-autoplay="{{section.settings.autoplay}}" data-show="{{ section.settings.slide_to_show }}" data-scroll="{{ section.settings.slide_to_scroll }}">         
+                  {% for product in collection3.products  %}
+                  {% include 'product-grid-item', grid_item_width: ' ' %} 
+                  {% else %}
+                  {% for i in (1..4) %}
+                  {% include 'empty-row', grid_item_width: ' ' %} 
+                  {% endfor %}
+                  {% endfor %}
+                </ul>                                  
+              </div>
+              {% endif %} 
+              {% endif %} 
+            </div>
+          </div>
+        </div>
+        {% if section.settings.image-position == 'right' and section.settings.layout_setup != '100%' %}
+        <div class="{{column2}}  image-on-right">
+          {{image_block}}
+        </div>
+        {% endif %}
+      </div> 
+    </div>
+    <div class="dt-sc-hr-invisible-medium"></div>
+  </div>
+</div>
+
+<style>
+  
+  #shopify-section-{{section.id}}.home-product-carousel .overlay-text:hover .ovrly { background:{{ section.settings.overlay_1 | color_modify: 'alpha', 0.5 }}; }
+  
+</style>
+
+
+{% schema %}
+{
+"name": "Product Vertical Carousel",
+"class": "index-section home-product-carousel",
+"settings": [  
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "select",
+"id": "layout_setup",
+"label": "Layout Grid Style",
+"options": [
+{
+"value": "75%",
+"label": "75/25"
+},
+{
+"value": "50%",
+"label": "50/50"
+},
+{
+"value": "67%",
+"label": "67/33"
+},
+{
+"value": "100%",
+"label": "100/100"
+}
+],
+"default": "75%"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Product Vertical Carousel"
+},  
+{
+"type": "color",
+"id": "title_clr",
+"label": "Title Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading",
+"default": "Small Heading"
+},  
+{
+"type": "color",
+"id": "text_clr",
+"label": "Text color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "slide_to_show",
+"label": "Slide to Show",
+"info": "For desktop screen",
+"options": [ 
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}        
+],
+"default": "2"
+},
+{
+"type": "select",
+"id": "slide_to_scroll",
+"label": "Slide to Scroll",
+"info": "For desktop screen",
+"options": [   
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}        
+],
+"default": "4"
+},
+{
+"type": "checkbox",
+"id": "list_navigation",
+"label": "Enable Navigaiton",
+"default": true
+},
+{
+"type": "select",
+"id": "navigation_position",
+"label": "Navigation position",
+"options": [
+{
+"value": "nav-top-left",
+"label": "Top Left"
+},
+{
+"value": "nav-top-right",
+"label": "Top Right"
+}
+],
+"default": "nav-top-left"
+},
+{
+"type": "checkbox",
+"id": "list_autoplay",
+"label": "Carousel Auto Play",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "list_pagination",
+"label": "Enable Pagination",
+"default": false
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 1000x710"
+},    
+{
+"type": "select",
+"id": "image-position",
+"label": "Image alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+} ,
+{
+"value": "none",
+"label": "None"
+}   
+]
+},
+{
+"type": "text",
+"id": "caption",
+"label": "Heading",
+"default": "Image Heading"
+},  
+{
+"type": "color",
+"id": "caption_clr",
+"label": "Heading Color",
+"default":"#000"
+},    
+{
+"type": "text",
+"id": "sub_caption",
+"label": "Image Text",
+"default": "Image Text"
+},  
+{
+"type": "color",
+"id": "sub_caption_clr",
+"label": "Sub Heading Color",
+"default":"#000"
+},            
+{
+"type": "select",
+"id": "image_text_position",
+"label": "Image Text Position",
+"options": [
+{
+"value": "imgtxt-top-left",
+"label": "Top Left"
+},
+{
+"value": "imgtxt-top-right",
+"label": "Top Right"
+},
+{
+"value": "imgtxt-middle",
+"label": "Middle"
+},
+{
+"value": "imgtxt-bottom",
+"label": "Bottom"
+},
+{
+"value": "imgtxt-bottom-left",
+"label": "Bottom Left"
+},
+{
+"value": "imgtxt-bottom-right",
+"label": "Bottom Right"
+}          
+
+],
+"default": "imgtxt-middle"
+},
+{
+"type": "checkbox",
+"id": "use_overlay",
+"label": "Overlay"
+},
+{
+"type": "color",
+"id": "overlay_1",
+"label": "Overlay",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "collecton_title",
+"label": "Collection Name",
+"default": "Collection Name"
+},  
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+},
+{
+"type": "text",
+"id": "collecton_title2",
+"label": "Collection Name",
+"default": "Collection Name"
+},  
+{
+"id": "collection2",
+"type": "collection",
+"label": "Collection"
+},      
+{
+"type": "text",
+"id": "collecton_title3",
+"label": "Collection Name",
+"default": "Collection Name"
+},  
+{
+"id": "collection3",
+"type": "collection",
+"label": "Collection"
+}
+],
+"presets": [
+{
+"name": "Product Vertical Carousel",
+"category": "Collection"
+}
+]
+}
+{% endschema %}

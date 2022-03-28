@@ -1,0 +1,96 @@
+{% if section.blocks.size > 0 %}   
+{% for block in section.blocks %}      
+{% assign tags = block.settings.shop_by_tags_list | split: ',' %}
+{% assign counter = 0 %}
+{% for t in tags %}
+{% assign tag = t | strip %}
+{% assign tag_value = tag | handleize %}      
+{% if current_tags contains tag %}            
+{% else %}
+{% if collection.tags contains tag %}             
+{% assign counter = counter | plus:1 %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+{% if  block.settings.enable_shop_by_tags %}
+{% if  block.settings.shop_by_tags_title != blank %}
+<aside class="sidebar-tag filter tags {{ block.settings.shop_by_tags_title | downcase }} {% if counter == 0 %} counter_zero {% endif %}">          
+  <div class="widget widget_tag_filter">
+    <h4>
+      <span>{{ block.settings.shop_by_tags_title  }} </span>
+<!--       <a href="javascript:void(0)" class="clear" style="display:none">
+        <i class="fas fa-times"></i>
+      </a> -->
+    </h4>
+
+    <div class="widget-content">
+      <ul>             
+        {% for t in tags %}
+        {% assign tag = t | strip %}
+        {% assign tag_value = tag | handleize %}      
+        {% if current_tags contains tag %}
+        <li>          
+          <input type="checkbox" id="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}" value="{{ tag_value }}" checked/>
+          <label for="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}">{{ tag  }}</label>
+        </li>
+        {% elsif collection.tags contains tag %} 
+        <li>          
+          <input type="checkbox" id="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}" value="{{ tag_value }}"/>
+          <label for="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}">{{ tag }}</label>
+        </li>  
+        {% else %}
+        <li>          
+          <input type="checkbox" id="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}" value="{{ tag_value }}"/>
+          <label for="{{ block.settings.shop_by_tags_title | handle }}{{forloop.index}}">{{ tag }}</label>
+        </li>  
+        {% endif %}        
+        {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+</aside>
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+{% schema %}
+
+{
+"name": "Tags",
+"max_blocks": 20,
+"settings": [
+],
+"blocks": [   
+{
+"type": "text",
+"name": "Tags",
+"settings": [
+{     
+
+"type": "checkbox",
+"id": "enable_shop_by_tags",
+"label": "Enable",
+"default": true
+},
+{
+"type": "text",
+"id": "shop_by_tags_title",
+"label": "Shop by tags",
+"default": "Shop By Size",
+"info": "i.e \"Shop by Size\"."
+},
+{
+"type": "textarea",
+"id": "shop_by_tags_list",
+"label": "Tags list",
+"info": "Separate by a comma, i.e \"XS, S, M, L, XL\"."
+}
+]
+}
+]
+}
+{% endschema %}

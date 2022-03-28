@@ -1,0 +1,35 @@
+<ul class="site-nav-dropdown level-one">
+  {% for childlink in linklists[link_child].links %}
+  <li {% if linklists[childlink.handle] != empty %}class="dropdown"{% endif %}>                    
+    <a href="{{ childlink.url }}" class="{% if childlink.active %}current{% endif %}">               
+      <span>               
+        {{ childlink.title | escape }}                
+      </span>
+      {% if linklists[childlink.handle] != empty %}<i class="fa fa-caret-right"></i>{% endif %}
+    </a>
+    <ul class="site-nav-dropdown level-two">
+      {% for childlink2 in linklists[childlink.handle].links %}
+      <li {% if linklists[childlink2.handle] != empty %}class="dropdown"{% endif %}>                        
+        <a href="{{ childlink2.url }}" class="{% if childlink2.active %}current{% endif %}">                     
+          <span>                      
+            {{ childlink2.title | escape }}                     
+          </span>
+          {% if linklists[childlink2.handle] != empty  %}<i class="fa fa-caret-right"></i>{% endif %}
+        </a>
+        <ul class="site-nav-dropdown level-three">
+          {% for childlink3 in linklists[childlink2.handle].links %}
+          <li>                            
+            <a href="{{ childlink3.url }}" class="{% if link.active %}current{% endif %}">                         
+              <span>                           
+                {{ childlink3.title | escape }}                           
+              </span>                          
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>

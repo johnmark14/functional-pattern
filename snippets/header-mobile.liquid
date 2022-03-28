@@ -1,0 +1,44 @@
+<div class="header-mb">          
+  <div class="header-mb-left header-mb-items">
+    <div class="hamburger-icon svg-mb">
+      <a href="#" class="icon-nav" title="Menu Mobile Icon" data-menu-mb-toogle>
+        <span class="icon-line"></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="header-mb-middle header-mb-items">
+    <div class="header-logo">
+      {% if template == 'index' %}
+      <div class="site-header__logo">
+        {% else %}
+        <div class="h1 site-header__logo">
+          {% endif %}
+          {% if settings.logo_use_image %}
+          <a  href="/" style="max-width: {{ settings.logo_max_width }}px;" >
+            <img class="normal-logo" src="{{ 'logo.png' | asset_url  }}" alt="{{ shop.name }}">
+          </a>
+          {% else %}
+          <a class="logo_name" href="/">{{ shop.name }}</a>
+          {% endif %}
+          {% if template == 'index' %}
+          </h1>
+        {% else %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="header-mb-right header-mb-items">
+    <div class="cart-icon svg-mb">
+      <a href="#" title="Cart Icon" data-cart-toggle>       
+        {% include 'icon-cart' %}
+
+        <span class="cartCount" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+  </div>          
+
+</div>

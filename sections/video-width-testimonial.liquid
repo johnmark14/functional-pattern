@@ -1,0 +1,166 @@
+<div class="grid-uniform">    
+  <div class="video-banner with-popup">
+    <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %} p-relative">          
+      <div class="overlay"></div>            
+      <div class="grid-uniform video-banner-block p-relative">   
+        
+        {% if section.settings.video_url != blank %}
+        <div class="video-image video-image-{{ section.id }} grid__item {% if section.settings.add_box %} three-fifths post-large--two-thirds large--grid__item medium--grid__item {% else %} wide--one-whole {% endif %} wow fadeIn animated">            
+          <div class="video-text p-video"> 
+ 
+            <a href="{{ section.settings.video_url }}" class="jas-popup-url">
+             
+              {% if section.settings.image_2 != blank %}   
+               <img class="hidden" src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2.alt }}"/>
+                {% style %}
+				  .video-image-{{ section.id }}{
+              		background-image:url({{ section.settings.image_2 | img_url: "2000x"}});
+              		background-repeat:no-repeat;
+              		background-size: cover;
+    				background-position: center;
+              	  }              		
+                {% endstyle %}
+              {% else %}
+              <img src="//via.placeholder.com/1920x900"/>
+              {% endif %}
+              
+              <i class="fas fa-play icons" aria-hidden="true"></i>
+              {% if section.settings.video_text != blank %}
+              <h4 class="video-summary">{{ section.settings.video_text | escape }}</h4>
+              {% endif %}
+            </a>     
+     
+          </div>             
+        </div>        
+        {% endif%}        
+        
+
+        <div class="testimonial-content grid__item two-fifths post-large--one-third large--grid__item medium--grid__item text-center"> 
+          <div class="testimonials-inner">                  
+            <blockquote class="testimonials-wrapper">
+              <span class="quote-icon">{% include 'icon-quote' %}</span>
+              {% if section.settings.testimonial != blank %}
+                <div class="rte-setting text-spacing"><h4>{{ section.settings.testimonial }}</h4></div>
+              {% endif %}
+              {% if section.settings.image != blank %}
+                <div class="image-wrap testimonail-image">
+                  {%- assign img_url = section.settings.image | img_url: '90x90' -%}
+                  <img class="lazyload" src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080]" data-aspectratio="{{ section.settings.image.aspect_ratio }}" data-sizes="auto" alt="{{ section.settings.image.alt }}">
+                </div>
+              {% endif %}
+              {% if section.settings.author != blank %}
+                <h3>{{ section.settings.author | escape }}</h3>
+              {% endif %}
+              {% if section.settings.position != blank %}
+                <p class="position">{{ section.settings.position | escape }}</p>
+              {% endif %}              
+            </blockquote>            
+          </div>
+        </div>    
+       
+
+      </div>          
+      <div class="dt-sc-hr-invisible-large"></div>
+      <div class="text-center">
+        {% if section.settings.bottom_heading != blank %}
+        <div><h4>{{ section.settings.bottom_heading }}</h4></div>
+        {% endif %}
+        {% if section.settings.btn_text != blank and section.settings.btn_url != blank %}
+        <a class="btn btn-primary" href="{{ section.settings.btn_url | escape }}">{{ section.settings.btn_text | escape }}</a>
+        {% endif %}        
+      </div>
+    </div> 
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+
+<style>
+  .video-banner .btn { background:{{ section.settings.button_bg_color }}; color:{{ section.settings.button_txt_color }}; }  
+  .video-banner .btn:hover{ background:{{ section.settings.button_bghover_color }}; color:{{ section.settings.button_txthover_color }}; }
+</style>
+
+{% schema %}
+{
+"name": "Video with Testimonial",
+"class": "index-section video-addbox video-with-testimonial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video Block Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Hero Image",
+      "info": "Size: 437x257"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL",
+      "default": "https://www.youtube.com/watch?v=bvtwWhKdxhM"
+    },
+    {
+      "type": "text",
+      "id": "video_text",
+      "label": "Video Label",
+      "default": "Video text"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Block Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial",
+      "label": "Text",
+      "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Author's image"
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Author",
+      "default": "Author's name"
+    },
+    {
+      "type": "text",
+      "id": "position",
+      "label": "Position",
+      "default": "Position"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_heading",
+      "label": "Bottom Heading",
+      "default": "<p>Add heading here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Url"      
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video with Testimonial",
+      "category": "Text",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

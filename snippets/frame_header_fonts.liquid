@@ -1,0 +1,12 @@
+{% if settings.base_font contains 'Google' %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font | remove: 'Google+' }}:300,300italic,400,500,600,400italic,600italic,700,700italic,800,800italic">
+{% endif %}
+{% if settings.header_font contains 'Google' %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.header_font | remove: 'Google+' }}:300,300italic,400,500,600,400italic,600italic,700,700italic,800,800italic">
+{% endif %}
+{% if settings.sub_header_font contains 'Google' %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.sub_header_font | remove: 'Google+' }}:300,300italic,400,500,600,400italic,600italic,700,700italic,800,800italic">
+{% endif %}
+{% if settings.other_font contains 'Google' %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.other_font | remove: 'Google+' }}:300,300italic,400,500,600,400italic,600italic,700,700italic,800,800italic">
+{% endif %}

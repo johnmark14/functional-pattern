@@ -1,0 +1,32 @@
+{% if section.settings.display_back_in_stock %}
+<div class="grid__item notify-block">
+  {% unless product.available %}
+  <div id="sold-out">
+    {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <p class="accent-text"> {{ section.settings.text }}</p>
+    {% else %}
+    <p><a id="notify-me" href="#"><strong>{{ section.settings.text1 }}</strong></a> {{ section.settings.text2 }} {{ product.title }} {{ section.settings.text3 }}.</p>
+    {% endif %}
+    {% if form.errors %}
+    <div class="error feedback accent-text">
+      <p>{{ section.settings.error }}</p>
+    </div>
+    {% endif %}
+    {% unless form.posted_successfully? %}
+    <div id="notify-me-wrapper" class="clearfix" style="display:none">
+      {% if customer %}
+      <input type="hidden" name="contact[email]" value="{{ customer.email }}" />
+      {% else %}
+      <input required="required" type="email" name="contact[email]" placeholder="your@email.com" class="styled-input{% if form.errors contains 'email' %} error{% endif %}" value="{{ contact.fields.email }}" />
+      {% endif %}
+      <input type="hidden" name="contact[body]" value="Please notify me when {{ product.title | escape }} becomes available." />
+      <input class="btn styled-submit" type="submit" value="Send" />
+    </div>
+    {% endunless %}
+    {% endform %}
+  </div>
+  {% endunless %}
+</div>
+{% endif %}
+

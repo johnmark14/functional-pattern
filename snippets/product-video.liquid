@@ -1,0 +1,13 @@
+{% if section.settings.show_video %}
+{% for block in section.blocks %}  
+{% case block.type %}
+{% when 'video' %}
+{% assign sel_product = block.settings.select_product_name %}
+{% if product.handle == sel_product %}    
+<div class="p-video">
+  <a href="{{block.settings.video_url }}" class="jas-popup-url" data-effect="mfp-move-from-top"><i class="fas fa-video" aria-hidden="true"></i> {{ 'products.product.video' | t }} </a>     
+</div>
+{% endif %}
+{% endcase %}
+{% endfor %}    
+{% endif %}

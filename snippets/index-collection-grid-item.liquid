@@ -1,0 +1,26 @@
+{% if collection.image %}
+  {%- assign collection_image = collection.image -%}
+{% elsif collection.products.first and collection.products.first.images != empty %}
+  {%- assign collection_image = collection.products.first.featured_image -%}
+{% else %}
+  {% assign collection_image = blank %}
+{% endif %}
+
+{% assign collection_item_img_size = 'large' %}
+<div class="grid__item {{collection_item_width}} text-center pickgradient-products">
+  {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+  <div class="collection-image">
+  <a href="{{ collections.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="pickgradient grid-link">
+   <img src="{{ collection_image | img_url: collection_item_img_size }}" />
+  </a>
+  </div>  
+
+  <div class="collection-content">
+    <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="grid-link">
+     <h4 class="grid-link__title">{{ collection.title }}</h4></a>
+    <p class="collection-count">{{ collection.all_products_count }} <span>{{ 'cart.general.items' | t }}</span></p>
+    {% if block.settings.link_text != blank %}
+    <a href="{{ collection.url }}" class="btn">{{ block.settings.link_text }}</a>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,166 @@
+
+<div class="coupon-stamp">
+  <div class="stamp stamp01">
+    {% if section.settings.title1 != blank %}
+    <div class="par">{{section.settings.title1}}</div>
+    {% endif %}
+     {% if section.settings.ctext1 != blank %}
+    <div class="code">
+      {{section.settings.ctext1}}
+    </div>
+    <i></i>
+    {% endif %}
+  </div>
+  <div class="stamp stamp02">
+    {% if section.settings.title2 != blank %}
+    <div class="par">{{section.settings.title2}}</div>
+    {% endif %}
+     {% if section.settings.ctext2 != blank %}
+    <div class="code">
+      {{section.settings.ctext2}}
+    </div>
+    <i></i>
+    {% endif %}
+  </div>
+  <div class="stamp stamp03">
+    {% if section.settings.title3 != blank %}
+    <div class="par">{{section.settings.title3}}</div>
+    {% endif %}
+     {% if section.settings.ctext3 != blank %}
+    <div class="code">
+      {{section.settings.ctext3}}
+    </div>
+    <i></i>
+    {% endif %}
+  </div>
+</div>
+<style type="text/css">
+  /* ----ADDED BY LICHONG---- */
+
+  .coupon-tips.hidden {
+    display: none;
+  }  
+
+  .coupon-stamp .stamp {
+    width: 400px;
+    height: 38px;
+    margin: 5px 5px 5px 0;
+    padding: 0 10px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+  }
+
+  .coupon-stamp .stamp:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    z-index: -1;
+    
+  }
+
+  .coupon-stamp .stamp i {
+    position: absolute;
+    left: 20%;
+    top: 5px;
+    height: 50px;
+    width: 160px;
+    background-color: rgba(255, 255, 255, .15);
+    transform: rotate(-30deg);
+  }
+
+  .coupon-stamp .stamp .par {
+    float: left;
+    padding: 0;
+    width: 180px;
+    line-height: 38px;
+    border-right: 2px dashed rgba(255, 255, 255, .3);
+    font-size: 14px;
+    color: #FFF;
+    text-align: center;
+  }
+
+  .coupon-stamp .stamp .code {
+    display: inline-block;
+    width: 195px;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
+
+  .coupon-stamp .stamp01 {
+    background: #F39B00;
+    background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #F39B00 0px);
+    background-size: 16px 12px;
+    background-position: 8px 1px;
+  }
+  .coupon-stamp .stamp01:before {
+    background-color: #F39B00;
+  }
+  .coupon-stamp .stamp02 {
+    background: #D24161;
+    background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #D24161 0px);
+    background-size: 16px 12px;
+    background-position: 8px 1px;
+  }
+  .coupon-stamp .stamp02:before {
+    background-color: #D24161;
+  }
+  .coupon-stamp .stamp03 {
+    background: #7EAB1E;
+    background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #7EAB1E 0px);
+    background-size: 16px 12px;
+    background-position: 8px 1px;
+  }
+  .coupon-stamp .stamp03:before {
+    background-color: #7EAB1E;
+  }
+
+  @media (max-width: 376px) {
+    .coupon-stamp .stamp:before {
+      z-index:0;    
+    }
+    .coupon-stamp .stamp {
+      width: 100%;
+      padding: 0 5px;
+    }
+
+    .coupon-stamp .stamp .par {
+      width: 150px;
+      line-height: 38px;
+      font-size: 12px;
+      position:relative;
+    }
+
+    .coupon-stamp .stamp .code {
+      width: 170px;
+      height: 38px;
+      line-height: 38px;
+      font-size: 12px;
+      position:relative;
+    }
+
+    .coupon-stamp .stamp01 {
+      background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #F39B00 0px);
+      background-size: 15px 12px;
+      background-position: 8px 1px;
+    }
+    .coupon-stamp .stamp02 {
+      background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #D24161 0px);
+      background-size: 15px 12px;
+      background-position: 8px 1px;
+    }
+    .coupon-stamp .stamp03 {
+      background: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 5px, #7EAB1E 0px);
+      background-size: 15px 12px;
+      background-position: 8px 1px;
+    }
+  }
+  /* ----END---- */
+</style>

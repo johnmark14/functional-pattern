@@ -1,0 +1,131 @@
+{% if section.settings.collections_view_enable or section.settings.limited_view or section.settings.collections_sort_enable %}
+<div class="toolbar">
+  {% if settings.enable_filters %}
+  <div class="sidebar-label">
+    <div class="sidebar-button">        
+      <div class="tags-filter">
+        <button id="showTagsFilter" class="btn tag-fillter">        
+        <svg data-name="Layer 1" id="Layer_1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><title></title><path d="M47,12a2,2,0,0,0-2-2H24a2,2,0,0,0,0,4H45A2,2,0,0,0,47,12Z"></path><path d="M3,14H8.35a6,6,0,1,0,0-4H3a2,2,0,0,0,0,4Zm11-4a2,2,0,1,1-2,2A2,2,0,0,1,14,10Z"></path><path d="M45,22H37.65a6,6,0,1,0,0,4H45a2,2,0,0,0,0-4ZM32,26a2,2,0,1,1,2-2A2,2,0,0,1,32,26Z"></path><path d="M22,22H3a2,2,0,0,0,0,4H22a2,2,0,0,0,0-4Z"></path><path d="M45,34H28a2,2,0,0,0,0,4H45a2,2,0,0,0,0-4Z"></path><path d="M18,30a6,6,0,0,0-5.65,4H3a2,2,0,0,0,0,4h9.35A6,6,0,1,0,18,30Zm0,8a2,2,0,1,1,2-2A2,2,0,0,1,18,38Z"></path></svg>
+           {{ 'collections.toolbar.filter' | t }}
+        </button>
+        <!-- <button id="showTagsFilter2" class="btn tag-fillter"><i class="fa fa-sliders"></i></button> -->
+      </div>
+    </div>
+  </div>
+  {% endif %} 
+
+  {% if section.settings.collections_view_enable %}
+  <div class="view-mode grid__item wide--one-third post-large--four-tenths large--four-tenths">          
+    <div class="filters-toolbar__view-as toolbar-col" data-view-as>
+      <label>
+        {{ 'collections.toolbar.view_as' | t}}:
+      </label>
+
+      <div class="view-mode">
+        <span class="icon-mode icon-mode-list{% if section.settings.collection_grid == '1' %} active{% endif %}" data-col="1"></span>
+        <span class="icon-mode icon-mode-grid grid-2{% if section.settings.collection_grid == '2' %} active{% endif %}" data-col="2"></span>
+        <span class="icon-mode icon-mode-grid grid-3{% if section.settings.collection_grid == '3' %} active{% endif %}" data-col="3"></span>
+        <span class="icon-mode icon-mode-grid grid-4{% if section.settings.collection_grid == '4' %} active{% endif %}" data-col="4"></span>
+        <span class="icon-mode icon-mode-grid grid-5{% if section.settings.collection_grid == '5' %} active{% endif %}" data-col="5"></span>
+      </div> 
+    </div>
+  </div>    
+  {% endif %}
+
+  <div class="grid__item {% if section.settings.collections_view_enable %}wide--five-tenths post-large--six-tenths large--six-tenths{% else %} wide--one-whole{% endif %} right">
+    
+    {% if section.settings.limited_view %}
+    <div class="filters-toolbar__limited-view toolbar-col" data-limited-view>
+      <label>
+        {{ 'collections.toolbar.show' | t}}:
+      </label>
+
+      <div class="limited-view">
+        <div class="label-tab" data-toggle="dropdown" aria-expanded="false">
+          <span name="paginateBy" class="label-text">
+            {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+            {{ cart.attributes.pagination }}
+            {% else %}
+            {{ section.settings.collection_results_per_page }}
+            {% endif %}
+          </span>
+
+          <span class="icon-dropdown">
+            <i class="fa fa-chevron-down"></i>
+          </span>
+        </div>
+
+        <ul class="dropdown-menu">
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '8'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '8' %}class="active"{% endif %}{% endif %}>
+            <span data-value="8"> 
+              8
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '12'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '12' %}class="active"{% endif %}{% endif %}>
+            <span data-value="12"> 
+              12
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '16'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '16' %}class="active"{% endif %}{% endif %}>
+            <span data-value="16">
+              16
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '20'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '20' %}class="active"{% endif %}{% endif %}>
+            <span data-value="20">
+              20
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '24'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '24' %}class="active"{% endif %}{% endif %}>
+            <span data-value="24">
+              24
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '30'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '30' %}class="active"{% endif %}{% endif %}>
+            <span data-value="30">
+              30
+            </span>
+          </li>
+          <li {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '50'%}class="active"{% endif %}{% else %}{% if section.settings.collection_results_per_page == '50' %}class="active"{% endif %}{% endif %}>
+            <span data-value="50">
+              50
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if section.settings.collections_sort_enable %}
+    <div class="filter-sortby toolbar-col">
+      <label for="sort-by">{{ 'collections.sorting.title' | t }}:</label> 
+      <input type="text" id="sort-by">
+      <div class="sorting-section">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">            
+          <span>{{ 'collections.sorting.featured' | t }}</span>
+        </button>
+
+        <ul class="dropdown-menu" role="menu">
+          <li class="active"><a href="manual">{{ 'collections.sorting.featured' | t }}</a></li>
+          <li><a href="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</a></li>
+          <li><a href="price-descending">{{ 'collections.sorting.price_descending' | t }}</a></li>
+          <li><a href="title-ascending">{{ 'collections.sorting.az' | t }}</a></li>
+          <li><a href="title-descending">{{ 'collections.sorting.za' | t }}</a></li>
+          <li><a href="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</a></li>
+          <li><a href="created-descending">{{ 'collections.sorting.date_descending' | t }}</a></li>
+          <li><a href="best-selling">{{ 'collections.sorting.best_selling' | t }}</a></li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% if section.settings.show_collection_image %}
+{% if collection.handle and collection.handle != 'all' and collection.image %}
+<div class="grid__item">
+  <img src="{{ collection.image.src | collection_img_url: '1920x' }}" alt="{{ collection.image.alt }}"  class="collection-featured-image"/>
+</div>
+{% endif %}
+{% endif %}

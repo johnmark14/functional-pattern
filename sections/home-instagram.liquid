@@ -1,0 +1,356 @@
+{% assign full = section.settings.full %}
+<div class="instagram">
+  <div class="{% if section.settings.full %} container-fluid {% else %}container{% endif %}">
+    <div class="dt-sc-hr-invisible-large"></div>
+    {% if section.settings.title != blank or section.settings.text_1 %} 
+    <div class="grid__item ">
+      <div class="border-title text-center">
+        {% if section.settings.text_1 != blank %}
+        <div class="short-desc"> <p style="color:{{ section.settings.text_1_clr }};">{{ section.settings.text_1}}</p></div> 
+        {% endif %} 
+        <h2><span style="color:{{ section.settings.title_1_clr }};">{{ section.settings.title | escape }}</span></h2>          
+        {% if section.settings.link != blank %}
+        <a class="instagram-link" href="{{section.settings.link}}">
+          {{section.settings.link_text}}
+        </a>
+        {% endif %} 
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="grid__item">
+      {% case section.blocks.size %}
+      {% when 0 %}
+      {% when 1 %}
+      {% assign column_width = 'text-center' %}
+      {% when 2 %}
+      {%- assign column_width = 'wide--one-half post-large--one-quarter large--one-quarter medium--one-half small--one-half' -%}            
+      {% when 3 %}
+      {%- assign column_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small--one-half' -%}            
+      {% when 4 %}
+      {%- assign column_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small--one-half' -%}            
+      {% when 5 %}
+      {%- assign column_width = 'wide--one-fifth post-large--one-fifth large--one-fifth medium--one-half small--one-half' -%}   
+      {% when 6 %}
+      {%- assign column_width = 'wide--one-sixth post-large--one-sixth large--one-third medium--one-half small--one-half' -%}   
+
+      {% else %}
+      {%- assign column_width = 'wide--one-fifth post-large--one-fifth large--one-fifth medium--one-half small--one-half' -%}  
+      {% endcase %}
+      <div class="grid-uniform">
+        {% if section.blocks.size > 0 %}
+        {% if section.settings.style == 'slider' %} <div class="customInstaSlider">{% endif %}
+        {% for block in section.blocks %}
+        <div class="item grid__item {% unless section.settings.style == 'slider' %} {{column_width}} {% endunless %}">
+          <div class="instagram-col">
+            {% if block.settings.image != blank %}
+            {% assign img_url = block.settings.image | img_url: 'master' %}
+            {% else %}
+            {% assign img_url = '//via.placeholder.com/500x500' %}
+            {% endif %}
+            <a href="{{ block.settings.gallery_link }}">
+              <img src="{{ img_url }}" />        
+            </a>
+
+            <div class="info text-center">
+              {% if block.settings.title != blank %}
+              <p><a style="color:{{ block.settings.title_clr }}" href="{{ block.settings.gallery_link }}">{{ block.settings.title }}</a></p>
+              {% else %}
+              <i style="color:{{ block.settings.title_clr }}" class="fab fa-instagram"></i>
+              {% endif %}
+            </div>              
+          </div>
+        </div>      
+        {% endfor %}
+        {% if section.settings.style == 'slider' %} </div>{% endif %}
+        {% endif %}
+      </div>  
+    </div>
+  </div>
+</div>
+
+<style>
+
+  {% if section.settings.use_overlay %} .lush-instagram .info, .instagram-col .info { background: {{ section.settings.overlay | color_modify: 'alpha', 0.7 }}; } {% endif %}
+  .lush-instagram .info span { background:{{ section.settings.Button_bg }};color:{{ section.settings.Button_text }}; }
+
+  .instagram .instagram-link { color:{{ section.settings.btn_text_clr }};border-bottom:1px solid {{ section.settings.btn_text_clr }}; }
+  .instagram .instagram-link:hover { color:{{ section.settings.btn_hover_clr }};border-bottom:1px solid {{ section.settings.btn_hover_clr }}; }
+
+</style>
+
+{%- if section.settings.padding != blank or section.settings.margin != blank -%}
+{% assign margin = section.settings.margin | remove: ' ' | split: '-' | join: ' ' %}
+{% assign padding = section.settings.padding | remove: ' ' | split: '-' | join: ' ' %}
+
+<style>
+
+  #shopify-section-{{ section.id }} .item { 
+    {%- if section.settings.margin != blank -%} margin: {{margin}};{%- endif -%}
+    {%- if section.settings.padding != blank -%}padding: {{padding}};{%- endif -%}
+  }
+
+</style>
+
+{%- endif -%}
+
+{% if section.settings.style == 'slider'  %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.customInstaSlider').not('.slick-initialized').slick({
+      infinite: true,
+      speed: 1000,                            
+      {% if section.settings.display_arrow %}
+      nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>',
+      prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
+      {% else %}
+      arrows: false,
+      autoplay: false,
+      {% endif %}
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            {% if section.settings.slide_rows == '2' %}
+            slidesPerRow: 1,   
+            slidesToShow: 4,
+            rows: 2,
+            {% else %}
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            {% endif %}
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            {% if section.settings.slide_rows == '2' %}
+            slidesPerRow: 1,   
+            slidesToShow: 3,
+            rows: 2,
+            {% else %}
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            {% endif %}            
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            {% if section.settings.slide_rows == '2' %}
+            slidesPerRow: 1,   
+            slidesToShow: 2,
+            rows: 2,                                  
+            {% else %}
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            {% endif %}      
+          }
+        }                                          
+      ]
+    });
+  });
+</script>
+{% endif %}
+
+
+{% schema %}
+{
+"name": "Instagram Feed",
+"class": "index-section instagram-block",    
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "select",
+"id": "style",
+"label": "Instagram Style",
+"default": "slider",
+"options": [
+{
+"value": "slider",
+"label": "Slider"
+},
+{
+"value": "grid",
+"label": "Grid"
+}
+]
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Instagram Feed"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading Color",
+"default": "#000"
+},
+{
+"type": "textarea",
+"id": "text_1",
+"label": "Description"
+},
+{
+"type": "color",
+"id": "text_1_clr",
+"label": "Description",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "link_text",
+"label": "Link Text",
+"default": "Follow us on Instagram "
+},
+{
+"type": "color",
+"id": "btn_text_clr",
+"label": "Link Color",
+"default": "#777777"
+},
+{
+"type": "color",
+"id": "btn_hover_clr",
+"label": "Link Hover Color",
+"default": "#231f1e"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Link"
+},
+
+{
+"type": "checkbox",
+"id": "display_arrow",
+"label": "Display Arrow?",
+"default": true,
+"info": "================="
+},
+{
+"type": "header",
+"content": "=== settings Color"
+},
+{
+"type": "checkbox",
+"id": "use_overlay",
+"label": "Image Overlay ?",
+"default": true
+},
+{
+"type": "color",
+"id": "overlay",
+"label": "Image Overlay",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "Button_bg",
+"label": "Button Bg",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "Button_text",
+"label": "Button Text",
+"default": "#000"
+},     
+{
+"type": "header",
+"content": "== Design settings"
+},
+{
+"type": "paragraph",
+"content": "To horizontally center a block element (like <div>), use margin: auto;"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Margins ( top-right-bottom-left )",
+"info": "60px-auto-60px-auto"
+},
+{
+"type": "text",
+"id": "padding",
+"label": "Paddings Integer px ( top-right-bottom-left )",
+"info": "60px-60px-0-60px"
+},
+{
+"type": "select",
+"id": "grid",
+"label": "Products per row (Custom Choice only)",
+"default": "4",
+"options": [
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+},
+{
+"value": "6",
+"label": "6"
+}
+]
+}
+],
+"blocks": [
+{
+"type": "Image",
+"name": "Custom Images",
+"settings": [ 
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "Size: 480x572"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"	
+},
+{
+"type": "color",
+"id": "title_clr",
+"label": "Color",
+"default": "#fff"	
+},
+
+{
+"type": "url",
+"id": "gallery_link",
+"label": "Insta Image Link",
+"info": "input the photo url such as https:\/\/www.instagram.com\/p\/Bn0j_G0D4AF"
+}
+
+]
+}
+],
+"presets": [
+{
+"name": "Instagram Feed",
+"category": "Instagram Feed"     
+}
+]
+}
+{% endschema %}

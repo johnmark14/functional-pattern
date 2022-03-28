@@ -1,0 +1,469 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="icon-block-inner" style="background:{{section.settings.tri_bg_clr}}; float:left;width:100%;">
+  <div class="{% if section.settings.full %}container-bg{% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="grid__item">
+      <div class="triangle-icon-wrapper">   
+        {% if section.settings.title != blank or section.settings.small_title != blank %}
+        <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+          <div class="border-title">
+            {% if section.settings.title != blank %}
+            <h2 class="section-header__title" style="color:{{ section.settings.heading_color }};">    
+              {{ section.settings.title }}
+            </h2>
+            {% endif %}      
+            {% if section.settings.small_title != blank %}
+            <div class="short-desc">  
+              <p style="color:{{ section.settings.small_title_color }};">{{ section.settings.small_title }}</p>
+            </div>{% endif %}   
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="icon-block {{ section.settings.brand_style }}">
+      <div class="grid-uniform">   
+        {% if section.settings.brand_style == 'style1' %}
+        {% if section.settings.image_alignment == 'left' %}
+        <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item wow fadeInUp animated">
+          <div class="block-image">
+            <div id="triangle-{{ section.id }}-slider">
+              {% for block in section.blocks %}
+              <div class="center-block">
+                {% if block.settings.large != blank  %}
+                <img src="{{ block.settings.large | img_url: 'grande' }}" alt="{{ section.settings.heading }}" />
+                {% else %}
+                <img src="//via.placeholder.com/780x900">
+                {% endif %} 
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item wow fadeInUp animated">
+          <div class="block-content">
+            <div class="border-title text-left">          
+              {% if section.settings.image_heading != blank  %}  
+              <h3 class="" style="color:{{ section.settings.heading_clr }}">{{ section.settings.image_heading }}</h3>
+              {% endif %}
+            </div> 
+            <div id="triangle-{{ section.id }}-nav">
+              {% for block in section.blocks %}
+              <div class="grid__item">
+                <div class="icon_wrapper icon-right">
+                  <div class="icon">
+                    {% if block.settings.icon != blank  %} 
+                    <img src="{{ block.settings.icon | img_url: 'grande' }}" alt="" title=""  style=""/> 
+                    {% else %}
+                    <img src="//via.placeholder.com/100x70">
+                    {% endif %}
+                  </div>
+
+                  <div class="icon-content icon-content--{{ block.id }}">
+                    {% if block.settings.title != blank  %}  
+                    <h4>{{ block.settings.title }}</h4>
+                    {% endif %} 
+                    {% if block.settings.text != blank  %}  
+                    <p class="desc" style="">{{ block.settings.text }}</p>
+                    {% endif %}   
+                  </div>              
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>   
+        </div>
+        {% if section.settings.image_alignment == 'right' %}
+        <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item wow fadeInUp animated">
+          <div class="block-image">
+            <div id="triangle-{{ section.id }}-slider">
+              {% for block in section.blocks %}
+              <div class="center-block">
+                {% if block.settings.large != blank  %}
+                <img src="{{ block.settings.large | img_url: 'grande' }}" alt="{{ section.settings.heading }}" />
+                {% else %}
+                <img src="//via.placeholder.com/780x900">
+                {% endif %} 
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if section.settings.brand_style == 'style2' %}
+        <div class="grid__item wide--one-third post-large--one-third large--one-third medium--one-whole small-grid__item wow fadeInUp animated">
+          <div class="block-content">
+            {% for block in section.blocks limit:3 %}
+            <div class="icon_wrapper icon-left">            
+              {% if block.settings.title != blank  %}  
+              <div class="icon-content">                  
+                <div class="icon">
+                  {% if block.settings.icon != blank %}
+                  <img src="{{ block.settings.icon | img_url: 'medium' }}" /> 
+                  {% else %}
+                  <img src="//via.placeholder.com/70x70">
+                  {% endif %}
+                </div>
+
+                {% if block.settings.title != blank  %}  
+                <h4>{{ block.settings.title }}</h4>
+                {% endif %} 
+                {% if block.settings.text != blank  %}  
+                <p class="desc" style="">{{ block.settings.text }}</p>
+                {% endif %}   
+              </div>
+              {% endif %} 
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="grid__item wide--one-third post-large--one-third large--one-third medium--one-whole small-grid__item wow fadeInUp animated">
+          <div class="center-block">
+            {% if section.settings.image != blank  %}
+            <img src="{{ section.settings.image | img_url: 'grande' }}" alt="{{ section.settings.image_heading }}" />
+            {% else %}
+            <img src="//via.placeholder.com/430x600">
+            {% endif %} 
+          </div>
+        </div>
+        <div class="grid__item wide--one-third post-large--one-third large--one-third medium--one-whole small-grid__item wow fadeInUp animated">
+          <div class="block-content">
+            {% for block in section.blocks offset:3  %}
+            <div class="icon_wrapper icon-right">            
+              {% if block.settings.title != blank  %}  
+              <div class="icon-content">
+                {% if block.settings.icon != blank %}
+                <div class="icon">
+                  <img src="{{ block.settings.icon | img_url: 'medium' }}" /> 
+                </div>
+                {% endif %}
+                {% if block.settings.title != blank  %}  
+                <h4>{{ block.settings.title }}</h4>
+                {% endif %} 
+                {% if block.settings.text != blank  %}  
+                <p class="desc" style="">{{ block.settings.text }}</p>
+                {% endif %}   
+              </div>
+              {% endif %} 
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+      </div>   
+    </div>
+  </div>
+</div>  
+
+<style>
+
+  {% for block in section.blocks %}
+  .specification-icon-block .slick-current .icon-content--{{ block.id }} h4 { color:{{ section.settings.active_clr }};}
+  .specification-icon-block .icon-content--{{ block.id }} h4 { color:{{ section.settings.title_clr }};}
+  .specification-icon-block .icon-content--{{ block.id }} p { color:{{ section.settings.desc_clr }};}
+  .specification-icon-block .slick-current .icon-content--{{ block.id }} p { color:{{ section.settings.active_desc }};}
+  {% endfor %}
+
+  {% if section.settings.sliced_border_use %}
+  .specification-icon-block .triangle-icon-wrapper::after {   border-bottom: 645px solid {{ section.settings.sliced_border_clr }};}
+  {% endif %}
+
+  .specification-icon-block .icon i{color:{{section.settings.icon_clr}};}
+
+  @media (min-width: 767px) {
+    #triangle-{{ section.id }}-nav .grid__item { width:100% !important;}
+  }
+
+</style>
+
+{% if section.settings.brand_style == 'style1' %}
+
+<script>  
+  $(document).on('ready', function() {
+    $('#triangle-{{ section.id }}-slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1, 
+      arrows: false,
+      fade: true,
+      asNavFor: '#triangle-{{ section.id }}-nav',
+      autoplay:true,
+      autoplaySpeed:1500,
+      responsive: [
+      {     
+
+      breakpoint: 767,
+      settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: false,
+      arrows: true
+      }
+      }
+      // You can unslick at a given breakpoint now by adding:
+      // settings: "unslick"
+      // instead of a settings object
+      ]  
+      });
+    $('#triangle-{{ section.id }}-nav').slick({
+      slidesToShow: {{section.blocks.size}},
+      slidesToScroll: 1,
+      asNavFor: '#triangle-{{ section.id }}-slider',
+      dots: true,
+
+      focusOnSelect: true,
+      autoplay:true,
+      autoplaySpeed:1500,
+      responsive: [
+      {
+      breakpoint: 1024,
+      settings: {
+      slidesToShow: {{section.blocks.size}},
+      slidesToScroll: 1,
+      infinite: true,
+      dots: false
+      }
+      },
+      {
+      breakpoint: 768,
+      settings: {
+      slidesToShow: {{section.blocks.size}},
+      slidesToScroll: 1
+      }
+      },
+      {
+      breakpoint: 767,
+      settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: true,
+      arrows: false,
+      autoplay:false,
+      centerMode: true,
+      centerPadding: '10px'
+
+      }
+      }
+      // You can unslick at a given breakpoint now by adding:
+      // settings: "unslick"
+      // instead of a settings object
+      ]
+
+      });
+  })
+</script>
+
+{% endif %}
+
+
+
+{% schema %}
+{
+"name": "Specification Block 1",
+"class": "index-section specification-icon-block",  
+"max_blocks": 6,
+"settings": [ 
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Specification block" 
+},	
+{
+"type": "color",
+"id": "heading_color",
+"label": "Heading Color",
+"default": "#000"
+},	
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading",
+"default": "Sub Heading"
+},
+{
+"type": "color",
+"id": "small_title_color",
+"label": "Small Heading Color",
+"default": "#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "brand_style",
+"label": "Style",
+"options": [
+{
+"value": "style1",
+"label": "Style 1"
+},
+{
+"value": "style2",
+"label": "Style 2"
+}      
+],
+"default": "style1"
+},
+{
+"type": "color",
+"id": "tri_bg_clr",
+"label": "Bg Color",
+"default": "#f5f5f5"
+},
+{
+"type": "checkbox",
+"id": "sliced_border_use",
+"label": "Sliced Border ?",
+"default":true
+},
+{
+"type": "color",
+"id": "sliced_border_clr",
+"label": "Sliced Border",
+"default": "#f4f4f4"
+},
+
+{
+"type": "select",
+"id": "image_alignment",
+"label": "Image Alignment",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+}
+],
+"default": "left"
+},
+
+{
+"type": "color",
+"id": "active_clr",
+"label": "Active Heading",
+"default": "#000"   
+},
+{
+"type": "color",
+"id": "desc_clr",
+"label": "Description",
+"default": "#000"   
+},
+{
+"type": "color",
+"id": "active_desc",
+"label": "Active Desc",
+"default": "#000"   
+},
+{
+"type": "header",
+"content": "Middle Block Section"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "image_heading",
+"label": "Image Heading",
+"default": "Image Heading"    
+}
+],
+"blocks": [
+{
+"type": "Image",
+"name":"Icon Block",
+"settings": [
+
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon Img"          
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading" 
+},
+{
+"type": "textarea",
+"id": "text",
+"label": "Description",
+"default": "Description"          
+}, 
+{
+"type": "image_picker",
+"id": "large",
+"label": "Large Image"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Specification Block 1",
+"category": "Text",
+"blocks": [
+{
+"type": "Image"
+},
+{
+"type": "Image"
+},
+{
+"type": "Image"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

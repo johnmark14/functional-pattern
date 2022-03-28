@@ -1,0 +1,202 @@
+.dt-sc-hr-invisible-very-small{
+  display: none;
+}
+#help-hq-manual{
+  .top{    
+    height: 360px;    
+  }
+  .top h1{
+    font-family: BebasKai !important;
+    font-style: normal;
+    font-weight: 400 !important;
+    letter-spacing: 0px;
+
+    @media screen and (min-width: 1200px){      
+      font-size: 76px !important;            
+      line-height: 70px;      
+    }
+    @media screen and (min-width: 568px) and (max-width: 1199px){
+      font-size: 60px !important;            
+      line-height: 55px;
+    }
+    @media screen and (max-width: 567px){
+      font-size: 40px !important;            
+      line-height: 40px;
+    }
+  }
+  .featured-articles{
+    h2{
+      font-family: BebasKai !important;      
+      font-weight: 400 !important;      
+      letter-spacing: 0px;
+      text-align: left;
+    }
+  }  
+  .featured-article{
+    background: #EFEFEF !important;
+    border-radius: 8px !important;
+    
+    i{
+      display: none;
+    }
+    p{
+      text-align: left;
+      font-size: 16px !important;
+      line-height: 24px;
+    }
+  }
+  .top-overlay{
+    height: 100%;
+  }
+  .collection-card i{
+    @media screen and (min-width: 768px){
+      width: 36px;
+    }
+    @media screen and (max-width: 767px){
+      font-size: 28px !important;
+    }
+  }
+  .collection-cards{
+    .text h2{
+      font-family: BebasKai !important;
+      font-style: normal;
+      letter-spacing: 0px;
+      font-weight: 400 !important;            
+      font-size: 30px !important;                
+      line-height: 30px;              
+    }
+    .text p{
+      font-size: 16px !important;
+      line-height: 24px;
+      margin-top: 12px;
+    }
+  }
+  .featured-articles-articles{
+    @media screen and (min-width: 968px){
+      margin-left: -30px;
+      margin-right: -30px;
+      
+      .featured-article{
+        max-width: 50% !important;
+        margin: 0 30px !important;
+      }
+    }
+    @media screen and (min-width: 568px) and (max-width: 967px){
+      margin-left: -10px !important;
+      display: -webkit-box !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      -ms-flex-pack: distribute !important;
+      justify-content: space-around !important;
+      -ms-flex-wrap: wrap !important;
+      flex-wrap: wrap !important;
+      
+      .featured-article{
+        max-width: calc(50% - 20px);
+        margin: 0 0 0 10px !important;
+        padding: 20px 20px;
+      }
+    }
+  }
+  .contact{
+    h2{
+      font-family: BebasKai !important;
+      font-style: normal;
+      letter-spacing: 0px;
+      font-weight: 400 !important;      
+      font-size: 30px !important;                
+      line-height: 30px;
+      margin-bottom: 35px !important;      
+    }
+    .button{
+      padding: 16px 28px !important;
+      font-size: 20px !important;
+      line-height: 23px !important;
+      font-family: 'BebasKai';
+      letter-spacing: 0.2px;
+      font-weight: 400 !important;
+    }
+  }
+  @media screen and (min-width: 968px){
+    .top{      
+      .search{
+        margin-top: 60px;
+      }
+    }    
+    .featured-articles{
+      padding: 100px 0 !important;
+      
+      h2{
+        font-size: 46px !important;
+        line-height: 44px !important;
+      }
+      .featured-article{
+        padding: 40px !important;
+      }
+    }
+    .width{
+      max-width: 1200px !important;
+    }
+    .collection-cards{
+      .collection-cards-cards{
+        margin-left: -30px;
+    	margin-right: -30px;
+      }
+      .collection-card{
+        flex: 1 0 30% !important;
+        max-width: 50% !important;
+        padding: 35px !important;
+        margin: 30px 30px !important;
+        border-radius: 15px !important;
+      }
+      .text{
+        margin: 0 0 0 30px !important;
+      }
+    }
+  }
+  @media screen and (min-width: 568px) and (max-width: 967px){
+    .featured-articles{
+      padding: 80px 0 !important;
+      
+      h2{
+        font-size: 30px !important;
+        line-height: 30px !important;
+      }
+    }
+    .width{
+      max-width: 1200px !important;
+    }
+    .collection-cards{
+      .collection-cards-cards{
+        clear: both;
+    	overflow: hidden;
+        margin-left: -20px;    	
+      }
+      .collection-card{
+        width: calc(50% - 20px);
+        padding: 20px !important;
+        margin: 0 0 20px 20px !important;
+        border-radius: 15px !important;
+        float: left;
+      }
+      .text{
+        margin: 0 0 0 30px !important;
+      }
+    }
+  }
+  @media screen and (max-width: 567px){
+    .featured-article{
+      padding: 35px 25px 32px;
+      max-width: inherit !important;      
+      border: 1px solid rgb(230, 230, 230);
+      
+      h2{
+        font-size: 30px !important;        
+        line-height: 30px !important;
+      }
+    }
+    .contact{
+      padding: 50px 0 !important;
+    }
+  }
+}

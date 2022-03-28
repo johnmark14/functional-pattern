@@ -1,0 +1,415 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="price-table-wrapper" style="float:left; width:100%; {% if section.settings.image_1 != blank %} background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-repeat:no-repeat;background-size:cover; {% else %} background-color:{{ section.settings.bg_color }};{% endif %} margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}"> 
+    <div class="dt-sc-hr-invisible-large"></div>
+    {% if section.settings.title_1 != blank %}
+    <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+    <div class="border-title wow fadeInLeft animated">
+      {% endif %}                               
+      {% if section.settings.title_1 != blank %}<h2 style="color:{{ section.settings.title_1_color }}">{{ section.settings.title_1 }}</h2> {% endif %}     
+      {% if section.settings.description_1 != blank %} <p class="small-title" style="color:{{ section.settings.desc_color }}">{{ section.settings.description_1 }}</p>{% endif %} 
+      {% if section.settings.title_1 != blank %}
+    </div>
+    </div>
+    {% endif %} 
+
+    <div class="grid-uniform">
+      {% for block in section.blocks %} 		
+
+      {% case section.blocks.size %}
+      {% when 1 %}
+      {%- assign block_width = 'one-whole text-center' -%}
+      {% when 2 %}
+      {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+      {% when 3 %}
+      {%- assign block_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+      {% else %}
+      {%- assign block_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+      {% endcase %}
+
+      <div class="grid__item  {{block_width}} wow fadeInUp ">
+        <div class="look-book-wrapper {{section.settings.price_table_style}}">
+          <div class="loop-block">
+            <a class="support_icon" href="{{ block.settings.link }}">   
+              {% if  block.settings.icon_image != blank %}
+              <img src="{{  block.settings.icon_image | img_url: "1920X" }}" alt="{{  block.settings.title }}" />
+              {% else %}
+              <img src="//via.placeholder.com/600x600">
+              {% endif %} 
+            </a>
+
+            <div class="price-header-content">
+              <h4> {{ block.settings.title }} </h4>  
+              <div class="price-header-wrapper">
+              <p style="color:{{ section.settings.duration_txt }};margin-bottom:10px;">{{ block.settings.duration }}</p>
+              <span class="price-header"><i>{{ block.settings.desc_title }}</i></span>
+            </div>
+            </div>            
+            <div class="price-bottom-wrapper">
+              <ul>
+                {% if block.settings.linklist_1 != blank %}  <li>{{ block.settings.linklist_1 }} <span>{{ block.settings.take_time_1 }}</span></li> {% endif %}
+                {% if block.settings.linklist_2 != blank %} <li>{{ block.settings.linklist_2 }} <span>{{ block.settings.take_time_2 }}</span></li>{% endif %}
+                {% if block.settings.linklist_3 != blank %}  <li>{{ block.settings.linklist_3 }} <span>{{ block.settings.take_time_3 }}</span></li>{% endif %}
+                {% if block.settings.linklist_4 != blank %} <li>{{ block.settings.linklist_4 }} <span>{{ block.settings.take_time_4 }}</span></li>{% endif %}
+                {% if block.settings.linklist_5 != blank %} <li>{{ block.settings.linklist_5 }} <span>{{ block.settings.take_time_5 }}</span></li>{% endif %}
+                {% if block.settings.linklist_6 != blank %} <li>{{ block.settings.linklist_6 }} <span>{{ block.settings.take_time_6 }}</span></li>{% endif %}
+                {% if block.settings.linklist_7 != blank %} <li>{{ block.settings.linklist_7 }} <span>{{ block.settings.take_time_7 }}</span></li>{% endif %}
+                {% if block.settings.linklist_8 != blank %} <li>{{ block.settings.linklist_8 }} <span>{{ block.settings.take_time_8 }}</span></li>{% endif %}                    
+              </ul>
+              {% if block.settings.link != blank %} <a href="{{ block.settings.section.settings.link }}" class="{% if section.settings.price_table_style == 'style3' %}link{% else %}btn{% endif %}">{{ block.settings.link_txt }}</a>{% endif %}
+            </div>
+
+          </div>  
+        </div>
+      </div>     
+      {% endfor %}
+    </div>
+  </div>  
+</div>
+
+<style>
+
+  .price-table .loop-block { background:{{ section.settings.tab_bg_color }}; }
+  .price-table .price-table-wrapper ul li span { color:{{ section.settings.duration_txt }}; }
+  .price-table ul li a { border:1px solid {{ section.settings.border_color }};color:{{ section.settings.title_color }}; }      
+  .price-table ul li a.current, .price-table .dt-sc-tabs-vertical-frame li a:hover, .price-table .dt-sc-tabs-vertical-frame li { border:1px solid {{ section.settings.tab_bg_color }}; color: {{ section.settings.tab_text_color }}; }
+  .price-table ul li a.current:before,.price-table ul.dt-sc-tabs-vertical-frame li a:hover:before { border-left-color: {{ section.settings.tab_bg_color }}; }
+  .price-table ul,.price-table ul h4 { color:{{ section.settings.desc_color_1 }}; }
+  .price-table .loop-block .link {color:{{section.settings.btn_txt_color}};}
+  .price-table .loop-block .link:hover{color:{{section.settings.btn_txthover_color}};}
+  .price-table .price-table-wrapper ul li::before{color:{{section.settings.btn_txt_smcolor}};}
+  .price-table .loop-block .price-header i{color:{{section.settings.desc_title_txt}};}
+
+  .price-table .price-header-content{background:{{section.settings.price_header_bg}};}
+  .price-table .price-header-content::before {  border-top: 15px solid {{section.settings.price_header_bg}};}
+  .price-table .loop-block:hover .price-header-content h4{color:{{section.settings.title_hovertext_color}};}
+  .price-table .loop-block .price-header-content h4{color:{{section.settings.title_text_color}};} 
+  
+  .price-table .price-table-wrapper .style2 .loop-block { background:{{section.settings.price_header_bg}}; }
+  .price-table .price-table-wrapper .style2 .loop-block .price-bottom-wrapper { background:{{section.settings.tab_bg_color}}; }
+
+</style>
+
+{% schema %}
+{
+"name": "Price Table",
+"class": "index-section price-table",
+"max_blocks":3,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg Color",
+"default":"#fff"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Bg Image"
+},
+{
+"type": "text",
+"id": "title_1",
+"label": "Title",
+"default": "Pricing Table"
+},
+{
+"type": "color",
+"id": "title_1_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "textarea",
+"id": "description_1",
+"label": "Description",
+"default": "Short Description"
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "select",
+"id": "price_table_style",
+"label": "Style",
+"options": [
+{
+"value": "style1",
+"label": "Style 1"
+},
+{
+"value": "style2",
+"label": "Style 2"
+},
+{
+"value": "style3",
+"label": "Style 3"
+}
+],
+"default": "style1"
+},
+{
+"type": "color",
+"id": "tab_bg_color",
+"label": "Price table Bg Color",
+"default":"#f5f5f5"
+},
+{
+"type": "color",
+"id": "price_header_bg",
+"label": "Price table header Bg",
+"default":"#fff"
+},
+{
+"type": "color",
+"id": "title_text_color",
+"label": "Title Text Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "title_hovertext_color",
+"label": "Title Hover Text Color",
+"default":"#532798"
+},
+{
+"type": "color",
+"id": "duration_txt",
+"label": "Duration Text",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "desc_title_txt",
+"label": "Price Text",
+"default":"#000"
+},
+
+{
+"type": "color",
+"id": "desc_color_1",
+"label": "Content",
+"default":"#000"
+},
+
+{
+"type": "color",
+"id": "btn_txt_color",
+"label": "Btn Color",
+"default":"#fff"
+},
+{
+"type": "color",
+"id": "btn_txthover_color",
+"label": "BtnHover Color",
+"default":"#fff"
+}
+],
+"blocks": [
+{
+"type": "text",
+"name": "List Block",
+"settings": [ 
+{
+"type": "image_picker",
+"id": "icon_image",
+"label": "Icon"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Tab",
+"default": "Caption"
+},
+{
+"type": "text",
+"id": "duration",
+"label": "Duration",
+"default": "00"
+},
+{
+"type": "text",
+"id": "desc_title",
+"label": "Price",
+"default": "$00"
+},
+{
+"type": "text",
+"id": "linklist_1",
+"label": "Text 1",
+"default": "Text 1"
+
+},
+{
+"type": "text",
+"id": "take_time_1",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_2",
+"label": "Text 2",
+"default": "Text 2"
+},
+{
+"type": "text",
+"id": "take_time_2",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_3",
+"label": "Text 3",
+"default": "Text 3"
+},
+{
+"type": "text",
+"id": "take_time_3",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_4",
+"label": "Text 4",
+"default": "Text 4"
+},
+{
+"type": "text",
+"id": "take_time_4",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_5",
+"label": "Text 5",
+"default": "Text 5"
+},
+{
+"type": "text",
+"id": "take_time_5",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_6",
+"label": "Text 6",
+"default": "Text 6"
+},
+{
+"type": "text",
+"id": "take_time_6",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_7",
+"label": "Text 7",
+"default": "Text 7"
+},
+{
+"type": "text",
+"id": "take_time_7",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "linklist_8",
+"label": "Text 8",
+"default": "Text 8"
+},
+{
+"type": "text",
+"id": "take_time_8",
+"label": "Time",
+"default": "$0"
+},
+{
+"type": "text",
+"id": "link_txt",
+"label": "Link text",
+"default": "Link text"        
+},
+{
+"type": "color",
+"id": "link_color",
+"label": "Link text color",
+"default": "#000"
+}, 
+{
+"type": "color",
+"id": "link_hover_color",
+"label": "Hover color",
+"default": "#ccc"
+}, 
+{
+"type": "url",
+"id": "link",
+"label": "Link"        
+}
+]
+}
+],
+"presets": [
+{
+"name": "Price table",
+"category": "Text",
+"blocks": [
+{
+"type": "text"
+},
+{
+"type": "text"
+},
+{
+"type": "text"
+}
+]
+}
+]
+}
+{% endschema %}

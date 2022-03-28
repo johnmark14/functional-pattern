@@ -1,0 +1,192 @@
+{% if section.settings.display_gdpr %}
+<div id="accept-cookies" class="cookieMessage"> 
+  <div class="block-cookies">
+    <div class="des">
+      <p>{{ section.settings.content }}
+
+        
+      </p>  
+    </div>
+
+    
+    <div class="group-action-links"> 
+      {% if section.settings.privacy_policy_text != blank %}
+        <a target="_blank" href="{{ section.settings.privacy_policy_link }}" class="notification-cookies privacy-link btn">
+          {{ section.settings.privacy_policy_text }}
+        </a>
+        {% endif %}
+      {% if section.settings.accept_cookies_text != blank %}
+      <a href="#" class="notification-cookies accept_cookies_link btn" data-accept-cookie>
+        {{ section.settings.accept_cookies_text }}
+        <span class="icon">✔</span>
+      </a>  
+      {% endif %}
+    </div>
+    
+  </div>   
+</div>
+
+<style>
+
+  #accept-cookies .block-cookies {
+    color:{{ section.settings.text_color }};
+  }
+
+  #accept-cookies .privacy-link {
+    color:{{ section.settings.privacy_policy_color }};
+  }
+  #accept-cookies .privacy-link:hover {
+
+    color:{{ section.settings.privacy_policy_hover_color }};
+  }
+
+  #accept-cookies{
+    background: {{section.settings.bg_color }};
+  }
+
+  #accept-cookies .btn { background:{{ section.settings.btn_bg_color }}; color:{{ section.settings.btn_color }}; }
+  #accept-cookies .btn:hover { background:{{ section.settings.btn_hover_bg_color }}; color:{{ section.settings.btn_hover_color }}; }
+
+  @media (min-width: 1200px) {
+    #accept-cookies .block-cookies {
+      {% if section.settings.show_gdp == 'right' %}
+      justify-content:flex-end;
+
+      {% elsif section.settings.show_gdp == 'left'  %}
+      justify-content:flex-start;
+      {% else %}
+
+      justify-content:center;
+      {% endif %}
+    }
+
+    #accept-cookies .group-action-links { {% if section.settings.show_gdp == 'right' %} text-align:right;  {% elsif section.settings.show_gdp == 'left'  %}  text-align:right;  {% else %}  text-align:center;{% endif %} }
+
+  } 
+
+</style>
+
+<script>
+  $(document).ready(function() {
+    var gdprCookie = $('#accept-cookies');
+
+    gdprCookie.show();
+
+    if ($.cookie('cookieMessage') == 'closed') {
+      gdprCookie.remove();
+    }
+
+    gdprCookie.find('[data-accept-cookie]').on('click', function(e) {
+      e.preventDefault();
+      gdprCookie.remove();
+      $.cookie('cookieMessage', 'closed', {expires: 1, path:'/'});
+    });
+  })
+</script>
+{% endif %}
+
+
+{% schema %}
+{
+"name": "GDPR Modal",
+"settings": [
+{
+"type": "checkbox",
+"id": "display_gdpr",
+"label": "Enable",
+"default": true
+},
+{
+"type": "radio",
+"id": "show_gdp",
+"label": "Show GDPR Modal on the:",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+},
+{
+"value": "center",
+"label": "Center"
+}
+
+],
+"default": "left",
+"info": "Only Desktop"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Background Color",
+"default": "#fc846b"
+},
+{
+"type": "color",
+"id": "text_color",
+"label": "Text Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "privacy_policy_color",
+"label": "Link Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "privacy_policy_hover_color",
+"label": "Link Hover Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_color",
+"label": "Button Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "btn_bg_color",
+"label": "Button Bg Color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "btn_hover_color",
+"label": "Button Hover Color",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "btn_hover_bg_color",
+"label": "Button Hover Bg Color",
+"default": "#666"
+},
+{
+"type": "textarea",
+"id": "content",
+"label": "Description text"
+},        
+{
+"type": "text",
+"id": "privacy_policy_text",
+"label": "Privacy Policy Text"
+},
+{
+"type": "text",
+"id": "privacy_policy_link",
+"label": "Privacy Policy Link",
+"info": "https:\/\/policies.google.com"
+},
+{
+"type": "text",
+"id": "accept_cookies_text",
+"label": "Accept Cookies Text"
+}
+]
+}
+{% endschema %}

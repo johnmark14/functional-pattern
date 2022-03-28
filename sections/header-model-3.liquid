@@ -1,0 +1,410 @@
+
+<a href="#" class="icon-nav close-menu-mb" title="Menu Mobile Icon" data-menu-mb-toogle>
+  <span class="icon-line"></span>
+</a>    
+<div class="grid__item menubar_inner header-bottom" data-sticky-mb>
+  <div class="wrapper-header-bt">
+
+    {% include 'header-mobile' %}
+    <div class="header-pc">
+      <ul class="menu-icon">   
+        {% if section.settings.display_wishlist %}
+        <li>
+          <a href="/pages/wishlist" title="{{ 'products.wishlist.wishlist_name' | t }}"> <i class="fas fa-heart" aria-hidden="true"></i></a>
+        </li>
+        {% endif %}
+        {% if section.settings.display_minicart %}
+        <li class="header-bar__module cart header_cart">
+          {% include 'mini-cart' %} 
+        </li> 
+        {% endif %} 
+        {% if shop.customer_accounts_enabled  %}
+        <li class="menu_bar_right">
+
+          <div class="slidedown_section">
+            <a  id="Togglemodal" class="icon-cart-arrow"><i class="fas fa-user" aria-hidden="true"></i></a>
+            <div id="slidedown-modal">
+              <div class="header-panel-top">
+                <div class="customer_account">                          
+                  <ul>
+                    {% if shop.customer_accounts_enabled %}
+                    {% if customer %}
+                    <li>
+                      <a href="/account" title="{{ 'layout.customer.account' | t }}"><i class="fas fa-user" aria-hidden="true"></i> {{ 'layout.customer.account' | t }}</a>
+                    </li>
+                    <li class="logout-link">
+                      <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}" data-value="value 1"><i class="fa fa-sign-out-alt"></i>{{ 'layout.customer.log_out' | t }}</a>
+                    </li>
+                    {% else %}
+                    <li>
+                      <a href="/account/login" title="{{ 'layout.customer.log_in' | t }}"> <i class="fa fa-sign-in-alt icons" aria-hidden="true"></i> {{ 'layout.customer.log_in' | t }}</a>
+                    </li>
+                    <li>
+                      <a href="/account/register" title="{{ 'layout.customer.create_account' | t }}">  <i class="fas fa-user" aria-hidden="true"></i> {{ 'layout.customer.create_account' | t }}</a>
+                    </li>          
+                    {% endif %}  
+                    {% endif %} 
+
+                  </ul>
+                </div>    
+
+              </div>
+            </div>
+          </div>
+
+
+        </li>
+        {% endif %}  
+
+        {% if section.settings.display_search %} 
+        {% if settings.search_model == 'search_type2' %}
+        <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+          <div class="header-search">
+            <a href="#" class="site-header__link site-header__search" id="search_trigger">
+              <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+            </a>
+          </div>
+        </li>
+        {% endif %}
+        {% if settings.search_model == 'search_type3' %}
+        <li class="search-categories-section seeks post-large--hide large--hide medium-down--hide">
+          <div class="header-search">
+            <a href="/search" class="site-header__link site-header__search js-drawer-open-top">
+              <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 64 80" enable-background="new 0 0 64 64" xml:space="preserve"><path d="M57.7,55.6L44.8,40.7c2.9-3.8,4.7-8.6,4.7-13.8c0-12.5-10.2-22.6-22.6-22.6C14.4,4.3,4.2,14.4,4.2,26.9s10.2,22.6,22.6,22.6  c5.5,0,10.5-2,14.5-5.2l12.6,14.6c0.5,0.6,1.2,0.9,1.9,0.9c0.6,0,1.2-0.2,1.6-0.6C58.5,58.2,58.6,56.7,57.7,55.6z M9.2,26.9  c0-9.7,7.9-17.6,17.6-17.6c9.7,0,17.6,7.9,17.6,17.6s-7.9,17.6-17.6,17.6C17.2,44.5,9.2,36.6,9.2,26.9z"/></svg>
+            </a>
+          </div>
+        </li>
+        {% endif %}
+
+        {% if settings.search_model == 'search_type1' %}
+        {% include 'adv-search-model' %}
+        {% endif %}
+
+        {% if settings.search_model == 'search_type1' %}
+        {% unless settings.display_fixtop_menu %}
+        {% include 'mobile-search' %}
+        {% endunless %}
+        {% endif %}
+
+        {% endif %} 
+
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<style> 
+  @media only screen and (min-width:1200px) { 
+    /* Top block */
+    .header-type-3 .top_bar { background: {{ section.settings.top_bar_bg }}; }
+    .header-type-3 .top_bar li { color:{{section.settings.top_bar_text}};}   
+    .header-type-3 .top_bar a { color:{{section.settings.top_bar_links }};}    
+    .header-type-3 .top_bar a:hover, .header-type-3 .top_bar a:hover span { color:{{section.settings.top_bar_link_hover }};}    
+    .header-type-3 .header-bar__module.cart .baskettop a.icon-cart-arrow #cartCount { background: {{ section.settings.minicart_count_bg }};color:{{section.settings.minicart_count }};}
+    .header-type-3 .header-bar__module.cart .baskettop a.icon-cart-arrow:hover #cartCount { background: {{ section.settings.minicart_count_hover_bg }};color:{{section.settings.minicart_count_hover_text }};}
+
+
+    /* Logo block */
+    .header-type-3 .site-header__logo a  { color:{{section.settings.logo_text }};}
+    .header-type-3 .site-header__logo a:hover  { color:{{section.settings.logo_hover_text }};}    
+
+    /* Menu  block */
+    .header-type-3 .site-header,.mobile-nav-section ,.header-type-3 .sticky-animate,.banner-slideshow:before{background: {{ section.settings.menubar_bg }};}
+    .header-type-3 .desktop-megamenu ul> li {color: {{ section.settings.menubar_text }};}
+    .header-type-3 .desktop-megamenu ul> li> a,.mobile-nav-section .mobile-nav-trigger,.header-type-3 .wishlist {color:{{section.settings.menubar_links}};}  
+    .header-type-3 .desktop-megamenu ul> li:hover > a,.header-type-3 .menu-tool .site-nav > li:hover > a.current,.header-type-3 .wishlist:hover {color:{{section.settings.menubar_links_hover}};} 
+    .header-type-3 .desktop-megamenu .site-nav >  li > a.current {color:{{section.settings.menu_active}};}
+    .header-type-3 .site-nav-dropdown,#MobileNav,.mobile-nav__sublist { background: {{ section.settings.menubar_dropdown_bg }};}
+    .header-type-3 .site-nav-dropdown .inner > a,.header-type-3 .site-nav .mega-banner .title,.header-type-3 .site-nav .mega-banner .regular-product {color: {{ section.settings.menubar_dropdown_caption }};}    
+    .header-type-3 .desktop-megamenu .site-nav-dropdown .inner > a:hover,.header-type-3 .site-nav .mega-menu .product-item .product-title:hover {color: {{ section.settings.menubar_dropdown_caption_hover }};}    
+    .header-type-3 .desktop-megamenu .site-nav-dropdown li > a,.header-type-3 .menu-tool .site-nav .site-nav-dropdown li a,.header-type-3 .site-nav .mega-menu .product-item .product-title,.header-type-3 .site-nav .widget-featured-product .widget-title h3,#MobileNav a,.mobile-nav__sublist a,.site-nav .widget-featured-nav .owl-prev a,.site-nav .widget-featured-nav .owl-next a  {color: {{ section.settings.menubar_dropdown_links }};}
+    .header-type-3 .desktop-megamenu .site-nav-dropdown li:hover > a,.header-type-3 .menu-tool .site-nav .site-nav-dropdown li a:hover,.header-type-3 .site-nav-dropdown .inner .dropdown a.current,.header-type-3 .menu-tool .site-nav .site-nav-dropdown li a.current,.header-type-3 .site-nav .mega-menu .product-item .product-title:hover,#MobileNav a.current,.mobile-nav__sublist a.current,.site-nav .widget-featured-nav .owl-prev a:hover,.site-nav .widget-featured-nav .owl-next a:hover {color: {{ section.settings.menubar_dropdown_links_hover }};}    
+   
+   
+    .header-type-3 .header-search svg {fill:{{section.settings.search_icon}};} 
+    .header-type-3 .header-search svg:hover {fill:{{section.settings.search_icon_hover}};} 
+    
+    
+    /* Dropdown block */
+    .header-type-3 #Togglemodal i {color: {{ section.settings.dropdown_icon }};}
+    .header-type-3 #Togglemodal i:hover {color: {{ section.settings.dropdown_icon_hover }};}
+    .header-type-3 #slidedown-modal {background: {{ section.settings.dropdown_bg }};}
+    .header-type-3 #slidedown-modal ul li a {color:{{section.settings.dropdown_link}};} 
+    .header-type-3 #slidedown-modal ul li a:hover {color:{{section.settings.dropdown_hover_link}};} 
+
+
+
+
+    /* Search block */     
+    .header-type-3 .search-bar input[type="search"] {color:{{section.settings.search_text }};} 
+    .header-type-3 .header-search span  {color:{{section.settings.search_icon}};} 
+    .header-type-3 .header-search span:hover {color:{{section.settings.search_icon_hover }};} 
+
+
+
+    .header-type-3 .search-bar__form, .header-type-3 #SearchDrawer,.header-type-3 .search-bar  {  background:{{section.settings.search_bg }};} 
+    
+    .header-type-3 .search-bar input[type="search"]::-webkit-input-placeholder  { /* Chrome/Opera/Safari */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-3 .search-bar input[type="search"]::-moz-placeholder { /* Firefox 19+ */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-3 .search-bar input[type="search"]:-ms-input-placeholder { /* IE 10+ */
+      color:{{section.settings.search_text }};
+    }
+    .header-type-3 .search-bar input[type="search"]:-moz-placeholder { /* Firefox 18- */
+      color:{{section.settings.search_text }};
+    }
+    /* Cart Summary block */
+    .header-type-3 a.icon-cart-arrow i  {color: {{ section.settings.minicart_icon }};}
+    .header-type-3 a.icon-cart-arrow:hover i {color: {{ section.settings.minicart_icon_hover }};}
+    .header-type-3 #slidedown-cart .actions, .header-type-3  #slidedown-cart  {background: {{ section.settings.minicart_bg }};}
+    .header-type-3 .header-bar__module p {color: {{ section.settings.minicart_text }};}
+    .header-type-3 .header-bar__module a {color:{{section.settings.minicart_link }};}  
+    .header-type-3 .header-bar__module a:hover {color:{{section.settings.minicart_link_hover}};} 
+    .header-type-3 .header-bar__module .btn {color:{{section.settings.minicart_btn_text}};background: {{ section.settings.minicart_btn_bg }};} 
+    .header-type-3 .header-bar__module .btn:hover {color:{{section.settings.minicart_btn_hover_text}};background: {{ section.settings.minicart_btn_hover_bg }};} 
+    .header-type-3  #slidedown-cart .total .price, .header-type-3 #minicart_total,.header-type-3 #slidedown-cart ul li .cart-collateral {color:{{section.settings.minicart_total }};} 
+  }
+</style> 
+
+
+
+
+
+{% schema %}
+{
+"name": "Header Model",
+"settings": [
+
+
+{
+"type":"checkbox",
+"id": "display_search",
+"label": "Display search"	
+},
+
+{
+"type": "checkbox",
+"id": "display_minicart",
+"label": "Display minicart"
+},
+{
+"type": "checkbox",
+"id": "display_wishlist",
+"label": "Display wishlist"
+},
+{
+"type": "header",
+"content": "Logo Block"
+},
+
+{
+"type": "color",
+"id": "logo_text",
+"label": "Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "logo_hover_text",
+"label": "Hover text",
+"default": "#000"
+},
+
+{
+"type": "header",
+"content": "Search"
+},
+{
+"type": "color",
+"id": "search_bg",
+"label": "Background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "search_icon",
+"label": "Icon",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "search_icon_hover",
+"label": "Icon hover",
+"default": "#35b8f4"
+},
+
+{
+"type": "color",
+"id": "search_text",
+"label": "Text",
+"default": "#000"
+},
+
+
+{
+"type": "header",
+"content": "Dropdown Block"
+},
+{
+"type": "color",
+"id": "dropdown_icon",
+"label": "Icon",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "dropdown_icon_hover",
+"label": "Icon hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "dropdown_border",
+"label": "Border",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "dropdown_bg",
+"label": "Background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "dropdown_link",
+"label": "Links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "dropdown_hover_link",
+"label": "Link hover",
+"default": "#35b8f4"
+},
+{
+"type": "header",
+"content": "Cart Block"
+},
+{
+"type": "color",
+"id": "minicart_icon",
+"label": "Icon",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_icon_hover",
+"label": "Icon hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "minicart_count",
+"label": "Count Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_bg",
+"label": "Count Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_hover_bg",
+"label": "Count Hover Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_count_hover_text",
+"label": "Count Hover Text",
+"default": "#000"
+},
+
+{
+"type": "color",
+"id": "minicart_link",
+"label": "Link",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "minicart_link_hover",
+"label": "Link hover",
+"default": "#35b8f4"
+},
+ 
+{
+"type": "header",
+"content": "Menu Block"
+},
+{
+"type": "color",
+"id": "menubar_bg",
+"label": "Background",
+"default": "#fff"
+},  
+{
+"type": "color",
+"id": "menubar_links",
+"label": "Links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_links_hover",
+"label": "Hover links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menu_active",
+"label": "Active menu",
+"default": "#35b8f4"
+},
+
+{
+"type": "color",
+"id": "menubar_dropdown_bg",
+"label": "Dropdown menu background",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_caption",
+"label": "Dropdown menu title",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_caption_hover",
+"label": "Dropdown menu title hover",
+"default": "#35b8f4"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_links",
+"label": "Dropdown menu links",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "menubar_dropdown_links_hover",
+"label": "Dropdown menu links hover",
+"default": "#35b8f4"
+}
+
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

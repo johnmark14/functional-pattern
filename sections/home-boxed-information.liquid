@@ -1,0 +1,255 @@
+{% if section.blocks.size > 0 %}
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}    
+
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="boxed-block-inner" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">  
+  <div class="grid-uniform">
+    <div class="{% if section.settings.full %}container-bg{% else %}container{% endif %}">  
+      <div class="grid__item">
+        {% if section.settings.heading != blank  %}
+        <div class="section-header section-header--small full-position-{{section.settings.content_position}}">
+          <div class="border-title wow fadeInDown animated">
+            {% if section.settings.heading != blank %}
+            <h2 style="color:{{section.settings.heading_color }}">{{ section.settings.heading }}</h2>  
+            {% endif %}             
+            {% if section.settings.title_img != blank %}
+            <div class="tilte_img">
+              <img src="{{ section.settings.title_img | img_url: '177x37' }}" alt="" title=""  />
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="boxed-blk-section {{ section.settings.block_style }} align-center">
+        {% if section.settings.sub_heading != blank %}
+        <h4 style="background:{{section.settings.sub_heading_bg }};color:{{section.settings.sub_heading_color }}">{{ section.settings.sub_heading }}</h4>  
+        {% endif %}
+        <div class="boxed_items" style="background: {{ section.settings.sectionbg_color }};">
+          <ul class="boxed_list">         
+            {% if section.blocks.size > 0 %}      
+            {% for block in section.blocks %}
+            {% case section.blocks.size %}
+            {% when 1 %}
+            {%- assign block_width = 'one-whole text-center' -%}
+            {% when 2 %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--one-whole small-grid__item' -%}
+            {% else %}
+            {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--one-whole small-grid__item' -%}
+            {% endcase %}
+
+            <li class="grid__item {{ block_width }} wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load }}ms">
+              <div class="boxed_section align-center">                 
+                <div class="boxed-wrapper">   
+                  <div class="icon-img"> 
+                    {% if block.settings.icon != blank %}
+                    <img src="{{ block.settings.icon | img_url: 'medium' }}" alt="{{ block.settings.title }}" />
+                    {% else %}
+                    <img src="//via.placeholder.com/60x50">
+                    {% endif%}
+
+                    {% if block.settings.title != blank  %}  
+                    <h6 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h6>
+                    {% endif %}                  
+                  </div>
+
+                  <div class="boxed_text"> 
+                    {% if block.settings.sub_heading != blank  %}  
+                    <h3 class="gradient_text">{{ block.settings.sub_heading }}</h3>
+                    {% endif %} 
+
+                    {% if block.settings.desc != blank  %}  
+                    <p style="color:{{ section.settings.desc_color }};" class="desc">{{ block.settings.desc }}</p>
+                    {% endif %}                     
+                  </div>                      
+                </div>
+              </div>    
+            </li>  
+
+            {% endfor %}
+            {% endif %}
+          </ul>  
+        </div>
+        {% if section.settings.addtional_text != blank  %}  
+        <p style="color:{{ section.settings.desc_color }};" class="additional-text">{{ section.settings.addtional_text }}</p>
+        {% endif %}  
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<style>
+
+  .support-block-type .support_section .support-wrapper:hover .support_text h4::after { background:{{section.settings.iconhovertext_color}}!important;} 
+  .support-block-type .support_section .support-wrapper .support_text h4::after { background: {{section.settings.border_color}}!important;}
+  .support-block-type .support-wrapper:hover .support_icon a::before {background:{{section.settings.iconhoverbg_color}};}
+  .support-block-type .support-wrapper:hover .support_icon a {color:{{section.settings.iconhovertext_color}} !important;}
+
+</style>
+
+{% endif %}
+
+{% schema %}
+{
+"name": "Home boxed info",
+"class": "index-section home-boxed-information",
+"max_blocks":2,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading"
+},
+{
+"type": "color",
+"id": "heading_color",
+"label": "Heading Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "sub_heading",
+"label": "Sub Heading",
+"default": "Lorem ipsum dolor sit"
+},
+{
+"type": "color",
+"id": "sub_heading_color",
+"label": "Sub Heading Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "sub_heading_bg",
+"label": "Sub Heading Bg",
+"default":"#f5f5f5"
+},
+{
+"type": "image_picker",
+"id": "title_img",
+"label": "Title Image",
+"info": "Size: 60x50"
+},
+{
+"type": "select",
+"id": "content_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "header",
+"content": "General Color"
+},
+{
+"type": "color",
+"id": "sectionbg_color",
+"label": "Section Bg Color",
+"default":"#fff"
+},
+{
+"type": "color",
+"id": "class_color",
+"label": "Icon color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "iconhovertext_color",
+"label": "Icon Hover Text Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Title Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "desc_color",
+"label": "Description Color",
+"default":"#000"
+},
+{
+"type": "text",
+"id": "addtional_text",
+"label": "Additional Text"          
+} 
+],
+"blocks": [
+{
+"type": "icon",
+"name": "Icon",        
+"settings": [
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon"        
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "text",
+"id": "sub_heading",
+"label": "Sub Heading",
+"default": "Sub heading"
+},
+{
+"type": "text",
+"id": "desc",
+"label": "Description",  
+"default": "Lorem ipsum dolor sit amet"
+}     
+]
+}
+],
+"presets": [
+{
+"name": "Home boxed info",
+"category": "Text",
+"blocks": [
+{
+"type": "icon"
+},
+{
+"type": "icon"
+}
+]
+}
+]
+}
+{% endschema %}

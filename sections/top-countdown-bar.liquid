@@ -1,0 +1,119 @@
+<div data-section-id="{{ section.id }}" data-section-type="top-countdown-bar" class="top-countdown-bar"> 
+  {% if section.settings.show_image_1 %}
+  <div class="grid-uniform CollectionItems header-top">    
+    <div class="top-countdown-bar-block"  style=" {% if section.settings.image_1 != blank %}background-image:url('{{ section.settings.image_1 | img_url: '1920X' }}');background-attachment:fixed;background-repeat:no-repeat;background-position:center center; {% else %}background-color:{{section.settings.background_color}};{% endif %}">
+     <div class="container">
+      <div class="top-countdown-bar-content">  
+        {% if section.settings.text != blank %}
+          <p  style="color:{{ section.settings.text_color }};">{{ section.settings.text }}</p>    
+          {% endif %} 
+        
+        <div class="deal-clock lof-clock-timer-detail"></div>
+        {% assign dealTime = section.settings.deal_end_date | replace: '_',' ' %}  
+        <div class="deal-content">
+           
+         
+          <script>
+            //<![CDATA[
+            jQuery(document).ready(function($){
+              $(".lof-clock-timer-detail").lofCountDown({      
+                TargetDate:"{{ dealTime }}",
+                DisplayFormat:"<ul class='list-inline'><li class='day'>%%D%%<span>Days</span></li><li class='hours'>%%H%%<span>Hours</span></li><li class='mins'>%%M%%<span>Mins</span></li><li class='seconds'>%%S%%<span>Secs</span></li></ul>",
+                FinishMessage: "Expired"
+              });
+            });
+            //]]>
+          </script>
+          
+          {% if section.settings.button_1 != blank %}
+          <div class="deal-btn"> <a class="btn" href="{{ section.settings.link_1 }}" style="border:none;color:{{ section.settings.button_txt_color }};background-color:{{ section.settings.button_bg_color }};">{{ section.settings.button_1 }}</a> </div>   
+          {% endif %}         
+        </div>  
+      </div>
+    </div>   
+    </div>
+  </div>
+  <a href="#" title="close" class="close" data-close-header-top>
+    {% include 'icon-close' %}
+  </a>
+  <style>
+    
+    .lof-clock-timer-detail ul li,.lof-clock-timer-detail ul li span { color:{{ section.settings.time_color }}; }
+    .top-countdown-bar-content .lof-clock-timer-detail li { border-color:{{ section.settings.time_color }}; }
+    .top-countdown-bar-content .deal-btn .btn:hover { background:{{ section.settings.button_bghover_color }}!important; color:{{ section.settings.button_txthover_color }}!important; }
+    
+  </style>
+  {% endif%}
+</div>
+
+{% schema %}
+{
+"name": "Top countdown section",
+"class": "index-section",
+"settings": [
+{
+"type": "checkbox",
+"id": "show_image_1",
+"label": "Show?",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image",
+"info": "Size: 1920x1280"
+},
+{
+"type": "color",
+"id": "background_color",
+"label":"Bckground color",
+"default": "#fff"
+},
+{
+"type": "textarea",
+"id": "text",
+"label": "Text",
+"default": "Mid-Season Sale up to 70% Off. End Ins:"
+},
+{
+"type": "color",
+"id": "text_color",
+"label":"Text color",
+"default": "#000"
+},
+
+{
+"type": "color",
+"id": "time_color",
+"label":"Deal time color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "button_1",
+"label": "Link Text",
+"default": "Shop Now"
+},
+{
+"type": "url",
+"id": "link_1",
+"label": "Link URL"
+},
+{
+"type": "text",
+"id": "deal_end_date",
+"label": "Deal end date",
+"info": "format should be MM/DD/YYYY_HH:MM:SS "
+}
+
+
+],
+"presets": [
+{
+"name": "Top countdown section",
+"category": "Image",
+"blocks": []
+}
+]
+}
+{% endschema %}

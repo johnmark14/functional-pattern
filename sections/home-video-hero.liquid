@@ -1,0 +1,138 @@
+<!-- <!-- <div class="grid-uniform" {% if section.settings.video_style == 'style2' %} style="{% if section.settings.promo_images_1 %}background-image:url({{ section.settings.promo_images_1 | img_url: "2000x"}});background-repeat:no-repeat;data-background=({{ section.settings.promo_images_1 | img_url: "2000x"}});{% else %}background:{{section.settings.background_color}};{% endif %}"{% endif %}>     -->
+<div class="grid-uniform">    
+  <div class="video-banner with-popup" >
+    <div class="container-bg">          
+
+      <div class="overlay"></div>     
+
+      <div class="grid-uniform video-banner-block">   
+        
+
+        <div class="video-content grid__item two-fifths post-large--one-third large--grid__item medium--grid__item text-left"> 
+          <div class="content-inner">                  
+            {% if section.settings.title_1 != blank %}
+            <h1 class="custom-h1" style="color:#000">{{ section.settings.title_1 }}</h1>
+            {% endif %}
+            {% if section.settings.subtitle != blank %}
+            <h2 class="custom-h2" style="color:#000">{{ section.settings.subtitle }}</h2>
+            {% endif %}
+            {% if section.settings.desc_text != blank %}
+            <div class="desc-text" style="color: #000">{{ section.settings.desc_text }}</div>
+            {% endif %}            
+            {% if section.settings.button_1 != blank and section.settings.video_url != blank %}
+            <a class="btn btn-primary jas-popup-url" href="{{ section.settings.video_url }}"><i class="fas fa-play icons" aria-hidden="true"></i>{{ section.settings.button_1 }}</a>             
+            {% endif %}
+            {% if section.settings.button_2 != blank and section.settings.button_2_url != blank %}
+              <a class="btn btn-secondary" href="{{ section.settings.button_2_url }}">{{ section.settings.button_2 }}</a>             
+            {% endif %}
+          </div>
+        </div>    
+
+        
+        {% if section.settings.video_url != blank %}
+        <div class="video-image video-image-{{ section.id }} grid__item three-fifths post-large--two-thirds large--grid__item medium--grid__item wow fadeIn">            
+          <div class="video-text p-video"> 
+     		<iframe class="video-hero-obj" src="{{ section.settings.promo_video_code }}" frameborder=“0”   allow=autoplay ></iframe>
+            <a href="{{ section.settings.video_url }}" class="jas-popup-url">
+              <i class="fas fa-play icons" aria-hidden="true"></i>
+            </a>     
+          </div>
+        </div>        
+        {% endif%}
+
+      </div>  
+
+    </div> 
+  </div>
+</div>
+
+<div class="bottom-area">
+<h4><a href="{{section.settings.cta_url}}">{{section.settings.cta_title}}<br><span style="color: {{ settings.color_primary }}
+;">{{section.settings.cta_subtitle}}</span><i class="fas fa-angle-right"></i></a></h4>
+</div>
+
+
+
+{% schema %}
+{
+"name": "Video Hero",
+"class": "index-section video-addbox home-video-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "promo_video_code",
+      "label": "Hero Video URL"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Popup Video url",
+      "default": "https://www.youtube.com/watch?v=bvtwWhKdxhM"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Offer",
+      "default": "Offer Text"
+    },
+    {
+      "type": "richtext",
+      "id": "desc_text",
+      "label": "Description Text",
+	  "default": "<p>Add text here</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_2",
+      "label": "Second Button text",
+      "default": "Our Results"
+    },
+    {
+      "type": "url",
+      "id": "button_2_url",
+      "label": "Second Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_1",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA Heading",
+      "default": "CTA Heading"
+    },
+    {
+      "type": "text",
+      "id": "cta_subtitle",
+      "label": "CTA Subtitle",
+      "default": "CTA Subtitle"
+    },
+    {
+	  "type": "url",      
+	  "id": "cta_url",
+      "label": "CTA URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Hero",
+      "category": "Video",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

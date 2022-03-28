@@ -1,0 +1,260 @@
+{% if settings.preloader_enable %}<div class="se-pre-con"></div> {% endif %}
+
+{% if settings.search_model == 'search_type2' %}
+<div id="PageContainer"></div>  
+{% endif %}
+
+<div class="quick-view"></div>   
+
+{% case settings.header_style_1 %}
+{% when 'style_1' %}  
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-1">  
+    {% section 'top-bar-type-1' %}  
+    <header class="site-header header-default"> 
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          <div class="wrapper">
+            <div class="grid--full site-header__menubar"> 
+
+              {% include 'logo' %} 
+              <div class="grid__item menubar-section">
+                <div class="desktop-megamenu grid__item wide--four-sixths post-large--four-sixths large--four-sixths medium--one-half small-grid__item" >     
+                  {% section 'adv-navigation' %}        
+                </div>
+                {% section 'header-model-1' %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+{% when 'style_2' %}
+<div class="wrapper-header wrapper_header_default">
+  <div class="wrapper-container">	
+    <div class="header-type-2">   
+      <header class="site-header header-default">
+        <div class="header-sticky">
+          <div id="header-landing" class="sticky-animate">
+            {% section 'header-model-2' %}
+            <div class="desktop-megamenu">  
+              <div class="container">
+                {% section 'adv-navigation' %}  
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        {% if settings.search_model == 'search_type2' %}
+        {% include 'adv-search-model' %}
+        {% endif %}
+      </header> 
+    </div>
+  </div>
+</div>
+
+
+{% when 'style_3' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-3">  
+    {% section 'top-bar-type-3' %}   
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          <div class="container-bg">
+            <div class="grid--full site-header__menubar"> 
+           
+              <div class="menubar-section order-header">
+                <div class="desktop-megamenu">     
+                  {% section 'adv-navigation-logo-center' %}       
+                </div> 
+              </div>
+              {% section 'header-model-3' %}
+              <div class="logo-sec">
+
+                {% include 'logo' %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+
+{% when 'style_4' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-4">  
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          {% section 'header-model-4' %}
+          <div class="desktop-megamenu">    
+            <div class="container">
+              {% section 'adv-navigation' %}         
+            </div>  
+          </div>
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+
+{% when 'style_5' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-5">      
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          {% section 'header-model-5' %}
+          <div class="desktop-megamenu">     
+            <div class="container">
+              {% section 'adv-navigation' %} 
+            </div>
+          </div>     
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+
+
+
+{% when 'style_6' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-6">
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          {% section 'header-model-6' %}
+          <div class="desktop-megamenu"> 
+            <div class="container">
+              {% section 'adv-navigation' %}   
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+
+{% when 'style_7' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-7">     
+    <header class="site-header header-default">
+
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          {% section 'header-model-7' %}
+          <div class="desktop-megamenu">   
+            <div class="container">
+              {% section 'adv-navigation' %}   
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>      
+  </div>
+</div>
+
+{% when 'style_8' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-8">  
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          <div class="container-bg">
+            <div class="grid--full site-header__menubar"> 
+              {% include 'logo' %}
+              {% section 'header-model-8' %}
+              <div class="menubar-section order-header">
+                <div class="desktop-megamenu">     
+                  {% section 'adv-navigation' %}      
+                </div>  
+              </div> 
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    {% if settings.search_model == 'search_type2' %}
+    {% include 'adv-search-model' %}
+    {% endif %}
+  </div>
+</div>
+
+{% when 'style_9' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-9"> 
+    <header class="site-header header-default">
+
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          {% section 'header-model-9' %}
+          <div class="desktop-megamenu">     
+            {% section 'navigation-etc' %}         
+          </div>     
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>
+
+{% when 'style_10' %}
+<div class="wrapper-header wrapper-container">	
+  <div class="header-type-10"> 
+    <header class="site-header header-default">
+      <div class="header-sticky">
+        <div id="header-landing" class="sticky-animate">
+          <div class="grid--full site-header__menubar"> 
+            {% section 'header-model-10' %}
+          </div>
+          <div class="grid__item desktop-megamenu menubar-section">     
+            <div class="container">
+              <div class="grid__item wide--three-quarters post-large--three-quarters large--three-quarters medium--one-half small-grid__item">
+                {% section 'adv-navigation' %}   
+
+              </div>                
+              <div class="grid__item wide--one-quarter post-large--hide large--hide medium-down--hide">
+                <div class="header_icon">
+                  {% section 'social-links-menu' %}   
+                </div>
+              </div>                   
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% if settings.search_model == 'search_type2' %}
+      {% include 'adv-search-model' %}
+      {% endif %}
+    </header>
+  </div>
+</div>  
+{% endcase %}

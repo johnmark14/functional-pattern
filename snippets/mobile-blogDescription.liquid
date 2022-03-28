@@ -1,0 +1,50 @@
+<div class="article-description flexible {% if section.settings.blog_style == 'style1' %}grid__item wide--one-half{% endif %}">
+  {% if article.tags.size > 0 and section.settings.show_blog_tag %}
+  <div class="blog-tag">
+    <i class="fas fa-tag"></i>
+    {% for tag in article.tags %}
+    <a class="blog-tags" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %} <span class="meta-sep">&#44;</span> {% endunless %}
+    {% endfor %}
+  </div>
+  {% endif %}    
+
+  <div class="article-content">
+    {% if section.settings.show_featured_date %}   
+    <p class="blog-date">
+      <span data-datetime="{{ article.published_at | date: '%Y-%m' }}"><span class="date">{{ article.published_at | date: '%b' }} {{ article.published_at | date: '%Y' }}</span></span>             
+    </p>      
+    {% endif %}  
+    <h4><a href="{{ article.url }}">{{ article.title | strip_html | truncate:32 }}</a></h4>     
+    <div class="article-header">      
+      {% if section.settings.blog_author_enable %}
+      <p class="author">
+        <i class="far fa-user"></i>
+        <span> {{ article.author }}</span>
+      </p> 
+      {% endif %}  
+
+      {% if article.comments_enabled? %}
+      {% assign number_of_comments = article.comments_count %}
+      {% if section.settings.blog_comment %}
+      <p class="comments">{{  number_of_comments }} {{ 'blogs.comments.comments' | t }}</p>
+      {% endif %}
+      {% endif %}                    
+    </div>
+    {% if section.settings.blog_description %}
+    <p>{{ article.content | strip_html | truncate:80 }}</p>
+    {% endif %}
+  </div>
+  
+  {% if section.settings.show_blog_btn %}
+  <div class="article-btn">
+    <a class="read-more" href="{{ article.url }}">{{ section.settings.btn }}</a>
+  </div>
+  {% endif %}
+  
+  {% if article.comments_enabled? %}
+  {% assign number_of_comments = article.comments_count %}
+  {% if section.settings.blog_comment %}
+  <p class="comments-count"><i class="fa fa-eye"></i>{{ number_of_comments }}</p>
+  {% endif %}
+  {% endif %}
+</div>

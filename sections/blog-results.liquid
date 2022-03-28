@@ -1,0 +1,227 @@
+{% if section.settings.blog_results_per_page != blank %}
+{% assign blog_per_page = section.settings.blog_results_per_page %}
+{% else %}
+{% assign blog_per_page = 12 %}
+{% endif %}
+
+{% case section.settings.blog_grid %}
+{% when '1' %}
+{%- assign blog_item_width = 'wide--grid__item post-large--grid__item large--grid__item medium--grid__item small-grid__item' -%}
+{% when '2' %}
+{%- assign blog_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}            
+{% when '3' %}
+{%- assign blog_item_width = 'wide--one-third post-large--one-third large--one-half medium--one-half small-grid__item' -%}            
+{% when '4' %}
+{%- assign blog_item_width = 'wide--one-quarter post-large--one-third large--one-half medium--one-half small-grid__item' -%}            
+{% when '5' %}
+{%- assign blog_item_width = 'wide--one-fifth post-large--one-quarter large--one-half medium--one-half small-grid__item' -%}            
+{% endcase %}
+{% paginate blog.articles by blog_per_page %}
+{%include 'results-ajax-filter' %}
+<div class="container mt-40">
+  <div class="grid-uniform"> 
+    <div class="results-shown-number text-center mt-40"><h4 style="color: #BDBDBD;">Showing <span data-article-count>{{ blog.articles.size }}</span> (of {{ blog.articles_count }})</h4></div>
+    <div class="blog_grid_section mt-40">              
+
+      {% for article in blog.articles %}
+      <div class="article-item grid__item {{ blog_item_width  }} " >
+        <div class="article">
+
+
+          {% assign image_alt = article.title | escape %}
+          <div class="article-image p-relative">
+            {{ article | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+            <button class="results_modal_btn" type="button" data-toggle="modal" data-target="#results_modal-{{ article.id }}"></button>
+          </div>
+
+          <div class="article-description flexible">   
+            <div class="article-content">				                
+              <a class="h4 article-title" href="#" data-toggle="modal" data-target="#results_modal-{{ article.id }}">
+                {{ article.title }}
+              </a>  
+
+              {% if article.excerpt != blank %}
+              <p class="f-bk"> {{ article.excerpt | strip_html | truncate: 150 }}</p>
+              {% endif %}
+
+            </div>
+
+            {% if article.tags.size > 0 %}
+            {% assign tag_size = article.tags.size %}
+            <div class="blog-tag-wrapper">                
+              {% for tag in article.tags %}
+              <a class="blog-tags tag-grey">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+              {% endfor %}
+            </div>
+            {% endif %}                                                       
+          </div>
+
+          <div id="results_modal-{{ article.id }}" class="results_modal modal modal-grid fade" role="dialog" style="display: block;">     
+            <div class="modal-close p-absolute">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>                    
+            </div>            
+            <div class="modal-content">
+              
+              <div class="modal-body">
+                
+                <div class="d-flex modal-content-inner">
+                  <div class="modal-avater grid__item one-half">   
+
+
+                    {% if article.metafields.results_media.results_media != blank or article.metafields.accentuate.vimeo_videos != blank  %}					
+                      <div class="variable-width slideshow" data-init-slideshow data-dots="true" data-autoplay="false" data-autoplay-speed="2500" data-fade="false" role="toolbar">  
+                        {% assign i = 0 %}
+                        
+                        {% for video_image in article.metafields.accentuate.video_image %} 
+                        	{% assign i = i | plus: 1 %}
+                            <div class="slick-list slider_style_1 slider-{{ i }}-list">  
+                              <div class="video-mp4 p-video p-relative">
+                                <img src="{{ video_image[0].src }}" alt="{{ video_image[0].alt }}"/>
+                                <a href="{{ article.metafields.accentuate.vimeo_videos[forloop.index0] }}" class="jas-popup-url v-play-icon"><i class="fas fa-play icons" aria-hidden="true"></i></a>   
+                              </div>
+                            </div>							
+                       	{% endfor %}
+                        
+                        {% for media_data in article.metafields.results_media.results_media  %} 
+
+	                        {% assign i = i | plus: 1 %}
+                        
+                            <div class="slick-list slider_style_1 slider-{{ i }}-list">  
+                              {% if media_data['media_type'] == 'image' %}
+                                <img src="{{ media_data['src']}}" alt="{{ media_data['alt'] }}"/>
+                              {% else media_data['media_type'] == 'video' %}
+                                <div class="video-mp4 p-video p-relative">
+                                  <video id="results-popup-video" preload="metadata" controls  src="{{ media_data['src'] }}">
+                                      Your browser does not support the video tag.
+                                  </video>  
+                                </div>
+                              {% endif %}
+                            </div>                        
+                                                
+
+                        {% endfor %}  
+                      </div>
+
+                    {% else %}
+
+                      {% if article.image %}
+                      {% assign image_alt = article.title | escape %}
+                      {{ article | img_url: 'master' | img_tag: image_alt, 'article__image' }}
+                      {% endif %}  
+
+                    {% endif %}
+
+
+                  </div>
+                  <div class="modal-practitioners-inner grid__item one-half">
+                    <div class="article-content-inner">
+                      <h4>{{ article.title }}</h4>
+                      {% if article.excerpt != blank %}
+                      <p class="mt-10 f-bk"> {{ article.excerpt | strip_html | truncate: 150 }}</p>
+                      {% endif %}                        
+
+                      {% if article.tags.size > 0 %}
+                      <div class="blog-tag-wrapper">                
+                        {% for tag in article.tags %}
+                        <a class="blog-tags tag-grey">{{ tag }}</a>{% unless forloop.last %}{% endunless %}
+                        {% endfor %}
+                      </div>
+                      {% endif %}  
+                      <div class="article-desc mt-40">
+                        <p> {{ article.content }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>                    
+
+              </div>  
+            </div>
+          </div>             
+
+        </div>
+      </div>
+      {% endfor %} 
+    </div>
+    {% if paginate.pages > 1 %}
+    <div class="text-center mt-40"><a class="js-road-more btn btn-primary" href="{{ paginate.next.url }}" title="{{ paginate.next.title }}">+ load more</a></div>
+    {% endif %}
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+{% endpaginate %}
+
+
+
+{% schema %}
+{
+"name": "Blog Page",
+"class": "results-section",
+"settings": [
+{
+"type": "select",
+"id": "blog_results_per_page",
+"label": "Blogs per page",
+"default": "12",
+"options": [
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "8",
+"label": "8"
+},
+{
+"value": "9",
+"label": "9"
+},
+{
+"value": "12",
+"label": "12"
+},
+{
+"value": "24",
+"label": "24"
+},
+{
+"value": "36",
+"label": "36"
+},
+{
+"value": "100",
+"label": "100"
+}
+]
+},
+{
+"type": "select",
+"id": "blog_grid",
+"label": "Blog per row (grid only)",
+"default": "4",
+"options": [
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+]
+}
+]
+}
+{% endschema %}
+

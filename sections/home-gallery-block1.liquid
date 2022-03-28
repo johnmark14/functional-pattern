@@ -1,0 +1,276 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+<div class="dt-sc-hr-invisible-large"></div>
+<div class="gallery-block style1" style="background:{{ section.settings.bg_color }};">  
+  <div class="{% if section.settings.full %} container-bg {% else %}container{% endif %}" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">  
+    <div class="grid-uniform">      
+      <div class="dt-sc-tabs-container-section"> 
+        <div class="container">
+          {% if section.settings.heading != blank or section.settings.description != blank   %}  
+          <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+            <div class="border-title"> 
+              <h2 style="color:{{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+
+              {% if section.settings.description != blank  %}  
+              <div class="short-desc">  <p style="color:{{ section.settings.description_color }};">{{ section.settings.description }}</p></div>
+              {% endif %} 
+            </div>
+          </div>          
+          {% endif %} 
+        </div>
+
+        {% if section.blocks.size > 0 %} 
+        <div class="dt-sc-tabs-container"> 
+          <ul class="dt-sc-tabs wow fadeInUp animated">         
+            {% for block in section.blocks %} 
+            {% if block.settings.title != blank %}
+            <li><a href="#" class="btn tabs-{{ block.id }}">{{ block.settings.title }} </a></li>           
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% for block in section.blocks %}            
+          <div class="dt-sc-tabs-content" style="padding:0;"> 
+            <div class="grid-uniform list-gallery-items">  
+              {% for link in linklists[block.settings.collection].links limit: section.settings.limit %}
+              {% assign collection = link.object %}
+              {% unless collection.handle == 'frontpage' %}
+              {% assign collection_item_width = 'grid__item wide--one-quarter post-large--one-quarter large--one-half medium--one-half small--grid__item' %}
+              {% assign featured = collection.handle %}
+
+              {% assign collection_item_img_size = 'large' %}
+
+              {% if link.object.image != blank %}
+              <div class="grid__item {{collection_item_width}} column gallery  text-center pickgradient-products">
+                {% capture collection_title %}{{ collections[featured].title | escape }}{% endcapture %}
+                {{ collections[featured].image.src | img_url: collection_item_img_size | img_tag: collection_title }}        
+                <div class="image-overlay">  
+                  <div class="links">
+                    <a href="{{ collections[featured].url }}" class="link"><i class="fas fa-link icons"></i></a>
+                    <a href="{{ collections[featured].image.src | img_url: '1024x1024' }}" class="portfolio_zoom" rel="prettyPhoto[gallery{{forloop.index}}]"><i class="fas fa-search icons"></i></a>
+                  </div>
+                  {% if block.settings.gallery_title != blank %}
+                  <div class="image-overlay-details">
+                    {% if block.settings.gallery_title != blank %} <h4><a href="{{ collections[featured].url }}">{{ block.settings.gallery_title }}</a></h4>{% endif %}             
+                  </div>
+                  {% endif %}
+                </div> 
+              </div>
+              {% else %}
+              <div class="grid__item {{collection_item_width}} column gallery  text-center pickgradient-products">
+                <img src="//via.placeholder.com/768x580">              
+              </div>
+              {% endif %}  
+              {% endunless %}
+              {% endfor %}                   
+            </div>              
+
+          </div>
+
+          {% endfor %}                
+        </div><!--End tabs container-->
+        {% endif %}
+      </div>   
+
+    </div>
+  </div> 
+</div> 
+
+<style>
+
+  {% if section.settings.heading_image_need %} 
+  .home-gallery-block .style1 .border-title h2:after { background-image:url({{ section.settings.heading_image | img_url: 'master' }}); } {% endif %}
+  .home-gallery-block .style1 .dt-sc-tabs-frame-content, .dt-sc-tabs-content { border:none; }
+  .home-gallery-block .style1 .grid__item.gallery:hover .image-overlay { opacity: 1;}
+  .home-gallery-block .style1 .grid__item .image-overlay .links a { border:1px solid {{ section.settings.img_overlay_icon }};color:{{ section.settings.img_overlay_icon_txt }}; }
+  .home-gallery-block .style1 .grid__item .image-overlay .links a:hover { background:{{ section.settings.img_overlay_icon_bg }};color:{{ section.settings.img_overlay_icon_hover_txt }}; }
+  .home-gallery-block .style1 .grid__item .image-overlay-details h4 a { color:{{ section.settings.img_overlay_title }}; }
+  .home-gallery-block .style1 .grid__item .image-overlay-details h4 a:hover { color:{{ section.settings.img_overlay_title_hover }}; }
+  .home-gallery-block .style1 .grid__item .image-overlay-details p { color:{{ section.settings.img_overlay_catgry }}; }
+  .home-gallery-block .style1 .grid__item .image-overlay {  background: {{ section.settings.img_overlay  | color_modify: 'alpha', 0.8 }};  }
+
+</style>
+
+{% schema %}
+{
+"name": "Gallery Block 1",
+"class": "index-section home-gallery-block",
+"max_blocks": 6,
+"settings": [
+{
+"type": "checkbox",
+"id": "full",
+"label": "Show Full width"
+},
+{
+"type": "text",
+"id": "margin",
+"label": "Style value (Margin)",
+"default":"0,0",
+"info":"Top(px),Bottom(px)"
+},
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg",
+"default": "#fff"
+}, 
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Heading"
+},
+{
+"type": "color",
+"id": "heading_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "textarea",
+"id": "description",
+"label": "Description",
+"default": "Description"
+},
+{
+"type": "color",
+"id": "description_color",
+"label": "Color",
+"default":"#000"
+},
+{
+"type": "select",
+"id": "heading_position",
+"label": "Heading Position",
+"options": [
+{
+"value": "default",
+"label": "Full center"
+},
+{
+"value": "full-left",
+"label": "Full left"
+},
+{
+"value": "full-right",
+"label": "Full right"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "heading_image_need",
+"label": "Show Heading Image ?"
+
+},  
+{
+"type": "image_picker",
+"id": "heading_image",
+"label": "Image",
+"info": "Size: 69x45"
+
+},  
+{
+"type": "color",
+"id": "img_overlay",
+"label": "Image Overlay",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_title",
+"label": "Overlay Title",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_title_hover",
+"label": "Overlay Title Hover",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_catgry",
+"label": "Overlay Category",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon",
+"label": "Overlay Icon Border",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_txt",
+"label": "Overlay Icon Text",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_bg",
+"label": "Overlay Icon Hover Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "img_overlay_icon_hover_txt",
+"label": "Overlay Icon Hover Text",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "limit",
+"label": "Limit",
+"default": "4"
+}
+],
+"blocks": [ 
+{
+"type": "text_block",
+"name": "Column",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Menu Name",
+"default": "Tab Name"
+},  
+
+{
+"id": "collection",
+"type": "link_list",
+"label": "Pick Menu"
+},
+{
+"type": "text",
+"id": "gallery_title",
+"label": "Title"      
+}
+]
+}
+],
+"presets": [
+{
+"name": "Gallery Block 1",
+"category": "Image",
+"blocks": [
+{
+"type": "text_block"
+}        
+]
+}
+]
+}
+{% endschema %}
+
+{% javascript %}
+
+$("area[rel^='prettyPhoto']").prettyPhoto();
+$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'pp_default',slideshow:3000, autoplay_slideshow: false,social_tools: false,counter_separator_label: false});
+$(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'fast',slideshow:10000, hideflash: true});
+
+{% endjavascript %}

@@ -1,0 +1,126 @@
+{% if section.settings.instagram_use %}
+<div class="widget widget_instagram clearfix">
+  {% if section.settings.title != blank or section.settings.text_1 %}
+  <h4 style="color:{{ section.settings.title_1_clr }};"><span> {{ section.settings.title | escape }}</span></h4> 
+  {% endif %}
+  <input type="hidden" id="token-{{ section.id }}" value="{{ section.settings.accessToken }}">
+  <div class="lush-instagram clearfix" data-id="{{ section.id }}">
+    <div class="grid"> 
+      <div id="instafeed-{{ section.id }}" class="-{{ section.id }}" data-sort-by="{{ section.settings.sort }}">
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+{{ 'slick.scss' | asset_url | stylesheet_tag }}
+{{ 'instagram.js' | asset_url | script_tag }}
+
+{%- if section.settings.padding != blank or section.settings.margin != blank -%}
+{% assign margin = section.settings.margin | remove: ' ' | split: '-' | join: ' ' %}
+{% assign padding = section.settings.padding | remove: ' ' | split: '-' | join: ' ' %}
+<style>
+  #shopify-section-{{ section.id }} { 
+    {%- if section.settings.margin != blank -%} margin: {{margin}};{%- endif -%}
+    {%- if section.settings.padding != blank -%}padding: {{padding}}{%- endif -%}
+  }
+
+
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+"name": "Instagram Feed",
+"class": "instagram-block",    
+"settings": [
+
+{
+"type": "checkbox",
+"id": "instagram_use",
+"label": "Use Insagram?"
+
+},
+{
+"type": "color",
+"id": "sidebar_bg_color",
+"label": "Bg Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "accessToken",
+"label": "Access Token:",
+"default": "3311466850.1677ed0.84b4d7bf4b6f49b4887a8fe93707d9b5",
+"info": "Use when Get Image from: 'Access Token'. [Where do I find Access Token?](http:\/\/instagram.pixelunion.net)"
+},
+{
+"type": "checkbox",
+"id": "heading_image_need",
+"label": "Show Heading Image ?"
+
+},	
+{
+"type": "image_picker",
+"id": "heading_image",
+"label": "Image",
+"info": "Size: 105x17"
+
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Instagram Feed"
+},
+{
+"type": "color",
+"id": "title_1_clr",
+"label": "Heading",
+"default": "#000"
+},
+
+{
+"type": "select",
+"id": "sort",
+"label": "Sort by",
+"default": "none",
+"options": [
+{
+"value": "none",
+"label": "none (default)."
+},
+{
+"value": "most-recent",
+"label": "Newest to oldest."
+},
+{
+"value": "least-recent",
+"label": "Oldest to newest."
+},
+{
+"value": "most-liked",
+"label": "Highest # of likes to lowest."
+},
+{
+"value": "least-liked",
+"label": "Lowest # likes to highest."
+},
+{
+"value": "most-commented",
+"label": "Highest # of comments to lowest."
+},
+{
+"value": "least-commented",
+"label": "Lowest # of comments to highest."
+},
+{
+"value": "random",
+"label": "Random order."
+}
+]
+}
+]
+}
+{% endschema %}

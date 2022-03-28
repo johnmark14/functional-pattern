@@ -1,0 +1,8 @@
+<div class="grid__item collection-template">
+  <div class="collection-products position-change">
+     {% include 'collection-sidebar' %}
+    <div class="collection_grid_template grid__item {% if settings.collection_sidebar_use == 'left_sidebar' or settings.collection_sidebar_use == 'right_sidebar'   %} wide--three-quarters post-large--three-quarters {% endif %}">
+    {% section 'collection-template' %}
+    </div>
+  </div>
+</div>   

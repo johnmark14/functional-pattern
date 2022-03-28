@@ -1,0 +1,158 @@
+{% if section.settings.show_best_products %}
+<div data-section-id="{{ section.id }}"  data-section-type="product-sidebar-deals" class="product-sidebar-deals">  
+  <div class="widget widget_hot_deals">
+    {% if collections[section.settings.dealitems].products.size > 0 %} 
+    {% if section.settings.title != blank %}
+    <h4><span>{{ section.settings.title }}</span></h4>  
+    {% endif %}
+    {% endif %}
+    <div class="carousel-block">
+      <ul class="no-bullets sidebar-deal-products owl-carousel owl-theme">
+        {% for product in collections[section.settings.dealitems].products limit: section.settings.limit %}
+        <li class="products"> 
+          <div class="products-container">
+            {% if product.images.size > 0 %}  
+            <a class="thumb grid__item" href="{{ product.url | within: collection }}">                                          
+              <img alt="featured product" src="{{ product.featured_image | product_img_url: '350X' }}">                                              
+
+              {% if settings.count_down_enable and settings.count_down_collections %}
+              {% assign dealTime = settings.home_productdeal_time | split: ' ' | join: ' ' | split: ' ' %}
+              {% include 'deal-snippet-sidebar' %}
+              {% endif %}
+            </a>
+            {% endif %} 
+          </div>
+
+          <div class="product-detail"> 
+            <div class="product_left">
+              <a class="grid-link__title" href="{{ product.url | within: collection }}"> {{ product.title }} </a> 
+              {% if settings.product_review %} <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> {% endif %} 
+            </div>
+            <div class="top-product-prices grid-link__meta">
+
+              <div class="product_price">
+                <div class="grid-link__org_price">
+                  {{ product.price_min | money }}
+                </div>
+                {% if product.compare_at_price_max > product.price %}
+                <del>{{ product.compare_at_price_max | money }}</del>
+                {% endif %}
+              </div>
+
+              {% if product.compare_at_price > product.price %}
+              <span class="sale">{{ 'products.product.sale' | t }}</span>    
+              {% endif %}             
+
+            </div>
+          </div>
+
+        </li>
+
+        {% else %}
+        {% for i in (1..section.settings.limit) %}
+        <li>
+
+
+          <a href="#" class="grid-link thumb"> 
+
+
+            <div class="reveal"> 
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              <img src="//via.placeholder.com/570x490">
+            </div>
+          </a>
+          <div class="products">
+
+            <div class="top-products-detail product-detail grid__item"> 
+              <div class="product_left">
+                <a href="#" class="grid-link__title">Sample title {{ i }}</a>
+              </div>
+              <div class="top-product-prices grid-link__meta">
+                <div class="grid-link__meta">
+                  <div class="product_price"> <span class="money" data-currency-usd="$320.00">$0.00</span> </div>
+                  <del class="grid-link__sale_price"><span class="money" data-currency-usd="$756.00">$0.00</span></del> </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %} 
+        {% endfor %}
+      </ul> 
+      <div class="sidabar_nav product-sidebar-deals-nav"></div>
+    </div>
+  </div>
+  <style>
+    .sidebar-deal-products .lof-clock-timer-detail-single li {background:{{ section.settings.dealbtn }};color:{{ section.settings.dealbtn_text }};}
+
+  </style>
+</div>
+{% endif %} 
+
+{% schema %}
+{
+"name": "Product Sidebar Deals",    
+"settings": [	
+{
+"type": "checkbox",
+"id": "show_best_products",
+"label": "Enable best deals"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "collection",
+"id": "dealitems",
+"label": "Collection"
+},
+
+{
+"type": "color",
+"id": "dealbtn",
+"label": "Deal Button Bg",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "dealbtn_text",
+"label": "Deal Button Text",
+"default": "#000"
+},
+
+{
+"type": "text",
+"id": "limit",
+"label": "Product Limit",
+"default": "4"
+}
+
+]
+}
+{% endschema %}
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var productSidedeals = $(".sidebar-deal-products");
+    productSidedeals.owlCarousel({
+      loop:false,
+      margin:10,
+      nav:true,
+      navContainer: ".product-sidebar-deals-nav",
+      navText: [' <a class="prev btn active"><i class="fa fa-angle-left"></i></a>',' <a class="next btn active"><i class="fa fa-angle-right"></i></a>'],
+      dots: false,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:1
+        },
+        1000:{
+          items:1
+        }
+      }
+    });      
+  });
+</script>

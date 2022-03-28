@@ -1,0 +1,125 @@
+@media screen and (max-width: 1199px){
+  h1{
+    font-size: 60px;
+    line-height: 55px;
+  }
+}
+@media screen and (max-width: 767px){
+  .btn {
+    max-width: 350px;
+    padding: 16px 28px;
+    width: 100%;    
+  }
+}
+.contact-hero-section{  
+  img{
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+  }
+}
+.page-content{
+  .rte{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #000000;
+  }
+  @media screen and (min-width: 1200px){    
+    .rte{
+      margin: 0 auto;
+      line-height: 44px;
+      font-size: 34px;
+    }
+  }
+  @media screen and (min-width: 1400px){
+    .rte{
+      width: 45%;
+    }
+  }
+  @media screen and (min-width: 1200px) and (max-width: 1399px){
+    .rte{
+      width: 80%;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1199px){    
+    .rte{
+      width: 60%;
+      margin: 0 auto;
+      line-height: 28px;
+      font-size: 24px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    padding: 0 20px;
+    
+    .container{
+      width: 100%;
+    }
+    .rte{
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 30px;
+	  margin: 0 auto;           
+    }
+  }
+}
+.border-line{
+  width: 55%;  
+  margin: 0 auto;
+}
+.contact-page{
+  clear: both;
+}
+.contact-form-section{
+  @media screen and (min-width: 768px){
+    .btn{
+      width: 152px !important;
+      padding: 16px 28px 16px 28px;
+      float: right;
+    }
+    .contact-form{
+      width: 55%;
+      padding: 0;
+    }
+  }
+  h4{
+    letter-spacing: 0 !important;
+  }
+  input{
+    background: #EFEFEF;
+    border-radius: 3px;
+    padding: 15px 20px;
+    border: none;
+  }
+  textarea{
+    background: #EFEFEF;
+    border-radius: 3px;
+    border: none;
+    height: 230px;
+  }
+}
+// Grid-banner-section
+.contact-grid-banner-section{
+  .grid-uniform.featuredItems{
+    margin: 0 -2px;    
+
+    .grid__item{
+      margin-bottom: 0;
+      padding: 0 2px;
+    }
+    .banner_half_img img{
+      border-radius: 0;
+    }
+    h3{
+      @media screen and (min-width: 1200px){
+        line-height: 44px;
+        font-size: 46px;
+      }
+    }
+  }
+  .dt-sc-hr-invisible-very-small{
+    margin: 0;
+  }
+}

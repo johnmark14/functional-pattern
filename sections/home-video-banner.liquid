@@ -1,0 +1,353 @@
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}  
+
+<div class="grid-uniform" {% if section.settings.video_style == 'style1' %} style="{% if section.settings.promo_images_1 %}background-image:url({{ section.settings.promo_images_1 | img_url: "2000x"}});background-repeat:no-repeat;data-background=({{ section.settings.promo_images_1 | img_url: "2000x"}});{% else %}background:{{section.settings.background_color}};{% endif %}"{% endif %}>    
+  <div class="video-banner {% if section.settings.video_style == 'style1' %}with-popup{% else %}promo-video{% endif %}" style="padding-top:{{top}}px; padding-bottom:{{bottom}}px;">
+    <div class="container-bg">    
+      <div class="dt-sc-hr-invisible-large"></div>
+
+      <div class="overlay"></div>
+
+      {% if section.settings.title != blank or section.settings.description  %}
+      <div class="grid-uniform {% if section.settings.video_style == 'style2' %}promo-video__inner{% endif %}">
+        <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+          <div class="border-title">
+            {% endif %}  
+
+            {% if section.settings.title != blank %}
+            <h2 class="section-header__title" style="color:{{ section.settings.title_color }}">    
+              {{ section.settings.title }}
+            </h2>
+            {% endif %} 
+
+            {% if section.settings.description != blank %}
+            <div class="short-desc" style="color:{{ section.settings.desc_color }}"> <p>{{ section.settings.description }}</p>
+            </div>
+            {% endif %}  
+
+            <div class="dt-sc-hr-invisible-very-small"></div>
+
+            {% if section.settings.video_style == 'style2' %}
+            {% if section.settings.button_1 != blank %}
+            <a class="btn" href="{{ section.settings.link_1 }}">{{ section.settings.button_1 }}</a>    
+            {% endif %} 
+            {% endif %}
+            {% if section.settings.title != blank or section.settings.description  %}
+          </div>
+
+        </div>
+      </div>
+      {% endif %} 
+      {% if section.settings.video_style == 'style1' %}
+      <div class="grid-uniform video-banner-block">      
+        {% if section.settings.video_url != blank %}
+        <div class="video-image grid__item {% if section.settings.add_box %} wide--two-thirds post-large--two-thirds large--grid__item medium--grid__item {% else %} wide--one-whole {% endif %} wow slideInLeft animated">            
+          <div class="video-text p-video"> 
+             {% if section.settings.image_2_use %}  
+            <a href="{{ section.settings.video_url }}" class="jas-popup-url">
+             
+              {% if section.settings.image_2 != blank %}   
+              <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.titleshadow_1 }}"/>
+              {% else %}
+              <img src="//via.placeholder.com/1920x900"/>
+              {% endif %}
+              
+              <i><svg class="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="enable-background:new 0 0 100 100;" xml:space="preserve"><title>111all</title><path d="M80.8,47.4L22.2,13.6c-1.4-0.8-3.3-0.3-4.1,1.1c-0.3,0.5-0.4,1-0.4,1.5v67.7c0,1.7,1.3,3,3,3c0.5,0,1-0.1,1.5-0.4l58.6-33.8  c1.4-0.8,1.9-2.7,1.1-4.1C81.6,48,81.3,47.7,80.8,47.4z M23.7,78.7V21.4L73.3,50L23.7,78.7z"/></svg></i>
+            </a>     
+            {% endif %}
+          </div>          
+        </div>        
+        {% endif%}
+
+        {% if section.settings.add_box %}
+        <div class="video-content grid__item {% if section.settings.image_2_use %}   wide--one-third post-large--one-third large--grid__item medium--grid__item text-center {% endif %}"> 
+          <div class="content-inner" style="background:{{ section.settings.add_box_bg }}">
+            {% if section.settings.logo != blank %}
+            <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ section.settings.titleshadow_1 }}"/> 
+            {% else %}
+            <img src="//via.placeholder.com/75x75"/>
+            {% endif %}              
+
+            {% if section.settings.title_1 != blank %}
+            <h5 style="color:{{ section.settings.title_1_color }}">{{ section.settings.title_1 }}</h5>
+            {% endif %}
+            {% if section.settings.subtitle != blank %}
+            <h3 style="color:{{ section.settings.subtitle_color }}">{{ section.settings.subtitle }}</h3>
+            {% endif %}
+            {% if section.settings.titleshadow_1 != blank %}
+            <h4 style="color:{{ section.settings.shadowtext_color }}">{{ section.settings.titleshadow_1 }}</h4>
+            {% endif %}
+            {% if section.settings.text_1 != blank %}
+            <p style="color:{{ section.settings.text_color }}">{{ section.settings.text_1 }}</p>
+            {% endif %}
+            {% if section.settings.button_1 != blank %}
+            <a class="btn" href="{{ section.settings.link_1 }}">{{ section.settings.button_1 }}</a>    
+            {% endif %}
+          </div>
+        </div>    
+        {% endif %}
+      </div>  
+      {% endif %} 
+
+      {% if section.settings.video_style == 'style2' %}
+
+      <video {% if section.settings.auto_play %}autoplay {% endif %}  {% if section.settings.play_continue %} loop {% endif %}>
+        <source src="{{ section.settings.promo_video_code }}" type="video/mp4">
+      </video>
+
+      {% endif %}
+      <div class="dt-sc-hr-invisible-large"></div>
+    </div> 
+  </div>
+</div>
+
+<style>
+
+  {% if section.settings.show_overlay %} 
+  .video-banner .overlay { background:{{ section.settings.overlay_bg | color_modify: 'alpha', 0.8 }}; } 
+  .promo-video .overlay { background:{{ section.settings.overlay_bg | color_modify: 'alpha', 0.6 }}; } 
+  {% endif %} 
+
+  .video-banner .btn { background:{{ section.settings.button_bg_color }}; color:{{ section.settings.button_txt_color }}; }  
+  .video-banner .btn:hover{ background:{{ section.settings.button_bghover_color }}; color:{{ section.settings.button_txthover_color }}; }
+
+</style>
+
+{% schema %}
+{
+"name": "Video Banner",
+"class": "index-section video-addbox",
+  "settings": [
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Style value (Margin)",
+      "default":"0,0",
+      "info":"Top(px),Bottom(px)"
+    },
+    {
+      "type": "select",
+      "id": "video_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "style1",
+          "label": "Pop Up"
+        },
+        {
+          "value": "style2",
+          "label": "Background Video"
+        }      
+      ],
+      "default": "style1"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "promo_images_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_bg",
+      "label":"Overlay Bg color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label":"Bckground color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_2_use",
+      "label": "Video screenshot?"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Video screenshot",
+      "info": "Size: 437x257"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video url",
+      "default": "https://www.youtube.com/watch?v=bvtwWhKdxhM"
+    },
+    {
+      "type": "header",
+      "content": "For Background Video only"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "Auto play?"
+    },
+    {
+      "type": "checkbox",
+      "id": "play_continue",
+      "label": "Play video continuously"
+    },
+    {
+      "type": "textarea",
+      "id": "promo_video_code",
+      "label": "Video FIle URL"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video Banner"
+    }, 
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading color",
+      "default": "#000"
+    }, 
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#000"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Heading Position",
+      "options": [
+        {
+          "value": "default",
+          "label": "Full center"
+        },
+        {
+          "value": "full-left",
+          "label": "Full left"
+        },
+        {
+          "value": "full-right",
+          "label": "Full right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "add_box",
+      "label": "Show Add Box"
+    },
+    {
+      "type": "color",
+      "id": "add_box_bg",
+      "label": "Add Box Bg",
+      "default": "#fff"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "title_1_color",
+      "label":"Title color",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Offer",
+      "default": "Offer Text"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label":"Offer color",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "titleshadow_1",
+      "label": "Sub Heading"
+    },
+    {
+      "type": "color",
+      "id": "shadowtext_color",
+      "label":"Text color",
+      "default": "#000"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Description",
+      "default": "Description"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label":"Text color",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "button_1",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label":"Background color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_txt_color",
+      "label":"Text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "button_bghover_color",
+      "label":"Background Hover color",
+      "default": "#666"
+    },
+    {
+      "type": "color",
+      "id": "button_txthover_color",
+      "label":"Text Hover color",
+      "default": "#fff"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Banner",
+      "category": "Video",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

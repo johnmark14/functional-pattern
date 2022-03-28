@@ -1,0 +1,106 @@
+{% if section.settings.display_top_adv_bar %}   
+<div class="top_bar top-bar-type-5 notification_bar header-top"  style="background-color:{{ section.settings.notification_bar_bg }};">    
+  <div class="top-text-container ">        
+    <div class="container">
+      {% if section.settings.notification_text != blank  %}
+      <ul class="top_bar_left">      
+        <li class="notification_text"><span style="color:{{section.settings.notification_text_clr}};">{{ section.settings.notification_text }}</span>
+          {% if section.settings.notification_linktxt != blank %}  <a class="link" href="{{section.settings.header_notification_link }}">{{ section.settings.notification_linktxt }}</a>  {% endif %}    
+        </li>
+      </ul>
+      {% endif %}    
+    </div>
+    <a href="javascript:void(0)" class="close"><i class="fas fa-times"></i></a>
+  </div>  
+</div>   
+{% endif %}
+
+<style>   
+
+  .notification_bar li a { color:{{section.settings.notification_linktxt_color }};}    
+  .notification_bar li a:hover { color:{{section.settings.notification_hover_linktxt_color }};}   
+
+  .notification_bar a.close { color:{{section.settings.stripe_icon }};}    
+  .notification_bar a.close:hover { color:{{section.settings.stripe_icon_hover }};} 
+
+</style>
+
+{% schema %}
+{
+"name": "Notification Bar",
+"settings": [
+{
+"type":"checkbox",
+"id": "display_top_adv_bar",
+"label": "Top Notification Bar"	
+},
+{
+"type": "color",
+"id": "notification_bar_bg",
+"label": "Background",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "stripe_icon",
+"label": "close Icon",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "stripe_icon_hover",
+"label": "close Icon Hover",
+"default": "#ffe491"
+},
+
+{
+"type": "text",
+"id": "notification_text",
+"label": "Notification text",
+"default": "Long Weekend Sale Up to 50% OFF"
+},  
+{
+"type": "color",
+"id": "notification_text_clr",
+"label": "Notify Text",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "notification_linktxt",
+"label": "Notification Link Text",
+"default": "Shop Now"
+}, 
+{
+"type": "color",
+"id": "notification_linktxt_color",
+"label": "Link Text",
+"default": "#fff"
+},
+{
+"type": "color",
+"id": "notification_hover_linktxt_color",
+"label": "Hover Link Text",
+"default": "#fff"
+},
+{
+"type": "text",
+"id": "header_notification_link",
+"label": "Link",
+"default": "/collections/all"
+}
+
+]
+}
+{% endschema %}
+{% javascript %}
+
+if (jQuery.cookie('headerTop') == 'closed') {
+jQuery('.header-top').fadeOut();
+}
+
+jQuery('.header-top a.close').bind('click',function(){
+jQuery('.header-top').fadeOut();
+jQuery.cookie('headerTop', 'closed', {expires:-1, path:'/'});
+});  
+{% endjavascript %}

@@ -1,0 +1,51 @@
+{% if section.settings.enable_contact_section %}        
+<div class="contact-address">    
+  
+  <div class="contact-form-section">
+    <h4> {{ section.settings.contact_form_title }} </h4>
+    {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <p class="note form-success">
+      {{ 'contact.form.post_success' | t }}
+    </p>
+    {% endif %}
+    {{ form.errors | default_errors }}
+    <div class="dt-sc-hr-invisible-medium"></div>
+    <div class="grid-uniform">
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        {% assign name_attr = 'contact.form.name' | t | handle %}    
+        <input type="text" id="ContactFormName" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">    
+        <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required="required">
+      </div>
+      <div class="grid__item wide--one-half post-large--one-half large--one-half">
+        <input type="tel" id="ContactFormPhone" placeholder="Phone" class="input-full" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">        
+        {% assign name_attr = 'contact.form.sub' | t | handle %}    
+        <input type="text" id="ContactFormSub" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.sub' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.subject }}{% endif %}">    
+      </div>
+    </div>
+    <textarea rows="7" id="ContactFormMessage" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+    <button type="submit" class="btn btn-primary">{{ 'contact.form.send' | t }}</button>
+    {% endform %}
+  </div>
+
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Contact block",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_contact_section",
+      "label": "Enable Contact Section"
+    },
+    {
+      "type": "text",
+      "id": "contact_form_title",
+      "label": "Form Title",
+      "default":"Contact Form"
+    }
+  ]
+}
+{% endschema %}

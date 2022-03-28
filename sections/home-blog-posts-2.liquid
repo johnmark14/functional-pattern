@@ -1,0 +1,268 @@
+{% assign full = section.settings.full %}
+{% assign margin = section.settings.margin | split: ',' %}
+{% assign top = margin[0] %}
+{% assign bottom = margin[1] %}
+
+{% assign blogStyle = 'data-blog-slider2' %}
+{% assign column_width = 'grid__item wide--one-third post-large--one-third large--one-half' %}
+
+{% assign limit = 3 %}
+
+<div class="blog-post home-blog-posts-2" style="margin-top:{{top}}px; margin-bottom:{{bottom}}px;">
+  <div class="container">
+    <div class="dt-sc-hr-invisible-large"></div>
+    <div class="grid">
+      {% if section.settings.title != blank  %}
+      <div class="section-header section-header--small full-position-{{section.settings.heading_position}}">
+        <div class="border-title wow">
+          {% if section.settings.text != blank   %}
+          <p class="short-desc" style="color:{{ section.settings.text_clr }};">{{ section.settings.text }}</p>
+          {% endif %}          
+          {% if section.settings.title != blank %}<div class="mt-20"> <h3 style="color:{{ section.settings.title_clr }};">{{ section.settings.title }}</h3></div>{% endif %}  
+        </div>
+      </div>        
+      {% endif %} 
+    </div>
+  </div>
+  
+  <div class="container post-wrapper"> 
+
+    <div class="grid-uniform ">
+      <div class="blog-post-inner style2">
+        <div class="home-blog blog-section" {{blogStyle}}>
+          <div class="owl-carousel owl-theme BlogCarousel">
+            {% for article in blogs[section.settings.pick_featured_blog].articles limit: limit %}
+            <div class="article-item grid__item wide--one-third three-blocks">
+                {% if section.settings.content_position == 'top' %}
+                {% include  'mobile-blogDescription' %}
+                {% endif %}
+                <div class="article-image">
+                  {% if article.image %}
+                  <a href="{{ article.url }}">
+                    <img src="{{ article.image.src | img_url: '1024x1024' }}" alt="{{ article.title }}" />
+                  </a>
+                  {% endif %}
+                </div>
+                {% if section.settings.content_position == 'right' or section.settings.content_position == 'bottom' or section.settings.content_position == 'overimage' %}
+                {% include  'mobile-blogDescription' %}
+                {% endif %}
+            </div>
+            {% endfor %}          
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">  
+    <div class="dt-sc-hr-invisible-normal"></div>
+    <div class="bottom">
+      {% if section.settings.bottom_heading != blank %}
+      <div class="text-center"><h4>{{ section.settings.bottom_heading }}</h4></div>
+      {% endif %}
+      {% if section.settings.bottom_btn != blank and section.settings.bottom_link != blank %}
+      <div class="text-center"><a class="btn btn-primary" href="{{ section.settings.bottom_link | escape }}">{{ section.settings.bottom_btn | escape }}</a></div>
+      {% endif %} 
+    </div>        
+  </div>
+      
+</div>
+
+<script type="text/javascript">        
+  $(document).ready(function(){
+    var BlogCarousel = $(".BlogCarousel");
+    BlogCarousel.owlCarousel({
+      loop:false,
+      autoPlay: false,
+      stagePadding: 50,
+      margin:15,          
+      nav:false,
+      dots: false,
+      responsive:{
+        0:{
+          items:1
+        },
+        568:{
+          items:2
+        },
+        720:{
+          items:2
+        },
+        1024:{
+          items: 3
+        }
+      }
+    });   
+  }); 
+
+</script>
+
+<style>
+  .home-blog-type .style2 .article-content h4 a { color:{{ section.settings.blog_titlecolor }}  }
+  .home-blog-type .style2 .link_text { color:{{ section.settings.link_color }}; }
+  .home-blog-type .style2 .read-more { color:{{ section.settings.btn_color }}; }
+</style>
+
+{% schema %}
+{
+  "name": "Blog Post 2",
+  "class": "index-section home-blog-type",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full",
+      "label": "Show Full width"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Style value (Margin)",
+      "default":"0,0",
+      "info":"Top(px),Bottom(px)"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Heading",
+      "default": "<p>Blog Post 2</p>"
+    },
+    {
+      "type": "color",
+      "id": "title_clr",
+      "label": "Heading",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Sub Heading",
+      "default": "Sub Heading"
+    },
+    {
+      "type": "color",
+      "id": "text_clr",
+      "label": "Text color",
+      "default":"#000"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Heading Position",
+      "options": [
+        {
+          "value": "default",
+          "label": "Full center"
+        },
+        {
+          "value": "full-left",
+          "label": "Full left"
+        },
+        {
+          "value": "full-right",
+          "label": "Full right"
+        }
+      ]
+    },
+    {
+      "type": "blog",
+      "id": "pick_featured_blog",
+      "label": "Select blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_author_enable",
+      "label": "Display Blog author name",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_btn",
+      "label": "Display Blog button",
+      "default": true
+    },
+      {
+      "type": "checkbox",
+      "id": "show_featured_date",
+      "label": "Display Blog date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog_tag",
+      "label": "Display Blog tag"
+    },
+    {
+      "type": "color",
+      "id": "blog_titlecolor",
+      "label": "Blog title color",
+      "default": "#000"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_comment",
+      "label": "Show Comment"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn",
+      "label": "Link Label",
+      "default": "Read more"
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "Link Color",
+      "default": "#fff"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [      
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "overimage",
+          "label": "Overlay"
+        }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_heading",
+      "label": "Bottom Heading",
+      "default": "<p>Read more</p>"
+    },
+    {
+      "type": "text",
+      "id": "bottom_btn",
+      "label": "Button Text",
+      "default": "Read more"
+    },
+    {
+      "type": "url",
+      "id": "bottom_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Post 2",
+      "category": "blog"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,160 @@
+<div class="no-padding container-bg">
+  {% for block in section.blocks %}
+  <div class="image-with-text-block-{{ block.id }}">
+    {% style %}
+      .image-with-text-block-{{ block.id }}{
+    	  height: 100%;
+      }
+      @media screen and (min-width: 1200px){
+        .image-with-text-block-{{ block.id }}{
+          height: 100vh;
+        }
+      }
+      @media screen and (min-width: 1024px) and (max-width: 1199px){
+        .image-with-text-block-{{ block.id }}{
+          height: 700px;
+        }
+      }
+      @media screen and (min-width: 768px) and (max-width: 1023px){
+        .image-with-text-block-{{ block.id }}{
+          height: 500px;
+        }
+      }
+    {% endstyle %}    
+    <div class="grid-uniform image-with-text-block content-block-{{ block.settings.color_version }}">
+
+      <div class="text-block-content p-relative grid__item text-left">      
+        <div class="text-block-content-inner">                  
+          {% if block.settings.subheading != blank %}
+          <p class="subheading">{{ block.settings.subheading | escape }}</p>
+          {% endif %}
+          {% if block.settings.heading != blank %}
+          <div><h2 class="custom-h2" >{{ block.settings.heading }}</h2></div>
+          {% endif %}
+          {% if block.settings.desc_text != blank %}
+          <div class="desc-text">{{ block.settings.desc_text }}</div>
+          {% endif %}  
+          <div class="mt-40 d-flex">
+            {% if block.settings.button_1 != blank and block.settings.button_url != blank %}
+            <a class="btn btn-primary disclaimer-first" href="{{ block.settings.button_url }}">{{ block.settings.button_1 | escape }}</a>    
+            {% endif %}
+            {% if block.settings.link != blank and block.settings.link_url != blank %}
+            <a class="btn btn-link{% if block.settings.color_version == 'dark' %}-white{% endif %}" href="{{ block.settings.link_url }}">{{ block.settings.link | escape }}</a>    
+            {% endif %}
+          </div>
+        </div>      
+      </div>
+
+      <div class="image-block-content grid__item">
+        {%- assign img_url = block.settings.image | img_url: '2000x' -%}
+        {%- assign mobile_img_url = block.settings.mobile_image | img_url: '767x' -%}        
+
+        {% if block.settings.image != blank %}
+        <img src="{{ img_url }}" class="lazyload medium-down--hide" alt="{{ block.settings.image.alt }}" />
+        {% else %}
+        <img src="//via.placeholder.com/1920x940"   class="lazyload medium-down--hide">
+        {% endif %}
+
+        {% if  block.settings.mobile_image != blank %}
+        <img src="{{ mobile_img_url }}"  class="lazyload wide--hide post-large--hide large--hide" alt="{{ block.settings.mobile_image.alt }}" />
+        {% else %}
+        <img src="//via.placeholder.com/767x750"   class="lazyload wide--hide post-large--hide large--hide">
+        {% endif %}      
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Custom Content Block",
+	"class": "practioners-text-with-image-section",
+	"max_blocks": 5,
+    "blocks": [
+      {      
+        "name": "Content Block",
+        "type": "image",
+        "settings": [
+          {
+            "type": "select",
+            "id": "color_version",
+            "label": "Color Version",
+            "options": [
+            {
+              "value": "dark",
+              "label": "Dark"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            }
+            ]
+          },
+
+		  {
+			"type": "header",
+			"content": "Text block settings"
+		  },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "subheading"
+          },
+          {
+            "type": "richtext",
+            "id": "heading",
+            "label": "Heading",
+			"default": "<p>Heading</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "desc_text",
+            "label": "Description Text",
+            "default": "<p>Add text here</p>"
+          },
+          {
+            "type": "text",
+            "id": "button_1",
+            "label": "Button text",
+            "default": "Button"
+          }, 
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button Url"
+          }, 
+          {
+            "type": "text",
+            "id": "link",
+            "label": "Link text",
+            "default": "Link"
+          }, 
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link Url"
+          },
+		  {
+			"type": "header",
+			"content": "Image block settings"
+		  },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image",
+            "info": "767x750 recommended"
+          }
+        ]
+      }    
+    ]
+  }
+{% endschema %}

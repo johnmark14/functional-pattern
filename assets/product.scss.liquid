@@ -1,0 +1,673 @@
+.container{
+  border: 10px green solid;
+  @media screen and (min-width: 1024px) and (max-width: 1399px){
+    width: 100%;
+    padding: 0 3%;
+  }  
+  @media screen and (min-width: 768px) and (max-width: 1023px){
+    width: 100%;
+    padding: 0 4%;
+  }
+  @media screen and (max-width: 767px){
+    padding: 0 20px;
+    width: 100%;
+  }
+}
+.product-equipment-section{
+  @media screen and (min-width: 768px) and (max-width: 1199px){
+    margin-top: 40px;
+  }
+}
+.product-section{
+  z-index: 9;
+  border-bottom: 1px solid #BDBDBD;
+
+  .product_single_detail_section{
+    background: #fff;
+
+    .product-single__title{
+      @media screen and (min-width: 1024px) and (max-width: 1399px){
+        font-size: 60px;
+    	line-height: 55px;
+      }
+      @media screen and (min-width: 768px) and (max-width: 1023px){
+        font-size: 40px;
+    	line-height: 35px;
+      }
+      @media screen and (max-width: 767px){
+        font-size: 30px;
+    	line-height: 30px;        
+      }
+    }
+    .product-description, .pdp-msg{
+      color: #000000;
+    }
+    .less-label{
+      display: none;
+    }
+    .p-summary{
+      overflow: hidden;
+      max-height: none;
+      min-height: auto;
+      height: 240px;
+      
+      @media screen and (max-width: 1399px){
+        margin-bottom: 0px;
+        
+        &:after{
+          position: absolute;
+          content: "";
+          display: table;
+          width: 100%;
+          height: 100px;
+          bottom: 0;
+          background-image: linear-gradient(transparent 10%, white 100%);
+        }
+      }
+    }
+    .product_single_price h4{
+      @media screen and (min-width: 1400px){
+        margin: 30px 0 35px;
+      }
+      @media screen and (min-width: 1024px) and (max-width: 1399px){
+        margin: 5px 0 15px;        
+      }
+      @media screen and (max-width: 1023px){
+        font-size: 26px;
+    	line-height: 26px;
+      }
+    }
+    #AddToCart{
+      @media screen and (min-width: 1400px){
+        width: 392px;
+      }
+      @media screen and (min-width: 1024px) and (max-width: 1399px){
+        width: 90%;
+      }
+    }
+  }
+  .selector-qty-wrapper{
+    width: 100%;
+    
+    .selector-wrapper-secton{
+      .selector-wrapper{
+        width: 100%;
+        position: relative;
+
+        &:before {
+          display: table;
+          content: '\f0d7';
+          font-size: 22px;
+          position: absolute;
+          top: 44px;
+          right: 20px;
+          font-family: 'Font Awesome 5 Free';
+          color: #434B67;
+          pointer-events: none;
+          line-height: 22px;          
+          width: 22px;
+        }       
+        .single-option-selector{
+          padding: 15px 10px;
+          width: 100%;
+          position: relative;
+        }
+      }
+    }
+    .product-single__quantity{
+      position: relative;      
+
+      .quantity_width{
+        width: 100%;
+      }
+      input#quantity{
+        width: 65px;
+        height: 50px;
+      }
+      .dec, .inc{
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+      }
+    }
+    @media screen and (min-width: 1400px){
+      .selector-wrapper-secton{
+        width: 60%;
+      }
+      .product-single__quantity{
+        top: 35px;
+        width: 30%;
+        margin-left: calc(10% - 20px);
+      }      
+    }
+    @media screen and (min-width: 1024px) and (max-width: 1399px){
+      .selector-wrapper-secton{
+        width: 50%;
+      }
+      .product-single__quantity{
+        top: 35px;
+        margin-left: calc(10% - 20px);
+        width: 40%;
+      }
+    }
+    @media screen and (max-width: 1023px){
+      overflow: hidden;
+      margin-bottom: 20px;
+      max-width: 375px;
+    }
+  }
+  .product_button_section{
+    @media screen and (max-width: 1023px){
+      .btn{
+        width: 100%;
+        max-width: 375px;
+        padding: 16px 28px;
+      }
+    }
+  }
+  .p-equipment-note{
+    color: #000000;
+
+    .p-note{
+      line-height: 23px;
+      font-size: 20px;
+    }
+    p{
+      font-size: 13px;
+    }
+  }
+  @media screen and (min-width: 1600px){
+    .product_single_detail_section{
+      padding: 0 100px 100px;
+    }
+  }
+  @media screen and (min-width: 1200px) and (max-width: 1599px){
+    .product_single_detail_section{
+      padding: 0 0 75px 100px;
+    }
+  }
+  @media screen and (min-width: 1024px) and (max-width: 1199px){
+    .product_single_detail_section{
+      padding: 0 0 60px 60px;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px){
+    padding: 0 !important;
+    
+    .product_single_detail_section{
+      padding: 0px 0px 50px 30px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    padding: 0 !important;
+    
+    .product_single_detail_section{
+      padding: 40px 0 30px;
+    }
+  }
+}
+// Equipment features section
+.equipment-features-section{
+  overflow: hidden;
+  width: 100%;
+
+  .grid-uniform.featuredItems{
+    .banner_half_img img{
+      border-radius: 0;
+    }
+    h3{
+      @media screen and (min-width: 1200px){
+        line-height: 44px;
+        font-size: 46px;
+      }
+    }
+  }
+  @media screen and (min-width: 1024px){
+    .grid-uniform.featuredItems{
+      margin: 0 -2px;
+      
+      .grid__item{
+        padding: 0 2px;
+      }
+    }    
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px){
+    .container{
+      width: 100%;
+      padding: 0 4%;
+    }
+    .grid-uniform.featuredItems{
+      margin: 0 -20px;
+      
+      .grid__item{
+        padding: 0 20px;
+      }
+    }
+  }
+  @media screen and (max-width: 767px){    
+    .container{
+      width: 100%;
+      padding: 0 20px;
+    }
+    .grid__item{
+      margin-bottom: 20px;
+    }
+    .grid__item:last-child{
+      margin-bottom: 0px;
+    }
+  }
+}
+// Video with text block
+.equipment-video-block-section{
+  clear: both;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+
+  .container{
+    width: 100%;
+  }
+  img{
+    width: 100%;
+  }
+  i{
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;    
+    margin: auto;    
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    
+    @media screen and (min-width: 421px){
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      bottom: 50px;
+      
+      &:before{
+        position: relative;
+        left: 3px;
+      }
+    }
+    @media screen and (max-width: 420px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 30px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 40px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 40px;
+    }    
+  }
+  .video-summary{
+    position: absolute;    
+    left: 0;
+    right: 0;    
+    margin: auto;
+    width: 100%;    
+    text-align: center;
+    max-width: 400px;
+    color: #fff;
+    
+    @media screen and (min-width: 421px){
+      height: 80px;
+      line-height: 80px;
+      bottom: 50px;
+      top: 150px;
+    }    
+    @media screen and (max-width: 420px){
+      height: 50px;
+      line-height: 50px;
+    }
+    @media screen and (min-width: 376px) and (max-width: 420px){
+      bottom: 55px;
+    }
+    @media screen and (min-width: 321px) and (max-width: 375px){
+      bottom: 40px;
+    }
+    @media screen and (max-width: 320px){      
+      bottom: 30px;
+    }    
+  }
+  .course-video{
+    width: 100%;
+  }
+  .video-banner-block{
+    width: 100%;    
+
+    .video-image{    
+      position: relative;
+      z-index: 9;
+
+      @media screen and (min-width: 968px){
+        width: 60%;
+      }
+    }    
+    @media screen and (min-width: 968px){
+      .course-content{
+        background: #fff;            
+        position: absolute;      
+      }
+      &.v2{
+        .course-content{
+          width: 62%;
+          background-color: #efefef;
+          -webkit-transform: translate(0%, 0%);
+          -ms-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+          
+          .course-content-inner{
+            width: 55%;
+            margin-right: auto;
+          }
+        }
+        .video-image{
+          position: absolute;
+          right: 0;
+        }
+      }      
+    }
+    @media screen and (min-width: 1681px){
+      height: calc(90vh - 135px);
+      
+      .course-content{
+        padding: 100px;
+      }
+    }
+    @media screen and (min-width: 1440px) and (max-width: 1680px){
+      height: calc(90vh - 100px);
+      
+      .course-content{
+        padding: 90px;
+      }
+    }
+    @media screen and (min-width: 1200px) and (max-width: 1439px){
+      height: calc(100vh - 130px);
+      
+      .course-content{
+        padding: 80px;
+      }
+    }
+    @media screen and (min-width: 968px) and (max-width: 1199px){
+      height: 625px;
+      
+      .course-content{
+        padding: 60px;
+      }
+    }    
+    @media screen and (max-width: 967px){
+	  display: initial;
+      
+      .course-content{
+        margin-bottom: 40px;
+      }
+    }
+  }  
+}
+// Testimonial type2
+.testimonial-type2{
+  .quote-icon{
+    svg{
+      width: 40px;
+      height: 40px;
+      color: #000000;      
+    }
+    path{
+      fill: #000;
+    }
+  }
+  .short-desc{
+    color: #828282;
+  }
+  .quote-author{
+    font-weight: 400;
+  }
+  .rating{
+    color: #E51446 !important;
+    justify-content: center;
+
+    .fas.fa-star{
+      margin: 0 3px;
+      font-size: 15px;
+    }
+  }
+  .quote.rte-setting{
+    @media screen and (min-width: 768px){
+      width: 50%;
+      margin: 20px auto 0;
+    }
+  }
+  @media screen and (max-width: 767px){
+    .container-fluid{
+      padding: 0 20px;
+    }
+    .quote{
+      margin-top: 20px;
+    }
+  }
+  .slick-arrow{
+    border: 2px solid #000000 !important;
+    color: #000000;
+    &:hover{
+      color: #000000;
+    }
+  }  
+}
+// FAQs section
+#shopify-section-equipment-faqs{
+  overflow: hidden;
+  clear: both;
+
+  .faqs-wrapper{
+    clear: both;    
+    margin: 0 auto;
+
+    .dt-sc-toggle-frame-set{   
+      .dt-sc-toggle-accordion{
+        cursor: pointer;        
+        border-bottom: 1px solid #e4e4e4;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        
+        @media screen and (min-width: 768px){
+          padding: 15px 0px 15px 0px;
+        }
+		@media screen and (max-width: 767px){
+          padding: 15px 30px 15px 0px;
+        }
+        &:before{
+
+          width: 20px;
+          height: 20px;
+          color: #000;
+          right: 8px;
+          left: inherit;
+          content: "\f067";
+        }
+        &.active:before{
+          content: "\f068";
+        }      
+      }
+      .dt-sc-toggle-content {
+        padding: 25px 20px 25px 0px;
+        background: transparent;
+
+        p{                
+          color: #000000;
+          line-height: 24px;
+          letter-spacing: 0px;        
+        }
+      }    
+    }
+  }
+  @media screen and (min-width: 1200px){
+    .faqs-wrapper{
+	  max-width: 60%;    
+    }
+    .dt-sc-toggle-accordion{
+      font-size: 30px;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1199px){
+    .faqs-wrapper{
+	  max-width: 80%;
+    }
+    .dt-sc-toggle-accordion{
+      font-size: 30px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    .dt-sc-toggle-accordion{
+      font-size: 26px;
+      line-height: 26px;
+      
+      &:before{
+        line-height: 20px !important;
+    	font-size: 20px;
+      }
+    }    
+  }
+  @media screen and (max-width: 767px){
+    .dt-sc-toggle-accordion{
+      font-size: 22px;
+      line-height: 22px;
+    }
+  }
+}
+// Course products section
+.course-products-section{
+  .product-detail{
+    @media screen and (min-width: 768px){
+      h4{
+        min-height: 60px;
+      }
+    }
+    .f-bk{      
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 23px;
+      letter-spacing: 0.02em;
+      color: #E51446;
+    }
+    .product_desc{
+      display: block;      
+      overflow: hidden;
+      color: #000000;
+
+      p{        
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0px;        
+      }
+    }
+  }
+  .heading-wrapper{
+    @media screen and (min-width: 768px){
+      width: 50%;
+      margin: 0 auto;
+    }
+  }
+  .product-container{
+    .ImageOverlayCa{
+      opacity: 0.3 !important;
+      background: #000 !important;
+    }
+  }
+  @media screen and (min-width: 1200px){
+    .course-grid-wrapper{
+      .grid-uniform{
+        margin: 0 -20px;
+
+        li.grid__item{
+          padding: 0 20px 20px;
+        }
+      }
+    }    
+    .product-detail{
+      padding: 40px;
+    }
+    .product_desc{
+      max-height: 50px;
+    }    
+    .collection-link{
+      margin-top: 30px;
+    }
+  }
+  @media screen and (min-width: 968px) and (max-width: 1199px){
+    .course-grid-wrapper{
+      .grid-uniform{
+        margin: 0 -20px;
+
+        li.grid__item{
+          padding: 0 20px;
+        }
+      }
+    }    
+    .product-detail{
+      padding: 25px;
+    }
+    .product_desc{
+      max-height: 40px;
+    }
+    .collection-link{
+      margin-top: 30px;
+    }    
+  }
+  @media screen and (min-width: 768px) and (max-width: 967px){
+    .course-grid-wrapper{
+      .grid-uniform{
+        margin: 0 -15px;
+
+        li.grid__item{
+          padding: 0 15px;
+        }
+      }
+    }    
+    .product-detail{
+      padding: 15px;
+    }
+    .product_desc{
+      max-height: 40px;
+    }
+    .collection-link{
+      margin-top: 15px;
+    }    
+  }
+  @media screen and (max-width: 767px){
+    .course-grid-wrapper{
+      .grid-uniform{
+        margin: 0px;
+
+        li.grid__item{
+          padding: 0px;
+          margin-bottom: 20px;
+        }
+        li.grid__item:last-child{
+          margin-bottom: 0px;
+        }
+      }
+    }    
+    .product-detail{
+      padding: 20px;
+    }
+    .product_desc{
+      max-height: 40px;
+    }
+    .collection-link{
+      margin-top: 20px;
+    }    
+  }
+}

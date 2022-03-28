@@ -1,0 +1,343 @@
+<div class="container-bg">  
+  {% if section.settings.title != blank %}
+    <div class="section-header text-{{ section.settings.align_text }}">
+      {% if section.settings.text != blank %}
+      <p style="color: {{ section.settings.text_color }}; font-weight: 700;">{{ section.settings.text | escape }}</p>
+      {% endif %}
+      <h2 class="section-title" style="color: {{ section.settings.heading_color }};">{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+      <div style="color: {{ section.settings.desc_color }};">{{ section.settings.description }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+  <div class="dt-sc-hr-invisible-medium"></div>
+  <div class="desktop grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %}">
+    {%- assign grid_item_width = 'one-third' -%}
+    {% case section.blocks.size %}
+      {% when 1 %}
+        {%- assign grid_item_width = 'one-third' -%}
+      {% when 2 %}
+        {%- assign grid_item_width = 'one-half' -%}
+      {% when 3 %}
+        {%- assign grid_item_width = 'one-third wide--one-third' -%}    
+      {% when 4 %}
+        {%- assign grid_item_width = 'one-quarter' -%}
+    {% endcase %}
+    {% for block in section.blocks %}
+      {% if section.blocks.size == 5 and forloop.index < 3 %}
+        {%- assign column_width = 'one-third' -%}
+      {% else %}
+        {%- assign column_width = grid_item_width -%}
+      {% endif %}
+      <div class="grid__item {{ column_width }} text-{{ block.settings.align_text1 }}" {{ block.shopify_attributes }} data-aos="row-of-3">    
+        <div class="image-column-inner">
+          {% if block.settings.enable_image %}
+            {% if block.settings.button_link != blank %}
+              <a href="{{ block.settings.button_link }}">
+            {% endif %}
+            {% if block.settings.image != blank %}
+              <div class="image-wrap">
+                {%- assign img_url = block.settings.image | img_url: '450x450' -%}
+                <img class="lazyload"
+                    src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080]"
+                    data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ block.settings.image.alt }}">
+              </div>
+            {% else %}
+              <div class="image-wrap text-spacing">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {% endif %}
+            {% if block.settings.button_link != blank %}
+              </a>
+            {% endif %}
+          {% endif %}
+          </div> 
+          <div class="text-column-inner" style="background-color: {{ block.settings.bg_color1 }};">
+            {% if block.settings.title != blank %}        
+              {% if block.settings.title_link != blank %}
+              <h4 style="color: {{ block.settings.heading_color1 }} !important;"><a class="ttl-link" href="{{ block.settings.title_link }}">{{ block.settings.title }}</a></h4>
+              {% endif %}        
+            {% endif %}
+
+            {% if block.settings.text1 != blank %}
+            <p class="f-bk" style="color: {{ block.settings.text_color1 }};">{{ block.settings.text1 | escape }}</p>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="rte-setting text-spacing">{{ block.settings.text }}</div>
+            {% endif %}
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="btn btn-primary">
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+            {% if block.settings.category1 != blank  or block.settings.category2 != blank or block.settings.category3 != blank %}
+            <div class="category-wrapper d-flex">              
+              <p class="category">{{ block.settings.category1 | escape }}</p>
+              <p class="category">{{ block.settings.category2 | escape }}</p>
+              <p class="category">{{ block.settings.category3 | escape }}</p>
+            </div>
+            {% endif %}
+          </div>
+      </div>    
+    {% endfor %}    
+  </div>
+  <div class="mobile grid">
+    <div class="quotes-slider text-center" slick-initialized data-quote-slider2 data-count="{{ section.blocks.size }}">
+      {% for block in section.blocks %}
+      <div class="quotes-slide--{{ forloop.index0 }} quotes-slide--{{ block.id }} " {{ block.shopify_attributes }}>
+        <div class="grid__item text-{{ block.settings.align_text1 }}" {{ block.shopify_attributes }} data-aos="row-of-3">    
+          <div class="image-column-inner">
+            {% if block.settings.enable_image %}
+              {% if block.settings.button_link != blank %}
+                <a href="{{ block.settings.button_link }}">
+              {% endif %}
+              {% if block.settings.image != blank %}
+                <div class="image-wrap">
+                  {%- assign img_url = block.settings.image | img_url: '450x450' -%}
+                  <img class="lazyload"
+                      src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt }}">
+                </div>
+              {% else %}
+                <div class="image-wrap text-spacing">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+              {% endif %}
+              {% if block.settings.button_link != blank %}
+                </a>
+              {% endif %}
+            {% endif %}
+            </div> 
+            <div class="text-column-inner" style="background-color: {{ block.settings.bg_color1 }};">
+              {% if block.settings.title != blank %}        
+                {% if block.settings.title_link != blank %}
+                <h4 style="color: {{ block.settings.heading_color1 }} !important;"><a class="ttl-link" href="{{ block.settings.title_link }}">{{ block.settings.title }}</a></h4>
+                {% endif %}        
+              {% endif %}
+
+              {% if block.settings.text1 != blank %}
+              <p class="f-bk" style="color: {{ block.settings.text_color1 }};">{{ block.settings.text1 | escape }}</p>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="rte-setting text-spacing">{{ block.settings.text }}</div>
+              {% endif %}
+              {% if block.settings.button_label != blank %}
+                <a href="{{ block.settings.button_link }}" class="btn btn-primary">
+                  {{ block.settings.button_label }}
+                </a>
+              {% endif %}
+              {% if block.settings.category1 != blank  or block.settings.category2 != blank or block.settings.category3 != blank %}
+              <div class="category-wrapper d-flex">              
+                <p class="category">{{ block.settings.category1 | escape }}</p>
+                <p class="category">{{ block.settings.category2 | escape }}</p>
+                <p class="category">{{ block.settings.category3 | escape }}</p>
+              </div>
+              {% endif %}
+            </div>
+        </div>        
+      </div>
+      {% endfor %}
+    </div>
+  </div>  
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+
+
+{% style %}
+	#shopify-section-{{ section.id }}{
+		background-color: {{ section.settings.bg_color }};
+	}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Text columns with images",
+    "class": "index-section text-with-column-section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+		"default": "#ffffff"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+		"default": "Add text here"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Heading",
+		"default": "<p>Add heading here</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Title Color",
+		"default": "#000000"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+		"default": "<p>Add description here</p>"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      }  
+    ],
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "color",
+            "id": "bg_color1",
+            "label": "Background Color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "select",
+            "id": "align_text1",
+            "label": "Text alignment",
+            "default": "left",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Centered"
+              }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_image",
+            "label": "Show image",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+			"default": "Example title"
+          },
+          {
+            "type": "color",
+            "id": "heading_color1",
+            "label": "Title Color",
+            "default": "#000000"
+          },
+          {
+            "type": "text",
+            "id": "text1",
+            "label": "Text",
+            "default": "Add text here"
+          },
+          {
+            "type": "color",
+            "id": "text_color1",
+            "label": "Text Color",
+            "default": "#000000"
+          },
+          {
+            "type": "text",
+            "id": "category1",
+            "label": "Category1",
+            "default": "Add Category1"
+          },
+          {
+            "type": "text",
+            "id": "category2",
+            "label": "Category2",
+            "default": "Add Category2"
+          },
+          {
+            "type": "text",
+            "id": "category3",
+            "label": "Category3",
+            "default": "Add Category3"
+          },
+          {
+            "type": "url",
+            "id": "title_link",
+            "label": "Title Link"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products. Add images for emphasis.</p>"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label",
+            "default": "Optional button"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text columns with images",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "text_block"
+          },
+          {
+            "type": "text_block"
+          },
+          {
+            "type": "text_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

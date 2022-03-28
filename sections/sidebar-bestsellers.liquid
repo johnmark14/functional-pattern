@@ -1,0 +1,109 @@
+{% if section.settings.show_best_products %}
+
+<div class="widget widget_top_rated_products">
+  {% if section.settings.title != blank %}
+  <h4>{{ section.settings.title }}</h4>  
+  {% endif %}
+  <div class="carousel-block">	
+  <ul class="no-bullets top-products {{ section.id }} owl-carousel owl-theme">
+    {% for product in collections[section.settings.bestseller].products limit: section.settings.limit %}
+    <li class="products"> 
+      <div class="product-container"> 
+        {% if product.images.size > 0 %}  
+        <a class="thumb grid__item" href="{{ product.url | within: collection }}">                                          
+          {% if product.compare_at_price > product.price and settings.collections_show_sale_circle %}
+          <div class="featured-tag">
+            <span class="badge badge--sale">          
+              <span class="gift-tag badge__text{% if sale_text.size > 7 %} badge__text--small{% endif %}">{{ 'products.product.sale' | t }}</span>
+            </span>
+          </div>
+          {% endif %}
+
+
+          <img alt="featured product" src="{{ product.featured_image | product_img_url: '350X' }}">                                              
+
+          {% if settings.count_down_enable and settings.count_down_collections %}
+          {% assign dealTime = settings.home_productdeal_time | split: ' ' | join: ' ' | split: ' ' %}
+          {% include 'deal-snippet-sidebar' %}
+          {% endif %}
+        </a>
+        {% endif %} 
+      </div>
+
+      <div class="product-detail">   
+        <a class="grid-link__title" href="{{ product.url | within: collection }}"> {{ product.title }} </a>   
+        {% if settings.product_review %} <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> {% endif %}                 
+        {% for tag in product.tags %}
+
+        {% endfor %}
+        <div class="top-product-prices grid-link__meta">
+
+          <div class="product_price">
+            <div class="grid-link__org_price">
+              {{ product.price_min | money }}
+            </div>
+            {% if product.compare_at_price_max > product.price %}
+            <del>{{ product.compare_at_price_max | money }}</del>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </li>
+    {% endfor %}
+  </ul> 
+  <div class="sidabar_nav top_products_nav {{ section.id }}"></div>
+  </div>  
+</div>
+{% endif %} 
+
+{% schema %}
+{
+"name": "Products",    
+"settings": [	
+{
+"type": "checkbox",
+"id": "show_best_products",
+"label": "Enable best sellers",
+"default":false
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "collection",
+"id": "bestseller",
+"label": "Collection"
+},
+{
+"type": "text",
+"id": "limi",
+"label": "Product Limit",
+"default": "4"
+}
+
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".top-products.{{ section.id }}").owlCarousel({ 
+      items:1,
+      loop:false,      
+      nav:true,       
+      dots: false,
+      navContainer: ".top_products_nav.{{ section.id }}",
+      navText: ['<a class="prev btn active"><i class="fa fa-angle-left"></i></a>','<a class="next btn"><i class="fa fa-angle-right"></i></a>']
+      });
+  });
+
+</script>
